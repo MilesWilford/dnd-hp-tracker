@@ -3,6 +3,8 @@ package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
 import android.app.Activity;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.*;	
 import android.os.Bundle;
@@ -32,9 +34,6 @@ public class DNDHPActivity extends Activity {
 	public TextView currentEntryView, currentHPView;
 	public LinearLayout showWorkLayout;
 	public ScrollView showWorkScroller;
-	public int showWorkLineId = 1000; //set to an arbitrary large number so 
-										//that they won't overlap with anything because 
-										//I don't understand why it needs to be an int.
 	
     /** Called when the activity is first created. */
     @Override
@@ -238,22 +237,25 @@ public class DNDHPActivity extends Activity {
     	//First we must pick our operation.
     	if (value > 0) {
     		operation = "+";
+        	adjustment.setTextColor(Color.GREEN);
     	} else if (value < 0) {
-    		operation = "-";
+        	adjustment.setTextColor(Color.RED);
     	}
     	currentHP += value;
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
-    	adjustment.setId(showWorkLineId);
-    	showWorkLineId++;
+    	adjustment.setGravity(Gravity.RIGHT);
+    	adjustment.setTextSize(14 * this.getResources().getDisplayMetrics().density + 0.5f); //16 px converted to 16 dip
     	//Second line shows new total number
     	sum.setText(Integer.toString(currentHP));
-    	sum.setId(showWorkLineId);
-    	showWorkLineId++;
+    	sum.setGravity(Gravity.LEFT);
+    	sum.setTextSize(14 * this.getResources().getDisplayMetrics().density + 0.5f);  //16 px converted to 16 dip
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
     	clearEntry();
+    	
+    	currentHPView.setText(Integer.toString(currentHP));
     }
     
     public void DSUpdater(String how) {
