@@ -10,7 +10,6 @@ import android.os.Bundle;
 public class DNDHPActivity extends Activity {
     public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork, currentSurges = 0;
 	public int currentDeathSaves = 3;
-	public int numStorer;
 	
 	//Create the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
@@ -43,7 +42,7 @@ public class DNDHPActivity extends Activity {
         for (int i = 0; i < 10; i++) {
         	String buttonID = "input" + Integer.toString(i);
         	int resourceID = getResources().getIdentifier(buttonID, "id", "com.admteal.dndhp");
-            final Button b = (Button) findViewById(resourceID);
+            Button b = (Button) findViewById(resourceID);
             final int j = i;
             b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
