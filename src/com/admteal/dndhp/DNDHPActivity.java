@@ -119,13 +119,13 @@ public class DNDHPActivity extends Activity {
     	inputAdd	= (Button) findViewById(R.id.inputAdd);
     	inputAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater("+");
+				showWorkUpdater(currentEntry);
 			}
 		});
     	inputSub	= (Button) findViewById(R.id.inputSub);
     	inputSub.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater("-");
+				showWorkUpdater(currentEntry * -1);
 			}
 		});
     	inputClear	= (Button) findViewById(R.id.inputClear);
@@ -157,8 +157,24 @@ public class DNDHPActivity extends Activity {
 
     	//Create the ongoing function buttons
     	ongoAdd	= (Button) findViewById(R.id.ongoAdd);
+    	ongoAdd.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				ongoUpdater("+");
+			}
+		});
     	ongoSub	= (Button) findViewById(R.id.ongoSub);
+    	ongoSub.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				ongoUpdater("-");
+			}
+		});
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
+    	inputOngo.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (currentOngo < 0) {
+				}
+			}
+		});
 
     	//Create the surges function buttons
     	surgesAdd	= (Button) findViewById(R.id.surgesAdd);
@@ -185,25 +201,50 @@ public class DNDHPActivity extends Activity {
     	currentEntryView.setText(Integer.toString(currentEntry));
     }
     
-    public void showWorkUpdater(String how) {
+    public void showWorkUpdater(int value) {
+    	String operation = "";
+    	TextView adjustment = new TextView(this);   
+    	TextView sum = new TextView(this); 	
+    	//First we must pick our operation.
+    	if (value > 0) {
+    		operation = "+";
+    	} else if (value < 0) {
+    		operation = "-";
+    	}
+    	currentHP += value;
     	//First line shows how much was added or subtracted as +n or -n
-    	TextView adjustment = new TextView(this);    	
-    	adjustment.setText(how + Integer.toString(currentEntry));
+    	adjustment.setText(operation + Integer.toString(currentEntry));
     	adjustment.setId(showWorkLineId);
     	showWorkLineId++;
-    	//Second line shows the new total.  First we must pick our operation.
-    	if (how == "+") {
-    		currentHP += currentEntry;
-    	} else if (how == "-") {
-    		currentHP -= currentEntry;
-    	}
-    	TextView sum = new TextView(this);
+    	//Second line shows new total number
     	sum.setText(Integer.toString(currentHP));
     	sum.setId(showWorkLineId);
     	showWorkLineId++;
+    	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
     	clearEntry();
+    }
+    
+    public void ongoUpdater(String how) {
+    	String dotOrHot;
+    	String valueToUse;
+    	//Pick operation and adjust currentOngo number
+    	if (how == "+") {
+    		currentOngo++;
+    	} else if (how == "-") {
+    		currentOngo--;
+    	}
+    	//It's a regen if it is under 0, otherwise it is ongoing
+    	if (currentOngo < 0) {
+    		dotOrHot = "Regen: ";
+    		valueToUse = Integer.toString(currentOngo * -1);
+    	} else {
+    		dotOrHot = "Ongoing: ";
+    		valueToUse = Integer.toString(currentOngo);
+    	}
+    	//Change the button text to reflect variable
+    	inputOngo.setText(dotOrHot + valueToUse);
     }
     
     public void clearEntry() {
