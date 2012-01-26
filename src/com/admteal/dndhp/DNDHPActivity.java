@@ -42,7 +42,7 @@ public class DNDHPActivity extends Activity {
         	String buttonID = "input" + Integer.toString(i);
         	int resourceID = getResources().getIdentifier(buttonID, "id", "com.admteal.dndhp");
             Button b = (Button) findViewById(resourceID);
-            final int j = i;
+            final int j = i; //allows passing i into a new View.OnClickListener's onClick
             b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					currentEntryViewUpdater(j);					
