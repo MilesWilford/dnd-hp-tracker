@@ -171,8 +171,7 @@ public class DNDHPActivity extends Activity {
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
     	inputOngo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if (currentOngo < 0) {
-				}
+				showWorkUpdater(currentOngo * -1); //current ongo stores the number backwards, so it is inverted first
 			}
 		});
 
@@ -245,6 +244,15 @@ public class DNDHPActivity extends Activity {
     	}
     	//Change the button text to reflect variable
     	inputOngo.setText(dotOrHot + valueToUse);
+    }
+    
+    public void surgesUpdater(String how) {
+    	if (how == "+") {
+    		currentSurges++;
+    	} else if (how == "-") {
+    		currentSurges--;
+    	}
+    	inputSurges.setText(Integer.toString(currentSurges));
     }
     
     public void clearEntry() {
