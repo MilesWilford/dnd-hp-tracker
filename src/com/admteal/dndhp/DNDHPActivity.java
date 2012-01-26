@@ -132,10 +132,7 @@ public class DNDHPActivity extends Activity {
     	inputClear.setOnLongClickListener(new View.OnLongClickListener() {			
 			public boolean onLongClick(View v) {	
 				clearEntry();
-				showWorkLayout.removeAllViews();
-				currentHP = 0;
-				currentEntry = 0; 
-				
+				showWorkLayout.removeAllViews();				
 				return true; //stops click event from also being processed
 			}
 		});
