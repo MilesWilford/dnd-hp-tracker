@@ -8,8 +8,8 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-    public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork = 0;
-	public int currentSurges = 3;
+    public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork, currentSurges = 0;
+	public int currentDeathSaves = 3;
 	public int numStorer;
 	
 	//Create the calculator number buttons
@@ -146,6 +146,11 @@ public class DNDHPActivity extends Activity {
 			}
 		});
     	inputHS		= (Button) findViewById(R.id.inputHS);
+    	inputHS.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+				showWorkUpdater(currentHS);
+			}
+		});
     	// Long click to set currentEntry into Healing surge value, and display it on the button
     	inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
@@ -177,8 +182,27 @@ public class DNDHPActivity extends Activity {
 
     	//Create the surges function buttons
     	surgesAdd	= (Button) findViewById(R.id.surgesAdd);
+    	surgesAdd.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				surgesUpdater("+");
+			}
+		});
     	surgesSub	= (Button) findViewById(R.id.surgesSub);
+    	surgesSub.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				surgesUpdater("-");
+			}
+		});
     	inputSurges = (Button) findViewById(R.id.inputSurges);
+    	inputSurges.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (currentSurges == 0) {
+					return;
+				}
+				showWorkUpdater(currentHS);
+				surgesUpdater("-");
+			}
+		});
 
     	//Create the Death Saves function buttons
     	DSAdd		= (Button) findViewById(R.id.DSAdd);
@@ -212,7 +236,7 @@ public class DNDHPActivity extends Activity {
     	}
     	currentHP += value;
     	//First line shows how much was added or subtracted as +n or -n
-    	adjustment.setText(operation + Integer.toString(currentEntry));
+    	adjustment.setText(operation + Integer.toString(value));
     	adjustment.setId(showWorkLineId);
     	showWorkLineId++;
     	//Second line shows new total number
@@ -252,7 +276,7 @@ public class DNDHPActivity extends Activity {
     	} else if (how == "-") {
     		currentSurges--;
     	}
-    	inputSurges.setText(Integer.toString(currentSurges));
+    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
     }
     
     public void clearEntry() {
