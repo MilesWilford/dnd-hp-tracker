@@ -119,15 +119,23 @@ public class DNDHPActivity extends Activity {
     	inputAdd	= (Button) findViewById(R.id.inputAdd);
     	inputAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater("add");
+				showWorkUpdater("+");
 			}
 		});
     	inputSub	= (Button) findViewById(R.id.inputSub);
+    	inputSub.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				showWorkUpdater("-");
+			}
+		});
     	inputClear	= (Button) findViewById(R.id.inputClear);
     	inputClear.setOnLongClickListener(new View.OnLongClickListener() {			
 			public boolean onLongClick(View v) {	
 				clearEntry();
 				showWorkLayout.removeAllViews();
+				currentHP = 0;
+				currentEntry = 0; 
+				
 				return true; //stops click event from also being processed
 			}
 		});
@@ -178,12 +186,24 @@ public class DNDHPActivity extends Activity {
     }
     
     public void showWorkUpdater(String how) {
-    	TextView view = new TextView(this);
-    	view.setText(Integer.toString(currentEntry));
-    	view.setId(showWorkLineId);
+    	//First line shows how much was added or subtracted as +n or -n
+    	TextView adjustment = new TextView(this);    	
+    	adjustment.setText(how + Integer.toString(currentEntry));
+    	adjustment.setId(showWorkLineId);
     	showWorkLineId++;
-    	
-    	showWorkLayout.addView(view);
+    	//Second line shows the new total.  First we must pick our operation.
+    	if (how == "+") {
+    		currentHP += currentEntry;
+    	} else if (how == "-") {
+    		currentHP -= currentEntry;
+    	}
+    	TextView sum = new TextView(this);
+    	sum.setText(Integer.toString(currentHP));
+    	sum.setId(showWorkLineId);
+    	showWorkLineId++;
+    	showWorkLayout.addView(adjustment);
+    	showWorkLayout.addView(sum);
+    	clearEntry();
     }
     
     public void clearEntry() {
