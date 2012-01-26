@@ -12,9 +12,6 @@ public class DNDHPActivity extends Activity {
 	public int currentSurges = 3;
 	public int numStorer;
 	
-	//Create the calculator number buttons
-	public Button[] inputNum = new Button[10];
-	
 	//Create the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
 
@@ -43,78 +40,18 @@ public class DNDHPActivity extends Activity {
         setContentView(R.layout.main);
     	
         //Set the calculator number buttons and their onClickListeners
-        /*for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
         	String buttonID = "input" + Integer.toString(i);
         	int resourceID = getResources().getIdentifier(buttonID, "id", "com.admteal.dndhp");
-        	numStorer = i;
-        	inputNum[i] = (Button) findViewById(resourceID);
-        	inputNum[i].setOnClickListener(new View.OnClickListener() {
+            final Button b = (Button) findViewById(resourceID);
+            final int j = i;
+            b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					currentEntryViewUpdater(numStorer);					
+					currentEntryViewUpdater(j);					
 				}
 			});
-        } */
-        	inputNum[0] = (Button) findViewById(R.id.input0);
-        	inputNum[0].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(0);
-				}
-			});
-        	inputNum[1] = (Button) findViewById(R.id.input1);
-        	inputNum[1].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(1);
-				}
-			});
-        	inputNum[2] = (Button) findViewById(R.id.input2);
-        	inputNum[2].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(2);
-				}
-			});
-        	inputNum[3] = (Button) findViewById(R.id.input3);
-        	inputNum[3].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(3);
-				}
-			});
-        	inputNum[4] = (Button) findViewById(R.id.input4);
-        	inputNum[4].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(4);
-				}
-			});
-        	inputNum[5] = (Button) findViewById(R.id.input5);
-        	inputNum[5].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(5);
-				}
-			});
-        	inputNum[6] = (Button) findViewById(R.id.input6);
-        	inputNum[6].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(6);
-				}
-			});
-        	inputNum[7] = (Button) findViewById(R.id.input7);
-        	inputNum[7].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(7);
-				}
-			});
-        	inputNum[8] = (Button) findViewById(R.id.input8);
-        	inputNum[8].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(8);
-				}
-			});
-        	inputNum[9] = (Button) findViewById(R.id.input9);
-        	inputNum[9].setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					currentEntryViewUpdater(9);
-				}
-			});
-        
+        }
+
     	//Create the calculator function buttons
     	inputAdd	= (Button) findViewById(R.id.inputAdd);
     	inputAdd.setOnClickListener(new View.OnClickListener() {
