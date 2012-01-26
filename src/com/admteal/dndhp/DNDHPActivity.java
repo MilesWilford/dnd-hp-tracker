@@ -1,3 +1,4 @@
+//git repository: "git@github.com:codonnell/dnd-hp-tracker.git"
 package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
@@ -29,7 +30,8 @@ public class DNDHPActivity extends Activity {
 	//public Button inputDS	= (Button) findViewById(R.id.inputDS); //This button does nothing right now
 	
 	public TextView currentEntryView, currentHPView;
-	public ScrollView showWorkView;
+	public LinearLayout showWorkLayout;
+	public ScrollView showWorkScroller;
 	public int showWorkLineId = 1000; //set to an arbitrary large number so 
 										//that they won't overlap with anything because 
 										//I don't understand why it needs to be an int.
@@ -123,27 +125,24 @@ public class DNDHPActivity extends Activity {
     	inputSub	= (Button) findViewById(R.id.inputSub);
     	inputClear	= (Button) findViewById(R.id.inputClear);
     	inputClear.setOnLongClickListener(new View.OnLongClickListener() {			
-			public boolean onLongClick(View v) {
-				currentEntry = 0;
-				currentEntryView.setText(Integer.toString(currentEntry));
-				showWorkView.removeAllViews();
+			public boolean onLongClick(View v) {	
+				clearEntry();
+				showWorkLayout.removeAllViews();
 				return true; //stops click event from also being processed
 			}
 		});
     	inputClear.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
-				currentEntry = 0;
-				currentEntryView.setText(Integer.toString(currentEntry));				
+			public void onClick(View v) {	
+				clearEntry();
 			}
 		});
     	inputHS		= (Button) findViewById(R.id.inputHS);
+    	// Long click to set currentEntry into Healing surge value, and display it on the button
     	inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				currentHS = currentEntry;
 				inputHS.setText("HS: " + Integer.toString(currentEntry));
-				currentEntry = 0;
-				currentEntryView.setText(Integer.toString(currentEntry));
 				return true;
 			}
 		});
@@ -164,12 +163,12 @@ public class DNDHPActivity extends Activity {
     	//final Button inputDS	= (Button) findViewById(R.id.inputDS); //This button does nothing right now
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
-    	showWorkView	= (ScrollView) findViewById(R.id.showWorkView);
+    	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
+    	showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
     	currentHPView	= (TextView) findViewById(R.id.currentHPView); 
     	
     	currentEntryView.setText(Integer.toString(currentEntry));
     	currentHPView.setText(Integer.toString(currentHP));
-		
     }
     
     public void currentEntryViewUpdater(int updateWith) {
@@ -184,6 +183,11 @@ public class DNDHPActivity extends Activity {
     	view.setId(showWorkLineId);
     	showWorkLineId++;
     	
-    	showWorkView.addView(view);
+    	showWorkLayout.addView(view);
+    }
+    
+    public void clearEntry() {
+		currentEntry = 0;
+		currentEntryView.setText(Integer.toString(currentEntry));
     }
 }
