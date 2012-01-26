@@ -19,7 +19,7 @@ public class DNDHPActivity extends Activity {
 	public Button inputAdd, inputSub, inputClear, inputHS;
 
 	//Create the ongoing function buttons
-	public Button ongoAdd, ongoSub, inputOngo;
+	public Button ongoAdd, ongoSub, inputOngo, inputDS;
 
 	//Create the surges function buttons
 	public Button surgesAdd, surgesSub, inputSurges;
@@ -206,8 +206,18 @@ public class DNDHPActivity extends Activity {
 
     	//Create the Death Saves function buttons
     	DSAdd		= (Button) findViewById(R.id.DSAdd);
+    	DSAdd.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				DSUpdater("+");
+			}
+		});
     	DSSub		= (Button) findViewById(R.id.DSSub);
-    	//final Button inputDS	= (Button) findViewById(R.id.inputDS); //This button does nothing right now
+    	DSSub.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				DSUpdater("-");
+			}
+		});
+    	inputDS		= (Button) findViewById(R.id.inputDS);
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
     	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
@@ -249,6 +259,24 @@ public class DNDHPActivity extends Activity {
     	clearEntry();
     }
     
+    public void DSUpdater(String how) {
+    	if (how == "+") {
+    		currentDeathSaves++;
+    	} else if (how == "-") {
+    		currentDeathSaves--;
+    	}
+    	inputDS.setText("Death Saves: " + Integer.toString(currentDeathSaves));
+    }
+    
+    public void surgesUpdater(String how) {
+    	if (how == "+") {
+    		currentSurges++;
+    	} else if (how == "-") {
+    		currentSurges--;
+    	}
+    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
+    }
+    
     public void ongoUpdater(String how) {
     	String dotOrHot;
     	String valueToUse;
@@ -268,15 +296,6 @@ public class DNDHPActivity extends Activity {
     	}
     	//Change the button text to reflect variable
     	inputOngo.setText(dotOrHot + valueToUse);
-    }
-    
-    public void surgesUpdater(String how) {
-    	if (how == "+") {
-    		currentSurges++;
-    	} else if (how == "-") {
-    		currentSurges--;
-    	}
-    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
     }
     
     public void clearEntry() {
