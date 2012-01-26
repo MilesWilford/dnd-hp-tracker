@@ -8,15 +8,15 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-    public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork = 0;
-	public int currentSurges = 3;
+    public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork, currentSurges = 0;
+	public int currentDeathSaves = 3;
 	public int numStorer;
 	
 	//Create the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
 
 	//Create the ongoing function buttons
-	public Button ongoAdd, ongoSub, inputOngo;
+	public Button ongoAdd, ongoSub, inputOngo, inputDS;
 
 	//Create the surges function buttons
 	public Button surgesAdd, surgesSub, inputSurges;
@@ -56,23 +56,20 @@ public class DNDHPActivity extends Activity {
     	inputAdd	= (Button) findViewById(R.id.inputAdd);
     	inputAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater("+");
+				showWorkUpdater(currentEntry);
 			}
 		});
     	inputSub	= (Button) findViewById(R.id.inputSub);
     	inputSub.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater("-");
+				showWorkUpdater(currentEntry * -1);
 			}
 		});
     	inputClear	= (Button) findViewById(R.id.inputClear);
     	inputClear.setOnLongClickListener(new View.OnLongClickListener() {			
 			public boolean onLongClick(View v) {	
 				clearEntry();
-				showWorkLayout.removeAllViews();
-				currentHP = 0;
-				currentEntry = 0; 
-				
+				showWorkLayout.removeAllViews();				
 				return true; //stops click event from also being processed
 			}
 		});
@@ -83,6 +80,11 @@ public class DNDHPActivity extends Activity {
 			}
 		});
     	inputHS		= (Button) findViewById(R.id.inputHS);
+    	inputHS.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+				showWorkUpdater(currentHS);
+			}
+		});
     	// Long click to set currentEntry into Healing surge value, and display it on the button
     	inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
@@ -94,18 +96,62 @@ public class DNDHPActivity extends Activity {
 
     	//Create the ongoing function buttons
     	ongoAdd	= (Button) findViewById(R.id.ongoAdd);
+    	ongoAdd.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				ongoUpdater("+");
+			}
+		});
     	ongoSub	= (Button) findViewById(R.id.ongoSub);
+    	ongoSub.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				ongoUpdater("-");
+			}
+		});
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
+    	inputOngo.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				showWorkUpdater(currentOngo * -1); //current ongo stores the number backwards, so it is inverted first
+			}
+		});
 
     	//Create the surges function buttons
     	surgesAdd	= (Button) findViewById(R.id.surgesAdd);
+    	surgesAdd.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				surgesUpdater("+");
+			}
+		});
     	surgesSub	= (Button) findViewById(R.id.surgesSub);
+    	surgesSub.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				surgesUpdater("-");
+			}
+		});
     	inputSurges = (Button) findViewById(R.id.inputSurges);
+    	inputSurges.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (currentSurges == 0) {
+					return;
+				}
+				showWorkUpdater(currentHS);
+				surgesUpdater("-");
+			}
+		});
 
     	//Create the Death Saves function buttons
     	DSAdd		= (Button) findViewById(R.id.DSAdd);
+    	DSAdd.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				DSUpdater("+");
+			}
+		});
     	DSSub		= (Button) findViewById(R.id.DSSub);
-    	//final Button inputDS	= (Button) findViewById(R.id.inputDS); //This button does nothing right now
+    	DSSub.setOnClickListener (new View.OnClickListener() {			
+			public void onClick(View v) {
+				DSUpdater("-");
+			}
+		});
+    	inputDS		= (Button) findViewById(R.id.inputDS);
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
     	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
@@ -122,25 +168,68 @@ public class DNDHPActivity extends Activity {
     	currentEntryView.setText(Integer.toString(currentEntry));
     }
     
-    public void showWorkUpdater(String how) {
+    public void showWorkUpdater(int value) {
+    	String operation = "";
+    	TextView adjustment = new TextView(this);   
+    	TextView sum = new TextView(this); 	
+    	//First we must pick our operation.
+    	if (value > 0) {
+    		operation = "+";
+    	} else if (value < 0) {
+    		operation = "-";
+    	}
+    	currentHP += value;
     	//First line shows how much was added or subtracted as +n or -n
-    	TextView adjustment = new TextView(this);    	
-    	adjustment.setText(how + Integer.toString(currentEntry));
+    	adjustment.setText(operation + Integer.toString(value));
     	adjustment.setId(showWorkLineId);
     	showWorkLineId++;
-    	//Second line shows the new total.  First we must pick our operation.
-    	if (how == "+") {
-    		currentHP += currentEntry;
-    	} else if (how == "-") {
-    		currentHP -= currentEntry;
-    	}
-    	TextView sum = new TextView(this);
+    	//Second line shows new total number
     	sum.setText(Integer.toString(currentHP));
     	sum.setId(showWorkLineId);
     	showWorkLineId++;
+    	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
     	clearEntry();
+    }
+    
+    public void DSUpdater(String how) {
+    	if (how == "+") {
+    		currentDeathSaves++;
+    	} else if (how == "-") {
+    		currentDeathSaves--;
+    	}
+    	inputDS.setText("Death Saves: " + Integer.toString(currentDeathSaves));
+    }
+    
+    public void surgesUpdater(String how) {
+    	if (how == "+") {
+    		currentSurges++;
+    	} else if (how == "-") {
+    		currentSurges--;
+    	}
+    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
+    }
+    
+    public void ongoUpdater(String how) {
+    	String dotOrHot;
+    	String valueToUse;
+    	//Pick operation and adjust currentOngo number
+    	if (how == "+") {
+    		currentOngo++;
+    	} else if (how == "-") {
+    		currentOngo--;
+    	}
+    	//It's a regen if it is under 0, otherwise it is ongoing
+    	if (currentOngo < 0) {
+    		dotOrHot = "Regen: ";
+    		valueToUse = Integer.toString(currentOngo * -1);
+    	} else {
+    		dotOrHot = "Ongoing: ";
+    		valueToUse = Integer.toString(currentOngo);
+    	}
+    	//Change the button text to reflect variable
+    	inputOngo.setText(dotOrHot + valueToUse);
     }
     
     public void clearEntry() {
