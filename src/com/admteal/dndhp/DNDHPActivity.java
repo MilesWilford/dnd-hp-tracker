@@ -11,7 +11,7 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-    public int currentHP, currentHS, currentOngo, currentSurgeCount, currentEntry, showWork, currentSurges = 0;
+    public int currentHP, currentHS, currentOngo, currentEntry, showWork, currentSurges = 0;
 	public int currentDeathSaves = 3;
 	
 	//Create the calculator function buttons
@@ -89,6 +89,7 @@ public class DNDHPActivity extends Activity {
 			public boolean onLongClick(View v) {
 				currentHS = currentEntry;
 				inputHS.setText("HS: " + Integer.toString(currentEntry));
+				clearEntry();
 				return true;
 			}
 		});
