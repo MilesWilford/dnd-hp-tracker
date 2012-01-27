@@ -162,6 +162,7 @@ public class DNDHPActivity extends Activity {
     
     @Override
     protected void onResume() {
+        super.onResume();
     	currentEntryView.setText(Integer.toString(currentEntry));
     	currentHPView.setText(Integer.toString(currentHP));
     	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
@@ -169,11 +170,11 @@ public class DNDHPActivity extends Activity {
     	DSUpdater("");
     	surgesUpdater("");
 		inputHS.setText("HS: " + Integer.toString(currentHS));
-    	super.onResume();
     }
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
     	savedInstanceState.putInt("currentEntry", currentEntry);
     	savedInstanceState.putInt("currentHP", currentHP);
     	savedInstanceState.putInt("currentSurges", currentSurges);
@@ -181,7 +182,6 @@ public class DNDHPActivity extends Activity {
     	savedInstanceState.putInt("currentDeathSaves", currentDeathSaves);
     	savedInstanceState.putInt("currentSurges", currentSurges);
     	savedInstanceState.putInt("currentHS", currentHS);
-    	super.onSaveInstanceState(savedInstanceState);
     }
     
     @Override
