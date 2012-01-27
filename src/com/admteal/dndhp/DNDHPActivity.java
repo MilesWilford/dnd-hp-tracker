@@ -3,6 +3,7 @@ package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -33,8 +34,8 @@ public class DNDHPActivity extends Activity {
 	
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);        
         setContentView(R.layout.main);
     	
         //Set the calculator number buttons and their onClickListeners
@@ -149,15 +150,49 @@ public class DNDHPActivity extends Activity {
 				DSUpdater("-");
 			}
 		});
+    	
     	inputDS		= (Button) findViewById(R.id.inputDS);
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
     	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
     	showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
     	currentHPView	= (TextView) findViewById(R.id.currentHPView); 
-    	
+    }
+    
+    @Override
+    protected void onResume() {
     	currentEntryView.setText(Integer.toString(currentEntry));
     	currentHPView.setText(Integer.toString(currentHP));
+    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
+    	ongoUpdater("");
+    	DSUpdater("");
+    	surgesUpdater("");
+		inputHS.setText("HS: " + Integer.toString(currentHS));
+    	super.onResume();
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+    	savedInstanceState.putInt("currentEntry", currentEntry);
+    	savedInstanceState.putInt("currentHP", currentHP);
+    	savedInstanceState.putInt("currentSurges", currentSurges);
+    	savedInstanceState.putInt("currentOngo", currentOngo);
+    	savedInstanceState.putInt("currentDeathSaves", currentDeathSaves);
+    	savedInstanceState.putInt("currentSurges", currentSurges);
+    	savedInstanceState.putInt("currentHS", currentHS);
+    	super.onSaveInstanceState(savedInstanceState);
+    }
+    
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+    	currentEntry = savedInstanceState.getInt("currentEntry");
+    	currentHP = savedInstanceState.getInt("currentHP");
+    	currentSurges = savedInstanceState.getInt("currentSurges");
+    	currentOngo = savedInstanceState.getInt("currentOngo");
+    	currentDeathSaves = savedInstanceState.getInt("currentDeathSaves");
+    	currentSurges = savedInstanceState.getInt("currentSurges");
+    	currentHS = savedInstanceState.getInt("currentHS");
     }
     
     public void currentEntryViewUpdater(int updateWith) {
