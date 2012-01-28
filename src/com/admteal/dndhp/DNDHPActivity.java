@@ -3,7 +3,6 @@ package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -11,8 +10,9 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-    public int currentHP, currentHS, currentOngo, currentEntry, showWork, currentSurges = 0;
-	public int currentDeathSaves = 3;
+	public Player player = new Player();
+	
+	public int currentEntry;
 	
 	//Create the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
@@ -81,13 +81,13 @@ public class DNDHPActivity extends Activity {
     	inputHS		= (Button) findViewById(R.id.inputHS);
     	inputHS.setOnClickListener(new View.OnClickListener() {			
 			public void onClick(View v) {
-				showWorkUpdater(currentHS);
+				showWorkUpdater(player.getHS());
 			}
 		});
     	// Long click to set currentEntry into Healing surge value, and display it on the button
     	inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
-				currentHS = currentEntry;
+				player.setHS(currentEntry);
 				inputHS.setText("HS: " + Integer.toString(currentEntry));
 				clearEntry();
 				return true;
@@ -110,7 +110,7 @@ public class DNDHPActivity extends Activity {
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
     	inputOngo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater(currentOngo * -1); //current ongo stores the number backwards, so it is inverted first
+				showWorkUpdater(player.getOngo() * -1); //current ongo stores the number backwards, so it is inverted first
 			}
 		});
 
@@ -130,10 +130,10 @@ public class DNDHPActivity extends Activity {
     	inputSurges = (Button) findViewById(R.id.inputSurges);
     	inputSurges.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if (currentSurges == 0) {
+				if (player.getSurges() == 0) {
 					return;
 				}
-				showWorkUpdater(currentHS);
+				showWorkUpdater(player.getHS());
 				surgesUpdater("-");
 			}
 		});
@@ -164,36 +164,36 @@ public class DNDHPActivity extends Activity {
     protected void onResume() {
         super.onResume();
     	currentEntryView.setText(Integer.toString(currentEntry));
-    	currentHPView.setText(Integer.toString(currentHP));
-    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
+    	currentHPView.setText(Integer.toString(player.getHP()));
+    	inputSurges.setText("Surges: " + Integer.toString(player.getSurges()));
     	ongoUpdater("");
     	DSUpdater("");
     	surgesUpdater("");
-		inputHS.setText("HS: " + Integer.toString(currentHS));
+		inputHS.setText("HS: " + Integer.toString(player.getHS()));
     }
     
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     	savedInstanceState.putInt("currentEntry", currentEntry);
-    	savedInstanceState.putInt("currentHP", currentHP);
-    	savedInstanceState.putInt("currentSurges", currentSurges);
-    	savedInstanceState.putInt("currentOngo", currentOngo);
-    	savedInstanceState.putInt("currentDeathSaves", currentDeathSaves);
-    	savedInstanceState.putInt("currentSurges", currentSurges);
-    	savedInstanceState.putInt("currentHS", currentHS);
+    	savedInstanceState.putInt("currentHP", player.getHP());
+    	savedInstanceState.putInt("currentSurges", player.getSurges());
+    	savedInstanceState.putInt("currentOngo", player.getOngo());
+    	savedInstanceState.putInt("currentDeathSaves", player.getDeathSaves());
+    	savedInstanceState.putInt("currentSurges", player.getSurges());
+    	savedInstanceState.putInt("currentHS", player.getHS());
     }
     
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
     	super.onRestoreInstanceState(savedInstanceState);
     	currentEntry = savedInstanceState.getInt("currentEntry");
-    	currentHP = savedInstanceState.getInt("currentHP");
-    	currentSurges = savedInstanceState.getInt("currentSurges");
-    	currentOngo = savedInstanceState.getInt("currentOngo");
-    	currentDeathSaves = savedInstanceState.getInt("currentDeathSaves");
-    	currentSurges = savedInstanceState.getInt("currentSurges");
-    	currentHS = savedInstanceState.getInt("currentHS");
+    	player.setHP(savedInstanceState.getInt("currentHP"));
+    	player.setSurges(savedInstanceState.getInt("currentSurges"));
+    	player.setOngo(savedInstanceState.getInt("currentOngo"));
+    	player.setDeathSaves(savedInstanceState.getInt("currentDeathSaves"));
+    	player.setSurges(savedInstanceState.getInt("currentSurges"));
+    	player.setHS(savedInstanceState.getInt("currentHS"));
     }
     
     public void currentEntryViewUpdater(int updateWith) {
@@ -213,13 +213,13 @@ public class DNDHPActivity extends Activity {
     	} else if (value < 0) {
         	adjustment.setTextColor(Color.RED);
     	}
-    	currentHP += value;
+    	player.hpMod(value);
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
     	adjustment.setGravity(Gravity.RIGHT);
     	adjustment.setTextSize(14 * this.getResources().getDisplayMetrics().density + 0.5f); //16 px converted to 16 dip
     	//Second line shows new total number
-    	sum.setText(Integer.toString(currentHP));
+    	sum.setText(Integer.toString(player.getHP()));
     	sum.setGravity(Gravity.LEFT);
     	sum.setTextSize(14 * this.getResources().getDisplayMetrics().density + 0.5f);  //16 px converted to 16 dip
     	//Now commit those lines to the view
@@ -227,25 +227,25 @@ public class DNDHPActivity extends Activity {
     	showWorkLayout.addView(sum);
     	clearEntry();
     	
-    	currentHPView.setText(Integer.toString(currentHP));
+    	currentHPView.setText(Integer.toString(player.getHP()));
     }
     
     public void DSUpdater(String how) {
     	if (how == "+") {
-    		currentDeathSaves++;
+    		player.addDeathSave();
     	} else if (how == "-") {
-    		currentDeathSaves--;
+    		player.remDeathSave();
     	}
-    	inputDS.setText("Death Saves: " + Integer.toString(currentDeathSaves));
+    	inputDS.setText("Death Saves: " + Integer.toString(player.getDeathSaves()));
     }
     
     public void surgesUpdater(String how) {
     	if (how == "+") {
-    		currentSurges++;
+    		player.addSurge();
     	} else if (how == "-") {
-    		currentSurges--;
+    		player.remSurge();
     	}
-    	inputSurges.setText("Surges: " + Integer.toString(currentSurges));
+    	inputSurges.setText("Surges: " + Integer.toString(player.getSurges()));
     }
     
     public void ongoUpdater(String how) {
@@ -253,17 +253,17 @@ public class DNDHPActivity extends Activity {
     	String valueToUse;
     	//Pick operation and adjust currentOngo number
     	if (how == "+") {
-    		currentOngo++;
+    		player.addOngo();
     	} else if (how == "-") {
-    		currentOngo--;
+    		player.remOngo();
     	}
     	//It's a regen if it is under 0, otherwise it is ongoing
-    	if (currentOngo < 0) {
+    	if (player.getOngo() < 0) {
     		dotOrHot = "Regen: ";
-    		valueToUse = Integer.toString(currentOngo * -1);
+    		valueToUse = Integer.toString(player.getRegen());
     	} else {
     		dotOrHot = "Ongoing: ";
-    		valueToUse = Integer.toString(currentOngo);
+    		valueToUse = Integer.toString(player.getOngo());
     	}
     	//Change the button text to reflect variable
     	inputOngo.setText(dotOrHot + valueToUse);
