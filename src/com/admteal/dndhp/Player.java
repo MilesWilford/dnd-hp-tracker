@@ -1,73 +1,122 @@
 package com.admteal.dndhp;
 
+//TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
 public class Player {
 
-    /*
-     * It is a java idiom to make your actual class attributes private and
-     * provide getters and setters to access them. Those are at the bottom of
-     * the class. The idea is to hide implementation details from users of the
-     * class. For example, if you wanted to allow the health attribute to vary
-     * outside of the range of 0 and maxHealth, you wouldn't have to expose that
-     * to the user. In the getter, you could use a conditional to simply return
-     * maxHealth if currentHealth is greater than it or 0 if currentHealth is
-     * negative.
-     */
-    private int currentHealth, maxHealth, currentSurges;
-
-    public Player(int health, int surges) {
-        currentHealth = health;
-        maxHealth = health;
-        currentSurges = surges;
+    // The players various stats and HPs are tracked in this class.
+	
+	private int maxHP;
+    private int currentHP, currentHS, currentOngo, currentEntry, currentSurges, currentDeathSaves;
+    
+    //default constructor for if we aren't passing a real max hp
+    public Player() {
+    	maxHP = 999;
+    	currentHP = 0;
+    	currentHP = 0;
+    	currentHS = 0;
+     	currentOngo = 0;
+     	currentEntry = 0;
+     	currentSurges = 0;
+     	currentDeathSaves = 3;
+    }
+    
+    //create a new player at full HP
+    public Player(int newHP, int newSurges) {
+    	setHP(newHP);
+        setMaxHP(newHP);
+        setSurges(newSurges);
+    }
+    
+    //create a new player at less than full HP
+    public Player(int newHP, int newMaxHP, int newSurges) {
+    	setHP(newHP);
+    	setMaxHP(newMaxHP);
+        setSurges(newSurges);
     }
 
-    public Player(int curHP, int maxHP, int surges) {
-        currentHealth = curHP;
-        maxHealth = maxHP;
-        currentSurges = surges;
+   //modify current HP.  Do not allow current HP to go above max HP
+    // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
+    public int hpMod(int changeBy) {
+    	if (currentHP + changeBy > maxHP) {
+    		currentHP = maxHP;
+    	} else {
+        	currentHP += changeBy;
+    	}
+    	return currentHP;
     }
 
-    /*
-     * Reduces a player's health by the passed in value. If the player's health
-     * would be reduced below zero, only reduces it to zero.
-     */
-    public void injure(int health) {
-        currentHealth -= health;
-        if (currentHealth < 0)
-            currentHealth = 0;
+    public int getHP() {
+        return currentHP;
     }
 
-    /*
-     * Increases a player's health by the passed in value. If the player's
-     * health would increase above his maximum health, increases it to his
-     * maximum health.
-     */
-    public void heal(int health) {
-        currentHealth += health;
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
+    public void setHP(int newHP) {
+        currentHP = newHP;
     }
 
-    public int getCurrentHealth() {
-        return currentHealth;
+    public int getMaxHP() {
+        return maxHP;
     }
 
-    public void setCurrentHealth(int hp) {
-        currentHealth = hp;
+    public void setMaxHP(int newMaxHP) {
+        maxHP = newMaxHP;
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void setMaxHealth(int maxHP) {
-        maxHealth = maxHP;
-    }
-
-    public int getCurrentSurges() {
+    public int getSurges() {
         return currentSurges;
     }
 
-    public void setCurrentSurges(int surges) {
-        currentSurges = surges;
+    public void setSurges(int newSurges) {
+        currentSurges = newSurges;
+    }
+    
+    public void addSurge() {
+    	currentSurges++;
+    }
+    
+    public void remSurge() {
+    	currentSurges--;
+    }
+    
+    public void setHS(int newHS) {
+    	currentHS = newHS;
+    }
+    
+    public int getHS() {
+    	return currentHS;
+    }
+    
+    public void setOngo(int newOngo) {
+    	currentOngo = newOngo;
+    }
+    
+    public int getOngo() {
+    	return currentOngo;
+    }
+    
+    public int getRegen() { //regen is the opposite of ongoing damage
+    	return currentOngo * -1;
+    }
+    public void addOngo() {
+    	currentOngo++;
+    }
+    
+    public void remOngo() {
+    	currentOngo--;
+    }
+    
+    public void setDeathSaves(int newDeathSaves) {
+    	currentDeathSaves = newDeathSaves;
+    }
+    
+    public int getDeathSaves() {
+    	return currentDeathSaves;
+    }
+    
+    public void addDeathSave() {
+    	currentDeathSaves++;
+    }
+    
+    public void remDeathSave() {
+    	currentDeathSaves--;
     }
 }
