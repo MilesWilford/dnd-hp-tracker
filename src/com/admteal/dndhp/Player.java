@@ -1,12 +1,17 @@
 package com.admteal.dndhp;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 //TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
-public class Player {
+public class Player implements Serializable {
+	private static final long serialVersionUID = -736811401990731225L; //generated
 
     // The player's various stats and HPs are tracked in this class.
-	
+
 	private int maxHP;
     private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves;
+    private ArrayList<Integer> trackChanges = new ArrayList<Integer>();
     
     //default constructor for if we aren't passing a real max hp
     public Player() {
@@ -39,13 +44,11 @@ public class Player {
     public void hpMod(int changeBy) {
     	if (currentHP + changeBy > maxHP) {
     		currentHP = maxHP;
+    		trackChanges.add(maxHP-currentHP);
     	} else {
         	currentHP += changeBy;
+        	trackChanges.add(changeBy);
     	}
-    }
-    
-    public void injure(int changeBy) {
-
     }
 
     //HP VALUE

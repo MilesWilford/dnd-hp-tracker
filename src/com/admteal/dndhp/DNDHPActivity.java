@@ -186,24 +186,14 @@ public class DNDHPActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     	savedInstanceState.putInt("currentEntry", currentEntry);
-    	savedInstanceState.putInt("currentHP", player.getHP());
-    	savedInstanceState.putInt("currentSurges", player.getSurges());
-    	savedInstanceState.putInt("currentOngo", player.getOngo());
-    	savedInstanceState.putInt("currentDeathSaves", player.getDeathSaves());
-    	savedInstanceState.putInt("currentSurges", player.getSurges());
-    	savedInstanceState.putInt("currentHS", player.getHS());
+    	savedInstanceState.putSerializable("Player", player);
     }
     
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
     	super.onRestoreInstanceState(savedInstanceState);
     	currentEntry = savedInstanceState.getInt("currentEntry");
-    	player.setHP(savedInstanceState.getInt("currentHP"));
-    	player.setSurges(savedInstanceState.getInt("currentSurges"));
-    	player.setOngo(savedInstanceState.getInt("currentOngo"));
-    	player.setDeathSaves(savedInstanceState.getInt("currentDeathSaves"));
-    	player.setSurges(savedInstanceState.getInt("currentSurges"));
-    	player.setHS(savedInstanceState.getInt("currentHS"));
+    	player = (Player) savedInstanceState.getSerializable("Player");
     }
     
     public void currentEntryViewUpdater(int updateWith) {
