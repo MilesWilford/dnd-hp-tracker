@@ -245,12 +245,11 @@ public class DNDHPActivity extends Activity {
     	} else if (how == "-") {
     		player.remSurge();
     	}
-    	inputSurges.setText("Surges: " + Integer.toString(player.getSurges()));
+    	inputSurges.setText(this.getResources().getString(R.string.surges) + ": " + Integer.toString(player.getSurges()));
     }
     
     public void ongoUpdater(String how) {
-    	String dotOrHot;
-    	String valueToUse;
+    	String dotOrHot, valueToUse;
     	//Pick operation and adjust currentOngo number
     	if (how == "+") {
     		player.addOngo();
@@ -259,13 +258,14 @@ public class DNDHPActivity extends Activity {
     	}
     	//It's a regen if it is under 0, otherwise it is ongoing
     	if (player.getOngo() < 0) {
-    		dotOrHot = "Regen: ";
+    		dotOrHot = this.getResources().getString(R.string.regen);
     		valueToUse = Integer.toString(player.getRegen());
     	} else {
-    		dotOrHot = "Ongoing: ";
+    		dotOrHot = this.getResources().getString(R.string.ongoing);
     		valueToUse = Integer.toString(player.getOngo());
     	}
     	//Change the button text to reflect variable
+    	dotOrHot+= ": "; //Add colon space to the end of our word
     	inputOngo.setText(dotOrHot + valueToUse);
     }
     

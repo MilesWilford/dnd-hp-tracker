@@ -3,5 +3,8 @@
 
     <string name="app_name">DND HP</string>
     <string name="Clear">C</string>
+    <string name="regen">Regen</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="surges">Surges</string>
 
 </resources>
