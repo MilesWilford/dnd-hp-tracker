@@ -210,10 +210,11 @@ public class DNDHPActivity extends Activity {
     	if (value > 0) {
     		operation = PLUS;
         	adjustment.setTextColor(Color.GREEN);
+        	player.heal(value);
     	} else if (value < 0) {
         	adjustment.setTextColor(Color.RED);
+        	player.injure(value);
     	}
-    	player.hpMod(value);
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
     		adjustment.setGravity(Gravity.RIGHT);

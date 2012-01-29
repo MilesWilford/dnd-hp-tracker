@@ -10,12 +10,17 @@ public class Player implements Serializable {
     // The player's various stats and HPs are tracked in this class.
 
 	private int maxHP;
-    private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves;
+    private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves, bloodied;
+    /* 
+     * Note: class uses int division because we round down in D&D.
+     * 3÷2 should equal 1.
+     */
     private ArrayList<Integer> trackChanges = new ArrayList<Integer>();
     
     //default constructor for if we aren't passing a real max hp
     public Player() {
     	maxHP = 999;
+     	bloodied = 499;
     	currentHP = 0;
     	currentHP = 0;
     	currentHS = 0;
@@ -28,6 +33,7 @@ public class Player implements Serializable {
     public Player(int newHP, int newSurges) {
     	currentHP = newHP;
         maxHP = newHP;
+        bloodied = newHP / 2;
         currentSurges = newSurges;
     }
     
@@ -35,19 +41,31 @@ public class Player implements Serializable {
     public Player(int newHP, int newMaxHP, int newSurges) {
     	currentHP = newHP;
     	currentHP = newMaxHP;
+        bloodied = newMaxHP / 2;
         currentSurges = newSurges;
     }
 
-	//modify current HP.  Do not allow current HP to go above max HP
     // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
-
-    public void hpMod(int changeBy) {
-    	if (currentHP + changeBy > maxHP) {
-    		currentHP = maxHP;
+    
+    public void heal(int healBy) {
+    	if (currentHP + healBy > maxHP) { //No going above max.
     		trackChanges.add(maxHP-currentHP);
+    		currentHP = maxHP;
     	} else {
-        	currentHP += changeBy;
-        	trackChanges.add(changeBy);
+        	currentHP += healBy;
+        	trackChanges.add(healBy);
+    	}
+    }
+    
+    public void injure(int injureBy) {
+    	int negBloodied = bloodied * -1;
+    	//injureBy was passed as a negative number.  Treat it using addition for subtraction.
+    	if (currentHP + injureBy <= negBloodied) { //No going below negative bloodied (you're dead)
+    		trackChanges.add(negBloodied - currentHP);
+    		currentHP = negBloodied;
+    	} else {
+    		currentHP += injureBy;
+    		trackChanges.add(injureBy);
     	}
     }
 
@@ -67,13 +85,28 @@ public class Player implements Serializable {
 
     public void setMaxHP(int newMaxHP) {
         maxHP = newMaxHP;
+        bloodied = maxHP / 2; 
+    }
+    	
+    	public void setMaxHP(int newMaxHP, int newBloodied) {
+    		maxHP = newMaxHP;
+    		bloodied = newBloodied;
+    	}
+    	
+    //BLOODIED VALUE
+    public int getBloodied() {
+    	return bloodied;
+    }
+    
+    public void setBloodied(int newBloodied) {
+    	bloodied = newBloodied;
     }
 
+    //SURGES COUNT
     public int getSurges() {
         return currentSurges;
     }
 
-    //SURGES COUNT
     public void setSurges(int newSurges) {
         currentSurges = newSurges;
     }
