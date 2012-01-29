@@ -231,18 +231,18 @@ public class DNDHPActivity extends Activity {
     }
     
     public void DSUpdater(String how) {
-    	if (how == "+") {
+    	if (how.equals("+")) {
     		player.addDeathSave();
-    	} else if (how == "-") {
+    	} else if (how.equals("-")) {
     		player.remDeathSave();
     	}
     	inputDS.setText("Death Saves: " + Integer.toString(player.getDeathSaves()));
     }
     
     public void surgesUpdater(String how) {
-    	if (how == "+") {
+    	if (how.equals("+")) {
     		player.addSurge();
-    	} else if (how == "-") {
+    	} else if (how.equals("-")) {
     		player.remSurge();
     	}
     	inputSurges.setText("Surges: " + Integer.toString(player.getSurges()));
@@ -252,9 +252,9 @@ public class DNDHPActivity extends Activity {
     	String dotOrHot;
     	String valueToUse;
     	//Pick operation and adjust currentOngo number
-    	if (how == "+") {
+    	if (how.equals("+")) {
     		player.addOngo();
-    	} else if (how == "-") {
+    	} else if (how.equals("-")) {
     		player.remOngo();
     	}
     	//It's a regen if it is under 0, otherwise it is ongoing
