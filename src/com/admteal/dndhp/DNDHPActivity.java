@@ -36,7 +36,7 @@ public class DNDHPActivity extends Activity {
 	
 	public TextView currentEntryView, currentHPView;
 	public LinearLayout showWorkLayout;
-	public ScrollView showWorkScroller;
+	//public ScrollView showWorkScroller;
 	
     //Called when the activity is first created.
     @Override
@@ -167,11 +167,12 @@ public class DNDHPActivity extends Activity {
     	inputDS		= (Button) findViewById(R.id.inputDS);
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
-    	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
+    	//showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
     	showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
     	currentHPView	= (TextView) findViewById(R.id.currentHPView); 
     }
     
+    //Refills UI elements after the activity has been killed for some reason, e.g., orientation change
     @Override
     protected void onResume() {
         super.onResume();
@@ -185,6 +186,7 @@ public class DNDHPActivity extends Activity {
 		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 				+ Integer.toString(player.getHS()));
 		
+		//Because of the way they're created, player.changeHistory and player.HPHistory are always the same length
 		for (int i = 0; i < player.getChangeHistory().size(); i++) {
 			showWorkViewMaker(player.getChangeHistory().get(i),player.getHPHistory().get(i));
 		}
@@ -204,12 +206,7 @@ public class DNDHPActivity extends Activity {
     	player = (Player) savedInstanceState.getSerializable("Player");
     }
     
-    public void currentEntryViewUpdater(int updateWith) {
-    	if (currentEntry * 10 > 999) {return;} //Max 3 digit number in currentEntry
-    	currentEntry = (currentEntry * 10) + updateWith;
-    	currentEntryView.setText(Integer.toString(currentEntry));
-    }
-    
+    //Method injures or heals the player based on input, then calls for the view maker to show work
     public void showWorkUpdater(int value) {
     	//First we must pick our operation.
     	if (value > 0) {
@@ -228,6 +225,7 @@ public class DNDHPActivity extends Activity {
     	showWorkViewMaker(value, player.getHP());
     }
     
+    //Method which adds the red or green numbers and new current HP values to showWorkView
     public void showWorkViewMaker(int value, int hpToList) {
     	String operation = BLANK;
     	TextView adjustment = new TextView(this);   
@@ -252,6 +250,7 @@ public class DNDHPActivity extends Activity {
     	
     }
     
+    //Controls adding and removing death saves to player and updating the button's text to reflect changes
     public void DSUpdater(String how) {
     	if (how.equals(PLUS)) {
     		player.addDeathSave();
@@ -262,6 +261,7 @@ public class DNDHPActivity extends Activity {
     			+ Integer.toString(player.getDeathSaves()));
     }
     
+    //Controls adding and removing healing surges to player and updating the button's text to reflect changes
     public void surgesUpdater(String how) {
     	if (how.equals(PLUS)) {
     		player.addSurge();
@@ -272,6 +272,8 @@ public class DNDHPActivity extends Activity {
     			+ Integer.toString(player.getSurges()));
     }
     
+    //Controls adding and removing ongoing damage to the player and updating the button's text to reflect changes
+    //TODO: Is UX here best?  Turning to regen in negative numbers may be confusing.
     public void ongoUpdater(String how) {
     	String dotOrHot, valueToUse;
     	//Pick operation and adjust currentOngo number
@@ -293,6 +295,14 @@ public class DNDHPActivity extends Activity {
     	inputOngo.setText(dotOrHot + valueToUse);
     }
     
+    //Displays the numbers that represent the current entry based on key presses.
+    public void currentEntryViewUpdater(int updateWith) {
+    	if (currentEntry * 10 > 999) {return;} //Max 3 digit number in currentEntry
+    	currentEntry = (currentEntry * 10) + updateWith;
+    	currentEntryView.setText(Integer.toString(currentEntry));
+    }
+    
+    //Zeroes the currentEntry
     public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));
