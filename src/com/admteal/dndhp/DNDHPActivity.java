@@ -10,7 +10,7 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-	//Create the new default palyer
+	//Create the new default player
 	public Player player = new Player();
 	
 	//Some variables for cleanliness's sake
@@ -39,7 +39,7 @@ public class DNDHPActivity extends Activity {
 	public LinearLayout showWorkLayout;
 	public ScrollView showWorkScroller;
 	
-    /** Called when the activity is first created. */
+    //Called when the activity is first created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        

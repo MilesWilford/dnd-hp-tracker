@@ -3,7 +3,7 @@ package com.admteal.dndhp;
 //TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
 public class Player {
 
-    // The players various stats and HPs are tracked in this class.
+    // The player's various stats and HPs are tracked in this class.
 	
 	private int maxHP;
     private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves;
@@ -33,7 +33,7 @@ public class Player {
         currentSurges = newSurges;
     }
 
-   //modify current HP.  Do not allow current HP to go above max HP
+	//modify current HP.  Do not allow current HP to go above max HP
     // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
     public int hpMod(int changeBy) {
     	if (currentHP + changeBy > maxHP) {
@@ -44,6 +44,7 @@ public class Player {
     	return currentHP;
     }
 
+    //HP VALUE
     public int getHP() {
         return currentHP;
     }
@@ -52,6 +53,7 @@ public class Player {
         currentHP = newHP;
     }
 
+    //MAX HP VALUE
     public int getMaxHP() {
         return maxHP;
     }
@@ -108,6 +110,7 @@ public class Player {
     	currentOngo--;
     }
     
+    //DEATH SAVES COUNT
     public void setDeathSaves(int newDeathSaves) {
     	currentDeathSaves = newDeathSaves;
     }
