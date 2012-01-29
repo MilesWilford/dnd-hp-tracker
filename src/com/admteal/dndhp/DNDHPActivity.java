@@ -14,10 +14,10 @@ public class DNDHPActivity extends Activity {
 	public Player player = new Player();
 	
 	//Some variables for cleanliness's sake
-	public final String plus = "+";
-	public final String minus = "-";
-	public final String blank = "";
-	public final String colonSpace = ": ";
+	public final String PLUS = "+";
+	public final String MINUS = "-";
+	public final String BLANK = "";
+	public final String COLON_SPACE = ": ";
 	
 	public int currentEntry;
 	
@@ -95,7 +95,7 @@ public class DNDHPActivity extends Activity {
     	inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				player.setHS(currentEntry);
-				inputHS.setText(getResources().getString(R.string.hs) + colonSpace 
+				inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 						+ Integer.toString(currentEntry));
 				clearEntry();
 				return true;
@@ -106,13 +106,13 @@ public class DNDHPActivity extends Activity {
     	ongoAdd	= (Button) findViewById(R.id.ongoAdd);
     	ongoAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				ongoUpdater(plus);
+				ongoUpdater(PLUS);
 			}
 		});
     	ongoSub	= (Button) findViewById(R.id.ongoSub);
     	ongoSub.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				ongoUpdater(minus);
+				ongoUpdater(MINUS);
 			}
 		});
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
@@ -126,13 +126,13 @@ public class DNDHPActivity extends Activity {
     	surgesAdd	= (Button) findViewById(R.id.surgesAdd);
     	surgesAdd.setOnClickListener (new View.OnClickListener() {			
 			public void onClick(View v) {
-				surgesUpdater(plus);
+				surgesUpdater(PLUS);
 			}
 		});
     	surgesSub	= (Button) findViewById(R.id.surgesSub);
     	surgesSub.setOnClickListener (new View.OnClickListener() {			
 			public void onClick(View v) {
-				surgesUpdater(minus);
+				surgesUpdater(MINUS);
 			}
 		});
     	inputSurges = (Button) findViewById(R.id.inputSurges);
@@ -142,7 +142,7 @@ public class DNDHPActivity extends Activity {
 					return;
 				}
 				showWorkUpdater(player.getHS());
-				surgesUpdater(minus);
+				surgesUpdater(MINUS);
 			}
 		});
 
@@ -150,13 +150,13 @@ public class DNDHPActivity extends Activity {
     	DSAdd		= (Button) findViewById(R.id.DSAdd);
     	DSAdd.setOnClickListener (new View.OnClickListener() {			
 			public void onClick(View v) {
-				DSUpdater(plus);
+				DSUpdater(PLUS);
 			}
 		});
     	DSSub		= (Button) findViewById(R.id.DSSub);
     	DSSub.setOnClickListener (new View.OnClickListener() {			
 			public void onClick(View v) {
-				DSUpdater(minus);
+				DSUpdater(MINUS);
 			}
 		});
     	
@@ -173,12 +173,12 @@ public class DNDHPActivity extends Activity {
         super.onResume();
     	currentEntryView.setText(Integer.toString(currentEntry));
     	currentHPView.setText(Integer.toString(player.getHP()));
-    	inputSurges.setText(getResources().getString(R.string.surges) + colonSpace 
+    	inputSurges.setText(getResources().getString(R.string.surges) + COLON_SPACE 
     			+ Integer.toString(player.getSurges()));
-    	ongoUpdater(blank);
-    	DSUpdater(blank);
-    	surgesUpdater(blank);
-		inputHS.setText(getResources().getString(R.string.hs) + colonSpace 
+    	ongoUpdater(BLANK);
+    	DSUpdater(BLANK);
+    	surgesUpdater(BLANK);
+		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 				+ Integer.toString(player.getHS()));
     }
     
@@ -213,12 +213,12 @@ public class DNDHPActivity extends Activity {
     }
     
     public void showWorkUpdater(int value) {
-    	String operation = blank;
+    	String operation = BLANK;
     	TextView adjustment = new TextView(this);   
     	TextView sum = new TextView(this); 	
     	//First we must pick our operation.
     	if (value > 0) {
-    		operation = plus;
+    		operation = PLUS;
         	adjustment.setTextColor(Color.GREEN);
     	} else if (value < 0) {
         	adjustment.setTextColor(Color.RED);
@@ -241,31 +241,31 @@ public class DNDHPActivity extends Activity {
     }
     
     public void DSUpdater(String how) {
-    	if (how == plus) {
+    	if (how.equals(PLUS)) {
     		player.addDeathSave();
-    	} else if (how == minus) {
+    	} else if (how.equals(MINUS)) {
     		player.remDeathSave();
     	}
-    	inputDS.setText(getResources().getString(R.string.ds) + colonSpace
+    	inputDS.setText(getResources().getString(R.string.ds) + COLON_SPACE
     			+ Integer.toString(player.getDeathSaves()));
     }
     
     public void surgesUpdater(String how) {
-    	if (how == plus) {
+    	if (how.equals(PLUS)) {
     		player.addSurge();
-    	} else if (how == minus) {
+    	} else if (how.equals(MINUS)) {
     		player.remSurge();
     	}
-    	inputSurges.setText(getResources().getString(R.string.surges) + colonSpace 
+    	inputSurges.setText(getResources().getString(R.string.surges) + COLON_SPACE 
     			+ Integer.toString(player.getSurges()));
     }
     
     public void ongoUpdater(String how) {
     	String dotOrHot, valueToUse;
     	//Pick operation and adjust currentOngo number
-    	if (how == plus) {
+    	if (how.equals(PLUS)) {
     		player.addOngo();
-    	} else if (how == minus) {
+    	} else if (how.equals(MINUS)) {
     		player.remOngo();
     	}
     	//It's a regen if it is under 0, otherwise it is ongoing
@@ -277,7 +277,7 @@ public class DNDHPActivity extends Activity {
     		valueToUse = Integer.toString(player.getOngo());
     	}
     	//Change the button text to reflect variable
-    	dotOrHot+= colonSpace; //Add colon space to the end of our word
+    	dotOrHot+= COLON_SPACE; //Add colon space to the end of our word
     	inputOngo.setText(dotOrHot + valueToUse);
     }
     
