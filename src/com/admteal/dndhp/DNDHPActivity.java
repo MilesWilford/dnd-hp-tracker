@@ -180,6 +180,10 @@ public class DNDHPActivity extends Activity {
     	surgesUpdater(BLANK);
 		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 				+ Integer.toString(player.getHS()));
+		
+		for (int value: player.getChangeHistory()) {
+			showWorkViewMaker(value);
+		}
     }
     
     @Override
@@ -203,17 +207,27 @@ public class DNDHPActivity extends Activity {
     }
     
     public void showWorkUpdater(int value) {
+    	//First we must pick our operation.
+    	if (value > 0) {
+        	player.heal(value);
+    	} else if (value < 0) {
+        	player.injure(-value);
+    	}
+    	showWorkViewMaker(value);
+    	clearEntry();
+    	
+    	currentHPView.setText(Integer.toString(player.getHP()));
+    }
+    
+    public void showWorkViewMaker(int value) {
     	String operation = BLANK;
     	TextView adjustment = new TextView(this);   
     	TextView sum = new TextView(this); 	
-    	//First we must pick our operation.
     	if (value > 0) {
-    		operation = PLUS;
         	adjustment.setTextColor(Color.GREEN);
-        	player.heal(value);
     	} else if (value < 0) {
-        	adjustment.setTextColor(Color.RED);
-        	player.injure(-value);
+        	adjustment.setTextColor(Color.RED);   
+        	operation = BLANK; //if we do not clear operation at this point, an extra - will appear
     	}
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
@@ -226,9 +240,6 @@ public class DNDHPActivity extends Activity {
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
-    	clearEntry();
-    	
-    	currentHPView.setText(Integer.toString(player.getHP()));
     }
     
     public void DSUpdater(String how) {

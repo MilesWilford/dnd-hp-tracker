@@ -15,7 +15,7 @@ public class Player implements Serializable {
      * Note: class uses int division because we round down in D&D.
      * 3÷2 should equal 1.
      */
-    private ArrayList<Integer> trackChanges = new ArrayList<Integer>();
+    private ArrayList<Integer> changeHistory = new ArrayList<Integer>();
     
     //default constructor for if we aren't passing a real max hp
     public Player() {
@@ -49,11 +49,11 @@ public class Player implements Serializable {
     
     public void heal(int healBy) {
     	if (currentHP + healBy > maxHP) { //No going above max.
-    		trackChanges.add(maxHP-currentHP);
+    		changeHistory.add(maxHP-currentHP);
     		currentHP = maxHP;
     	} else {
         	currentHP += healBy;
-        	trackChanges.add(healBy);
+        	changeHistory.add(healBy);
     	}
     }
     
@@ -61,11 +61,11 @@ public class Player implements Serializable {
     	int negBloodied = bloodied * -1;
     	//injureBy was passed as a negative number.  Treat it using addition for subtraction.
     	if (currentHP - injureBy <= negBloodied) { //No going below negative bloodied (you're dead)
-    		trackChanges.add(negBloodied - currentHP);
+    		changeHistory.add(negBloodied - currentHP);
     		currentHP = negBloodied;
     	} else {
     		currentHP -= injureBy;
-    		trackChanges.add(injureBy);
+    		changeHistory.add(injureBy);
     	}
     }
 
@@ -167,7 +167,7 @@ public class Player implements Serializable {
     	currentDeathSaves--;
     }
     
-    public ArrayList<Integer> getTrackChanges() {
-    	return trackChanges;
+    public ArrayList<Integer> getChangeHistory() {
+    	return changeHistory;
     }
 }
