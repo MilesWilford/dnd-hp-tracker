@@ -60,11 +60,11 @@ public class Player implements Serializable {
     public void injure(int injureBy) {
     	int negBloodied = bloodied * -1;
     	//injureBy was passed as a negative number.  Treat it using addition for subtraction.
-    	if (currentHP + injureBy <= negBloodied) { //No going below negative bloodied (you're dead)
+    	if (currentHP - injureBy <= negBloodied) { //No going below negative bloodied (you're dead)
     		trackChanges.add(negBloodied - currentHP);
     		currentHP = negBloodied;
     	} else {
-    		currentHP += injureBy;
+    		currentHP -= injureBy;
     		trackChanges.add(injureBy);
     	}
     }
@@ -165,5 +165,9 @@ public class Player implements Serializable {
     
     public void remDeathSave() {
     	currentDeathSaves--;
+    }
+    
+    public ArrayList<Integer> getTrackChanges() {
+    	return trackChanges;
     }
 }

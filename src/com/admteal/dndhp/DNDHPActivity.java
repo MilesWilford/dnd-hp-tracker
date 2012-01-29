@@ -68,7 +68,7 @@ public class DNDHPActivity extends Activity {
     	inputSub	= (Button) findViewById(R.id.inputSub);
     	inputSub.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater(currentEntry * -1);
+				showWorkUpdater(-currentEntry);
 			}
 		});
     	inputClear	= (Button) findViewById(R.id.inputClear);
@@ -118,7 +118,7 @@ public class DNDHPActivity extends Activity {
     	inputOngo	= (Button) findViewById(R.id.inputOngo);
     	inputOngo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater(player.getOngo() * -1); //current ongo stores the number backwards, so it is inverted first
+				showWorkUpdater(-player.getOngo()); //current ongo stores the number backwards, so it is inverted first
 			}
 		});
 
@@ -213,7 +213,7 @@ public class DNDHPActivity extends Activity {
         	player.heal(value);
     	} else if (value < 0) {
         	adjustment.setTextColor(Color.RED);
-        	player.injure(value);
+        	player.injure(-value);
     	}
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
