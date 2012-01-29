@@ -217,11 +217,11 @@ public class DNDHPActivity extends Activity {
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
     		adjustment.setGravity(Gravity.RIGHT);
-    		adjustment.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f); //16 px converted to 16 dip
+    		adjustment.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f); //14 px converted to 16 dip
     	//Second line shows new total number
     	sum.setText(Integer.toString(player.getHP()));
     		sum.setGravity(Gravity.LEFT);
-    		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);  //16 px converted to 16 dip
+    		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);  //14 px converted to 16 dip
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
