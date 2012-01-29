@@ -10,8 +10,7 @@ import android.widget.*;
 import android.os.Bundle;
 		
 public class DNDHPActivity extends Activity {
-	//Create the new default player
-	public Player player = new Player();
+	public Player player;
 	
 	//Some variables for cleanliness's sake
 	public final String PLUS = "+";
@@ -44,6 +43,11 @@ public class DNDHPActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.main);
+        
+    	//Create the new default player
+    	if (savedInstanceState == null) {
+    		player = new Player();
+    	}
     	
         //Set the calculator number buttons and their onClickListeners.  Creates the 10 buttons dynamically
         for (int i = 0; i < 10; i++) {
@@ -181,7 +185,9 @@ public class DNDHPActivity extends Activity {
 		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 				+ Integer.toString(player.getHS()));
 		
+		
 		for (int value: player.getChangeHistory()) {
+			//TODO: WHY CAN'T I USE showWorkUpdater here without causing FCs?
 			showWorkViewMaker(value);
 		}
     }
