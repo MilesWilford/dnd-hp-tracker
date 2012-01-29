@@ -3,10 +3,10 @@ package com.admteal.dndhp;
 //TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
 public class Player {
 
-    // The players various stats and HPs are tracked in this class.
+    // The player's various stats and HPs are tracked in this class.
 	
 	private int maxHP;
-    private int currentHP, currentHS, currentOngo, currentEntry, currentSurges, currentDeathSaves;
+    private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves;
     
     //default constructor for if we aren't passing a real max hp
     public Player() {
@@ -15,26 +15,25 @@ public class Player {
     	currentHP = 0;
     	currentHS = 0;
      	currentOngo = 0;
-     	currentEntry = 0;
      	currentSurges = 0;
      	currentDeathSaves = 3;
     }
     
     //create a new player at full HP
     public Player(int newHP, int newSurges) {
-    	setHP(newHP);
-        setMaxHP(newHP);
-        setSurges(newSurges);
+    	currentHP = newHP;
+        maxHP = newHP;
+        currentSurges = newSurges;
     }
     
     //create a new player at less than full HP
     public Player(int newHP, int newMaxHP, int newSurges) {
-    	setHP(newHP);
-    	setMaxHP(newMaxHP);
-        setSurges(newSurges);
+    	currentHP = newHP;
+    	currentHP = newMaxHP;
+        currentSurges = newSurges;
     }
 
-   //modify current HP.  Do not allow current HP to go above max HP
+	//modify current HP.  Do not allow current HP to go above max HP
     // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
     public int hpMod(int changeBy) {
     	if (currentHP + changeBy > maxHP) {
@@ -45,6 +44,7 @@ public class Player {
     	return currentHP;
     }
 
+    //HP VALUE
     public int getHP() {
         return currentHP;
     }
@@ -53,6 +53,7 @@ public class Player {
         currentHP = newHP;
     }
 
+    //MAX HP VALUE
     public int getMaxHP() {
         return maxHP;
     }
@@ -65,6 +66,7 @@ public class Player {
         return currentSurges;
     }
 
+    //SURGES COUNT
     public void setSurges(int newSurges) {
         currentSurges = newSurges;
     }
@@ -77,6 +79,7 @@ public class Player {
     	currentSurges--;
     }
     
+    //SURGE VALUE
     public void setHS(int newHS) {
     	currentHS = newHS;
     }
@@ -85,6 +88,7 @@ public class Player {
     	return currentHS;
     }
     
+    //ONGOING VALUE
     public void setOngo(int newOngo) {
     	currentOngo = newOngo;
     }
@@ -92,10 +96,12 @@ public class Player {
     public int getOngo() {
     	return currentOngo;
     }
-    
-    public int getRegen() { //regen is the opposite of ongoing damage
-    	return currentOngo * -1;
-    }
+    	
+    	//regen is the opposite of ongoing damage
+	    public int getRegen() { 
+	    	return currentOngo * -1;
+	    }
+	    
     public void addOngo() {
     	currentOngo++;
     }
@@ -104,6 +110,7 @@ public class Player {
     	currentOngo--;
     }
     
+    //DEATH SAVES COUNT
     public void setDeathSaves(int newDeathSaves) {
     	currentDeathSaves = newDeathSaves;
     }
