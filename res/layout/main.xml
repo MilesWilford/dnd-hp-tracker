@@ -24,7 +24,7 @@
             <LinearLayout 
                 android:id="@+id/showWorkLayout"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" 
+                android:layout_height="wrap_content" 
                 android:orientation="vertical"
         		android:layout_gravity="bottom" />
             
@@ -54,23 +54,19 @@
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
             </TableRow>
             
@@ -79,23 +75,19 @@
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
             </TableRow>
             
@@ -104,23 +96,19 @@
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
                 <Button
                     android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:text=" " />
+                    android:layout_width="fill_parent" />
                 
             </TableRow>
             
@@ -143,19 +131,18 @@
 	                android:id="@+id/DSSub"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="-" />
+	                android:text="@string/minus" />
 	            
 	            <Button
 	                android:id="@+id/inputDS"
 	                android:layout_width="wrap_content"
-	                android:layout_height="48dp"
-	                android:text="Death Saves: 3" />
+	                android:layout_height="48dp" />
 	            
 	            <Button
 	                android:id="@+id/DSAdd"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="+" />
+	                android:text="@string/plus" />
         
 	    	</LinearLayout>
 	    	
@@ -169,19 +156,18 @@
 	                android:id="@+id/surgesSub"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="-" />
+	                android:text="@string/minus" />
 	            
 	            <Button
 	                android:id="@+id/inputSurges"
 	                android:layout_width="wrap_content"
-	                android:layout_height="48dp"
-	                android:text="Surges: 0" />
+	                android:layout_height="48dp" />
 	            
 	            <Button
 	                android:id="@+id/surgesAdd"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="+" />
+	                android:text="@string/plus" />
         
 	    	</LinearLayout>
 	    	
@@ -195,19 +181,18 @@
 	                android:id="@+id/ongoSub"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="-" />
+	                android:text="@string/minus" />
 	            
 	            <Button
 	                android:id="@+id/inputOngo"
 	                android:layout_width="wrap_content"
-	                android:layout_height="48dp"
-	                android:text="Ongoing: 0" />
+	                android:layout_height="48dp" />
 	            
 	            <Button
 	                android:id="@+id/ongoAdd"
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:text="+" />
+	                android:text="@string/plus" />
         
 	    	</LinearLayout>
 	            
@@ -351,14 +336,14 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_weight="1"
-	                android:text="+" />
+	                android:text="@string/plus" />
 	            
 	            <Button
 	                android:id="@+id/inputSub"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_weight="1"
-	                android:text="-" />
+	                android:text="@string/minus" />
 	            
 	        </LinearLayout>
             
