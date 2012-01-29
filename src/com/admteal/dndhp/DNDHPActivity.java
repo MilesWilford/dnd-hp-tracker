@@ -13,7 +13,7 @@ import android.os.Bundle;
 public class DNDHPActivity extends Activity {
     public int currentHP, currentHS, currentOngo, currentEntry, showWork, currentSurges = 0;
 	public int currentDeathSaves = 3;
-	
+
 	//Create the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
 
