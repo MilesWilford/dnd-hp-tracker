@@ -35,13 +35,17 @@ public class Player {
 
 	//modify current HP.  Do not allow current HP to go above max HP
     // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
-    public int hpMod(int changeBy) {
+
+    public void hpMod(int changeBy) {
     	if (currentHP + changeBy > maxHP) {
     		currentHP = maxHP;
     	} else {
         	currentHP += changeBy;
     	}
-    	return currentHP;
+    }
+    
+    public void injure(int changeBy) {
+
     }
 
     //HP VALUE

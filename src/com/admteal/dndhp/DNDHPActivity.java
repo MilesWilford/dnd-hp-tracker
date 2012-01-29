@@ -45,7 +45,7 @@ public class DNDHPActivity extends Activity {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.main);
     	
-        //Set the calculator number buttons and their onClickListeners
+        //Set the calculator number buttons and their onClickListeners.  Creates the 10 buttons dynamically
         for (int i = 0; i < 10; i++) {
         	String buttonID = "input" + Integer.toString(i);
         	int resourceID = getResources().getIdentifier(buttonID, "id", "com.admteal.dndhp");
@@ -207,8 +207,8 @@ public class DNDHPActivity extends Activity {
     }
     
     public void currentEntryViewUpdater(int updateWith) {
-    	if (currentEntry * 10 > 999) {return;} //Max 3 digit number
-    	currentEntry = currentEntry * 10 + updateWith;
+    	if (currentEntry * 10 > 999) {return;} //Max 3 digit number in currentEntry
+    	currentEntry = (currentEntry * 10) + updateWith;
     	currentEntryView.setText(Integer.toString(currentEntry));
     }
     
@@ -226,12 +226,12 @@ public class DNDHPActivity extends Activity {
     	player.hpMod(value);
     	//First line shows how much was added or subtracted as +n or -n
     	adjustment.setText(operation + Integer.toString(value));
-    	adjustment.setGravity(Gravity.RIGHT);
-    	adjustment.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f); //16 px converted to 16 dip
+    		adjustment.setGravity(Gravity.RIGHT);
+    		adjustment.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f); //16 px converted to 16 dip
     	//Second line shows new total number
     	sum.setText(Integer.toString(player.getHP()));
-    	sum.setGravity(Gravity.LEFT);
-    	sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);  //16 px converted to 16 dip
+    		sum.setGravity(Gravity.LEFT);
+    		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);  //16 px converted to 16 dip
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
