@@ -185,10 +185,8 @@ public class DNDHPActivity extends Activity {
 		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE 
 				+ Integer.toString(player.getHS()));
 		
-		
-		for (int value: player.getChangeHistory()) {
-			//TODO: WHY CAN'T I USE showWorkUpdater here without causing FCs?
-			showWorkViewMaker(value);
+		for (int i = 0; i < player.getChangeHistory().size(); i++) {
+			showWorkViewMaker(player.getChangeHistory().get(i),player.getHPHistory().get(i));
 		}
     }
     
@@ -225,7 +223,12 @@ public class DNDHPActivity extends Activity {
     	currentHPView.setText(Integer.toString(player.getHP()));
     }
     
+    //Use the player's HP if an hpToList was not specified.  Generally, this will be the case
     public void showWorkViewMaker(int value) {
+    	showWorkViewMaker(value, player.getHP());
+    }
+    
+    public void showWorkViewMaker(int value, int hpToList) {
     	String operation = BLANK;
     	TextView adjustment = new TextView(this);   
     	TextView sum = new TextView(this); 	
@@ -240,12 +243,13 @@ public class DNDHPActivity extends Activity {
     		adjustment.setGravity(Gravity.RIGHT);
     		adjustment.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f); //14 px converted to 16 dip
     	//Second line shows new total number
-    	sum.setText(Integer.toString(player.getHP()));
+    	sum.setText(Integer.toString(hpToList));
     		sum.setGravity(Gravity.LEFT);
     		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);  //14 px converted to 16 dip
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
+    	
     }
     
     public void DSUpdater(String how) {

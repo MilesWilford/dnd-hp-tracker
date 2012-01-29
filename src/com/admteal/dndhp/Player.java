@@ -16,6 +16,7 @@ public class Player implements Serializable {
      * 3÷2 should equal 1.
      */
     private ArrayList<Integer> changeHistory = new ArrayList<Integer>();
+    private ArrayList<Integer> HPHistory = new ArrayList<Integer>();
     
     //default constructor for if we aren't passing a real max hp
     public Player() {
@@ -55,6 +56,7 @@ public class Player implements Serializable {
         	currentHP += healBy;
         	changeHistory.add(healBy);
     	}
+    	HPHistory.add(currentHP);
     }
     
     public void injure(int injureBy) {
@@ -65,8 +67,9 @@ public class Player implements Serializable {
     		currentHP = negBloodied;
     	} else {
     		currentHP -= injureBy;
-    		changeHistory.add(injureBy);
+    		changeHistory.add(-injureBy); //We store injuries as a negative number in the history.
     	}
+    	HPHistory.add(currentHP);
     }
 
     //HP VALUE
@@ -169,5 +172,9 @@ public class Player implements Serializable {
     
     public ArrayList<Integer> getChangeHistory() {
     	return changeHistory;
+    }
+    
+    public ArrayList<Integer> getHPHistory() {
+    	return HPHistory;
     }
 }
