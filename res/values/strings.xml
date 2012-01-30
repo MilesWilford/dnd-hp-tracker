@@ -11,6 +11,8 @@
     <string name="minus">minus</string>
     <string name="plus">plus</string>
     <string name="blank"></string>
+    <string name="colonspace">: </string>
+    <string name="input">input</string>
     <!-- Status effect toggles -->
     <string name="Blinded">BLD</string>
     <string name="Dazed">DAZ</string>

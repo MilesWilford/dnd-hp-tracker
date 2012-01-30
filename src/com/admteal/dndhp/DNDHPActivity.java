@@ -13,10 +13,7 @@ public class DNDHPActivity extends Activity {
 	public Player player;
 	
 	//Some variables for cleanliness's sake
-	public final String PLUS = "+";
-	public final String MINUS = "-";
-	public final String BLANK = "";
-	public final String COLON_SPACE = ": ";
+	public static String PLUS, MINUS, BLANK, COLON_SPACE, INPUT;
 	
 	public int currentEntry;
 	
@@ -41,6 +38,12 @@ public class DNDHPActivity extends Activity {
     //Called when the activity is first created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	PLUS = getString(R.string.plus);
+    	MINUS = getString(R.string.minus);
+    	BLANK = getString(R.string.blank);
+    	COLON_SPACE = getString(R.string.colonspace);
+    	INPUT = getString(R.string.input);
+    	
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.main);
         
@@ -51,7 +54,7 @@ public class DNDHPActivity extends Activity {
     	
         //Set the calculator number buttons and their onClickListeners.  Creates the 10 buttons dynamically
         for (int i = 0; i < 10; i++) {
-        	String buttonID = "input" + Integer.toString(i);
+        	String buttonID = INPUT + Integer.toString(i);
         	int resourceID = getResources().getIdentifier(buttonID, "id", "com.admteal.dndhp");
             Button b = (Button) findViewById(resourceID);
             final int j = i; //allows passing i into a new View.OnClickListener's onClick

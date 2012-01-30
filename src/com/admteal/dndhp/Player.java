@@ -189,13 +189,16 @@ public class Player implements Serializable {
 	public void unblind() {
 		blinded = false;
 	}
+	
 	public boolean isDazed() {return dazed;}
 	public void daze() {
 		dazed = true;
 	}
+	
 	public void undaze() {
 		dazed = false;
 	}
+	
 	public boolean isDeafened() {return deafened;}
 	public void deafen() {
 		deafened = true;
@@ -203,6 +206,7 @@ public class Player implements Serializable {
 	public void undeafen() {
 		deafened = false;
 	}
+	
 	public boolean isDominated() {return dominated;}
 	public void dominate() {
 		dominated = true;
@@ -210,6 +214,7 @@ public class Player implements Serializable {
 	public void undominate() {
 		dominated = false;
 	}
+	
 	public boolean isDying() {return dying;}
 	public void kill() {
 		dying = true;
@@ -217,6 +222,7 @@ public class Player implements Serializable {
 	public void unkill() {
 		dying = false;
 	}
+	
 	public boolean isGrabbed() {return grabbed;}
 	public void grab() {
 		grabbed = true;
@@ -224,6 +230,7 @@ public class Player implements Serializable {
 	public void ungrab() {
 		grabbed = false;
 	}
+	
 	public boolean isHelpless() {return helpless;}
 	public void incapacitate() {
 		helpless = true;
@@ -231,6 +238,7 @@ public class Player implements Serializable {
 	public void unincapacitate() {
 		helpless = false;
 	}
+	
 	public boolean isImmobile() {return immobile;}
 	public void immobilize() {
 		immobile = true;
@@ -238,6 +246,7 @@ public class Player implements Serializable {
 	public void unimmobilize() {
 		immobile = false;
 	}
+	
 	public boolean isMarked() {return marked;}
 	public void mark() {
 		marked = true;
@@ -245,6 +254,7 @@ public class Player implements Serializable {
 	public void unmark() {
 		marked = false;
 	}
+	
 	public boolean isPetrified() {return petrified;}
 	public void petrify() {
 		petrified = true;
@@ -252,6 +262,7 @@ public class Player implements Serializable {
 	public void unpetrify() {
 		petrified = false;
 	}
+	
 	public boolean isProne() {return prone;}
 	public void knockProne() {
 		prone = true;
@@ -259,6 +270,7 @@ public class Player implements Serializable {
 	public void getUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockProne SOUNDS STUPID
 		prone = false;
 	}
+	
 	public boolean isRestrained() {return restrained;}
 	public void restrain() {
 		restrained = true;
@@ -266,6 +278,7 @@ public class Player implements Serializable {
 	public void unrestrain() {
 		restrained = false;
 	}
+	
 	public boolean isStunned() {return stunned;}
 	public void stun() {
 		stunned = true;
@@ -273,6 +286,7 @@ public class Player implements Serializable {
 	public void unstun() {
 		stunned = false;
 	}
+	
 	public boolean isUnconscious() {return unconscious;}
 	public void knockOut() {
 		unconscious = true;
@@ -280,6 +294,7 @@ public class Player implements Serializable {
 	public void wakeUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockOut SOUNDS STUPID
 		unconscious = false;
 	}
+	
 	public boolean isWeakened() {return weakened;}
 	public void weaken() {
 		weakened = true;
