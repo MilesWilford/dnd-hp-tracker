@@ -247,6 +247,13 @@ public class DNDHPActivity extends Activity {
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
+    	showWorkScroller.post(new Runnable() {
+    		public void run() {
+    			//I tried a .fullScroll(ScrollView.FOCUS_DOWN), but this failed to scroll ALL the way
+    			//This solution provides an alternative.
+    			showWorkScroller.scrollTo(showWorkLayout.getMeasuredWidth(),showWorkLayout.getMeasuredHeight());
+    		}
+    	});
     }
     
     //Controls adding and removing death saves to player and updating the button's text to reflect changes
