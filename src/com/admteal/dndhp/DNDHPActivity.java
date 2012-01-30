@@ -36,7 +36,7 @@ public class DNDHPActivity extends Activity {
 	
 	public TextView currentEntryView, currentHPView;
 	public LinearLayout showWorkLayout;
-	//public ScrollView showWorkScroller;
+	public ScrollView showWorkScroller;
 	
     //Called when the activity is first created.
     @Override
@@ -167,7 +167,7 @@ public class DNDHPActivity extends Activity {
     	inputDS		= (Button) findViewById(R.id.inputDS);
     	
     	currentEntryView= (TextView) findViewById(R.id.currentEntryView);
-    	//showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
+    	showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
     	showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
     	currentHPView	= (TextView) findViewById(R.id.currentHPView); 
     }
@@ -247,7 +247,6 @@ public class DNDHPActivity extends Activity {
     	//Now commit those lines to the view
     	showWorkLayout.addView(adjustment);
     	showWorkLayout.addView(sum);
-    	
     }
     
     //Controls adding and removing death saves to player and updating the button's text to reflect changes
