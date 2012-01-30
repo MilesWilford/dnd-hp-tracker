@@ -4,7 +4,9 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
-    <LinearLayout
+    <!-- Left Main Column -->
+
+    <RelativeLayout
         android:layout_width="64dp"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
@@ -13,32 +15,37 @@
             android:id="@+id/currentHPView"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center" />
 
         <ScrollView
             android:id="@+id/showWorkScroller"
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_margin="0dip"
-            android:layout_weight="1"
-            android:fillViewport="true"
-            android:padding="0dip" >
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/currentEntryView"
+            android:layout_below="@+id/currentHPView"
+            android:layout_centerHorizontal="true"
+            android:fillViewport="true" >
 
             <LinearLayout
                 android:id="@+id/showWorkLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:scrollbars="vertical"
-        		android:layout_gravity="bottom" />
+                android:scrollbars="vertical" />
         </ScrollView>
 
         <TextView
             android:id="@+id/currentEntryView"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center" />
-    </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Right Main Column -->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -46,10 +53,11 @@
         android:baselineAligned="false"
         android:orientation="vertical" >
 
+        <!-- Top Right Toggles -->
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
             android:stretchColumns="*" >
 
             <TableRow android:layout_weight="1" >
@@ -110,87 +118,97 @@
             </TableRow>
         </TableLayout>
 
-        <LinearLayout
+        <!-- Center Right Tracker Buttons -->
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <!-- Death Saves -->
 
-                <Button
-                    android:id="@+id/DSSub"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/minus" />
+            <Button
+                android:id="@+id/DSSub"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/minus" />
 
-                <Button
-                    android:id="@+id/inputDS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp" />
+            <Button
+                android:id="@+id/inputDS"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/DSAdd"
+                android:layout_toRightOf="@+id/DSSub" />
 
-                <Button
-                    android:id="@+id/DSAdd"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/plus" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/DSAdd"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/plus" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <!-- Healing Surges -->
 
-                <Button
-                    android:id="@+id/surgesSub"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/minus" />
+            <Button
+                android:id="@+id/surgesSub"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/DSSub"
+                android:text="@string/minus" />
 
-                <Button
-                    android:id="@+id/inputSurges"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp" />
+            <Button
+                android:id="@+id/inputSurges"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@+id/inputDS"
+                android:layout_toLeftOf="@+id/surgesAdd"
+                android:layout_toRightOf="@+id/surgesSub" />
 
-                <Button
-                    android:id="@+id/surgesAdd"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/plus" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/surgesAdd"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/DSAdd"
+                android:text="@string/plus" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:orientation="horizontal" >
+            <!-- Ongoing/Regeneration -->
 
-                <Button
-                    android:id="@+id/ongoSub"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/minus" />
+            <Button
+                android:id="@+id/ongoSub"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/surgesSub"
+                android:text="@string/minus" />
 
-                <Button
-                    android:id="@+id/inputOngo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp" />
+            <Button
+                android:id="@+id/inputOngo"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+				android:layout_below="@+id/inputSurges"
+                android:layout_toLeftOf="@+id/ongoAdd"
+                android:layout_toRightOf="@+id/ongoSub" />
 
-                <Button
-                    android:id="@+id/ongoAdd"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="@string/plus" />
-            </LinearLayout>
-        </LinearLayout>
+            <Button
+                android:id="@+id/ongoAdd"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+				android:layout_below="@+id/surgesAdd"
+                android:text="@string/plus" />
+        </RelativeLayout>
+
+        <!-- Calculator Buttons -->
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dip"
             android:layout_weight="2"
             android:baselineAligned="false"
             android:gravity="center_horizontal"
