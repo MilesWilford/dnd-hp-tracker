@@ -7,6 +7,7 @@
     <!-- Left Main Column -->
 
     <RelativeLayout
+        android:id="@+id/displaysLayout"
         android:layout_width="64dp"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
@@ -21,7 +22,7 @@
 
         <ScrollView
             android:id="@+id/showWorkScroller"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/currentEntryView"
             android:layout_below="@+id/currentHPView"
@@ -30,7 +31,7 @@
 
             <LinearLayout
                 android:id="@+id/showWorkLayout"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:scrollbars="vertical" />
@@ -48,6 +49,7 @@
     <!-- Right Main Column -->
 
     <LinearLayout
+        android:id="@+id/rightMainColumn"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:baselineAligned="false"
@@ -56,6 +58,7 @@
         <!-- Top Right Toggles -->
 
         <TableLayout
+            android:id="@+id/togglesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*" >
@@ -121,6 +124,7 @@
         <!-- Center Right Tracker Buttons -->
 
         <RelativeLayout
+            android:id="@+id/trackersLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -207,6 +211,7 @@
         <!-- Calculator Buttons -->
 
         <LinearLayout
+            android:id="calculatorLayout"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="2"
@@ -215,6 +220,7 @@
             android:orientation="horizontal" >
 
             <LinearLayout
+                android:id="calculatorLeftSideLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -226,8 +232,9 @@
                     android:layout_height="fill_parent"
                     android:text="@string/Clear" />
             </LinearLayout>
-
+            
             <TableLayout
+                android:id="calculatorNumbersLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="3" >
@@ -324,6 +331,7 @@
             </TableLayout>
 
             <LinearLayout
+                android:id="calculatorRightSideLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
