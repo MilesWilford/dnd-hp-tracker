@@ -6,7 +6,11 @@ import java.util.ArrayList;
 //TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
 public class Player implements Serializable {
 	private static final long serialVersionUID = -736811401990731225L; //generated
-
+	
+	private boolean blinded, dazed, deafened, dominated, dying, grabbed, 
+		helpless, immobile, marked, petrified, prone, restrained, 
+		stunned, unconscious, weakened = false;
+		
     // The player's various stats and HPs are tracked in this class.
 
 	private int maxHP;
@@ -56,6 +60,8 @@ public class Player implements Serializable {
         	currentHP += healBy;
         	changeHistory.add(healBy);
     	}
+    	dying = false;
+    	unconscious = false;
     	HPHistory.add(currentHP);
     }
     
@@ -111,7 +117,9 @@ public class Player implements Serializable {
     }
 
     public void setSurges(int newSurges) {
-        currentSurges = newSurges;
+    	if (newSurges >= 0) {
+            currentSurges = newSurges;
+    	}
     }
     
     public void addSurge() {
@@ -119,6 +127,9 @@ public class Player implements Serializable {
     }
     
     public void remSurge() {
+    	if (currentSurges == 0) {
+    		return;
+    	}
     	currentSurges--;
     }
     
@@ -170,6 +181,114 @@ public class Player implements Serializable {
     	currentDeathSaves--;
     }
     
+    //STATUS EFFECTS    
+	public boolean isBlinded() {return blinded;}
+	public void blind() {
+		blinded = true;
+	}
+	public void unblind() {
+		blinded = false;
+	}
+	public boolean isDazed() {return dazed;}
+	public void daze() {
+		dazed = true;
+	}
+	public void undaze() {
+		dazed = false;
+	}
+	public boolean isDeafened() {return deafened;}
+	public void deafen() {
+		deafened = true;
+	}
+	public void undeafen() {
+		deafened = false;
+	}
+	public boolean isDominated() {return dominated;}
+	public void dominate() {
+		dominated = true;
+	}
+	public void undominate() {
+		dominated = false;
+	}
+	public boolean isDying() {return dying;}
+	public void kill() {
+		dying = true;
+	}
+	public void unkill() {
+		dying = false;
+	}
+	public boolean isGrabbed() {return grabbed;}
+	public void grab() {
+		grabbed = true;
+	}
+	public void ungrab() {
+		grabbed = false;
+	}
+	public boolean isHelpless() {return helpless;}
+	public void incapacitate() {
+		helpless = true;
+	}
+	public void unincapacitate() {
+		helpless = false;
+	}
+	public boolean isImmobile() {return immobile;}
+	public void immobilize() {
+		immobile = true;
+	}
+	public void unimmobilize() {
+		immobile = false;
+	}
+	public boolean isMarked() {return marked;}
+	public void mark() {
+		marked = true;
+	}
+	public void unmark() {
+		marked = false;
+	}
+	public boolean isPetrified() {return petrified;}
+	public void petrify() {
+		petrified = true;
+	}
+	public void unpetrify() {
+		petrified = false;
+	}
+	public boolean isProne() {return prone;}
+	public void knockProne() {
+		prone = true;
+	}
+	public void getUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockProne SOUNDS STUPID
+		prone = false;
+	}
+	public boolean isRestrained() {return restrained;}
+	public void restrain() {
+		restrained = true;
+	}
+	public void unrestrain() {
+		restrained = false;
+	}
+	public boolean isStunned() {return stunned;}
+	public void stun() {
+		stunned = true;
+	}
+	public void unstun() {
+		stunned = false;
+	}
+	public boolean isUnconscious() {return unconscious;}
+	public void knockOut() {
+		unconscious = true;
+	}
+	public void wakeUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockOut SOUNDS STUPID
+		unconscious = false;
+	}
+	public boolean isWeakened() {return weakened;}
+	public void weaken() {
+		weakened = true;
+	}
+	public void unweaken() {
+		weakened = false;
+	}
+    
+	//History trackers
     public ArrayList<Integer> getChangeHistory() {
     	return changeHistory;
     }

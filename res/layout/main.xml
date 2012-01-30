@@ -61,59 +61,71 @@
 
             <TableRow android:layout_weight="1" >
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleBlinded" />
 
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/toggleDazed" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleDeafened" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleDominated" />
             </TableRow>
 
             <TableRow android:layout_weight="1" >
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleGrabbed" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleHelpless" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleMarked" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/togglePetrified" />
             </TableRow>
 
             <TableRow android:layout_weight="1" >
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleProne" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleRestrained" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleStunned" />
 
-                <Button
+                <ToggleButton
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_height="fill_parent"
+                    android:id="@+id/toggleWeakened" />
             </TableRow>
         </TableLayout>
 
@@ -131,7 +143,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/minus" />
+                android:text="-" />
 
             <Button
                 android:id="@+id/inputDS"
@@ -147,7 +159,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/plus" />
+                android:text="+" />
 
             <!-- Healing Surges -->
             <Button
@@ -156,7 +168,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/DSSub"
-                android:text="@string/minus" />
+                android:text="-" />
 
             <Button
                 android:id="@+id/inputSurges"
@@ -172,7 +184,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/DSAdd"
-                android:text="@string/plus" />
+                android:text="+" />
 
             <!-- Ongoing/Regeneration -->
             <Button
@@ -181,7 +193,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/surgesSub"
-                android:text="@string/minus" />
+                android:text="-" />
 
             <Button
                 android:id="@+id/inputOngo"
@@ -197,7 +209,7 @@
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
 				android:layout_below="@+id/surgesAdd"
-                android:text="@string/plus" />
+                android:text="+" />
         </RelativeLayout>
 
         <!-- Calculator Buttons -->
@@ -333,14 +345,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/plus" />
+                    android:text="+" />
 
                 <Button
                     android:id="@+id/inputSub"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/minus" />
+                    android:text="-" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

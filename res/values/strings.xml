@@ -8,7 +8,25 @@
     <string name="surges">Surges</string>
     <string name="ds">Death Saves</string>
     <string name="hs">HS</string>
-    <string name="minus">-</string>
-    <string name="plus">+</string>
+    <string name="minus">minus</string>
+    <string name="plus">plus</string>
+    <string name="blank"></string>
+    <!-- Status effect toggles -->
+    <string name="Blinded">BLD</string>
+    <string name="Dazed">DAZ</string>
+    <string name="Deafened">DEF</string>
+    <string name="Dominated">DOM</string>
+    	<string name="Dying">DYI</string>
+    <string name="Grabbed">GRB</string>
+    	<string name="Helpless">HLP</string>
+    <string name="Immobile">IMM</string>
+    <string name="Marked">MRK</string>
+    <string name="Petrified">PET</string>
+    <string name="Prone">PRN</string>
+    <string name="Restrained">RES</string>
+    <string name="Stunned">STN</string>
+    	<string name="Unconscious">UNC</string>
+    <string name="Weakened">WEK</string>
+    
 
 </resources>
