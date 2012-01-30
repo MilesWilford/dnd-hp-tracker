@@ -38,16 +38,16 @@ public class DNDHPActivity extends Activity {
     //Called when the activity is first created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);        
+        setContentView(R.layout.main);
+        
     	PLUS = getString(R.string.plus);
     	MINUS = getString(R.string.minus);
     	BLANK = getString(R.string.blank);
     	COLON_SPACE = getString(R.string.colonspace);
     	INPUT = getString(R.string.input);
-    	
-        super.onCreate(savedInstanceState);        
-        setContentView(R.layout.main);
         
-    	//Create the new default player
+    	//Create the new default player if there isn't one already
     	if (savedInstanceState == null) {
     		player = new Player();
     	}
@@ -216,6 +216,9 @@ public class DNDHPActivity extends Activity {
         	player.heal(value);
     	} else if (value < 0) {
         	player.injure(-value);
+    	} else {
+    		clearEntry();
+    		return;
     	}
     	showWorkViewMaker(value);
     	clearEntry();
