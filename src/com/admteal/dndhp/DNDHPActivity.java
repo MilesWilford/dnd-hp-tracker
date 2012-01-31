@@ -17,16 +17,19 @@ public class DNDHPActivity extends Activity {
 	
 	public int currentEntry;
 	
-	//Create the calculator function buttons
+	//Initialize the toggles we use
+	public ToggleButton toggleBlinded, toggleDazed, toggleDominated, 
+		toggleGrabbed, toggleMarked, toggleProne, toggleStunned, toggleWeakened;
+	//Initialize the calculator function buttons
 	public Button inputAdd, inputSub, inputClear, inputHS;
 
-	//Create the ongoing function buttons
+	//Initialize the ongoing function buttons
 	public Button ongoAdd, ongoSub, inputOngo, inputDS;
 
-	//Create the surges function buttons
+	//Initialize the surges function buttons
 	public Button surgesAdd, surgesSub, inputSurges;
 
-	//Create the Death Saves function buttons
+	//Initialize the Death Saves function buttons
 	public Button DSAdd, DSSub;
 	
 	//public Button inputDS	= (Button) findViewById(R.id.inputDS); //This button does nothing right now

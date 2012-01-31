@@ -64,22 +64,30 @@
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleBlinded" />
+                    android:id="@+id/toggleBlinded"
+                    android:textOn="@string/Blinded"
+                    android:textOff="@string/Blinded" />
 
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/toggleDazed" />
+                    android:id="@+id/toggleDazed"
+                    android:textOn="@string/Dazed"
+                    android:textOff="@string/Dazed" />
 
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleDeafened" />
+                    android:id="@+id/toggleDominated"
+                    android:textOn="@string/Dominated"
+                    android:textOff="@string/Dominated" />>
 
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleDominated" />
+                    android:id="@+id/toggleGrabbed"
+                    android:textOn="@string/Grabbed"
+                    android:textOff="@string/Grabbed" />
             </TableRow>
 
             <TableRow android:layout_weight="1" >
@@ -87,45 +95,30 @@
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleGrabbed" />
+                    android:id="@+id/toggleMarked"
+                    android:textOn="@string/Marked"
+                    android:textOff="@string/Marked" />
 
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleHelpless" />
+                    android:id="@+id/toggleProne"
+                    android:textOn="@string/Prone"
+                    android:textOff="@string/Prone" />
 
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleMarked" />
+                    android:id="@+id/toggleStunned"
+                    android:textOn="@string/Stunned"
+                    android:textOff="@string/Stunned" />
 
                 <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/togglePetrified" />
-            </TableRow>
-
-            <TableRow android:layout_weight="1" >
-
-                <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/toggleProne" />
-
-                <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/toggleRestrained" />
-
-                <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/toggleStunned" />
-
-                <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/toggleWeakened" />
+                    android:id="@+id/toggleWeakened"
+                    android:textOn="@string/Weakened"
+                    android:textOff="@string/Weakened" />
             </TableRow>
         </TableLayout>
 

@@ -13,22 +13,22 @@
     <string name="blank"></string>
     <string name="colonspace">:</string>
     <string name="input">input</string>
-    <!-- Status effect toggles -->
-    <string name="Blinded">BLD</string>
-    <string name="Dazed">DAZ</string>
-    <string name="Deafened">DEF</string>
-    <string name="Dominated">DOM</string>
-    	<string name="Dying">DYI</string>
-    <string name="Grabbed">GRB</string>
-    	<string name="Helpless">HLP</string>
-    <string name="Immobile">IMM</string>
-    <string name="Marked">MRK</string>
-    <string name="Petrified">PET</string>
-    <string name="Prone">PRN</string>
-    <string name="Restrained">RES</string>
-    <string name="Stunned">STN</string>
-    	<string name="Unconscious">UNC</string>
-    <string name="Weakened">WEK</string>
+    <!-- Status effect toggles.  Tabbed ones are unused -->
+    <string name="Blinded">BLND</string>
+    <string name="Dazed">DAZE</string>
+    	<string name="Deafened">DEAF</string>
+    <string name="Dominated">DOMI</string>
+    	<string name="Dying">DYIG</string>
+    <string name="Grabbed">GRAB</string>
+    	<string name="Helpless">HELP</string>
+    	<string name="Immobile">IMMO</string>
+    <string name="Marked">MARK</string>
+    	<string name="Petrified">PETR</string>
+    <string name="Prone">PRON</string>
+    	<string name="Restrained">REST</string>
+    <string name="Stunned">STUN</string>
+    	<string name="Unconscious">UNCO</string>
+    <string name="Weakened">WEAK</string>
     
 
 </resources>
