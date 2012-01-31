@@ -13,13 +13,13 @@
     <string name="blank"></string>
     <string name="colonspace">:</string>
     <string name="input">input</string>
-    <!-- Status effect toggles.  Tabbed ones are unused -->
+    <!-- Status effect toggles -->
     <string name="Blinded">BLND</string>
     <string name="Dazed">DAZE</string>
     	<string name="Deafened">DEAF</string>
     <string name="Dominated">DOMI</string>
     	<string name="Dying">DYIG</string>
-    <string name="Grabbed">GRAB</string>
+    <string name="Grabbed">GRSB</string>
     	<string name="Helpless">HELP</string>
     	<string name="Immobile">IMMO</string>
     <string name="Marked">MARK</string>

@@ -5,6 +5,7 @@
     android:orientation="horizontal" >
 
     <!-- Left Main Column -->
+
     <RelativeLayout
         android:id="@+id/displaysLayout"
         android:layout_width="64dp"
@@ -45,6 +46,7 @@
     </RelativeLayout>
 
     <!-- Right Main Column -->
+
     <LinearLayout
         android:id="@+id/rightMainColumn"
         android:layout_width="fill_parent"
@@ -53,76 +55,78 @@
         android:orientation="vertical" >
 
         <!-- Top Right Toggles -->
+
         <TableLayout
             android:id="@+id/togglesLayout"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*" >
 
-            <TableRow android:layout_weight="1" >
+            <TableRow>
 
                 <ToggleButton
+                    android:id="@+id/toggleBlinded"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/toggleBlinded"
-                    android:textOn="@string/Blinded"
-                    android:textOff="@string/Blinded" />
+                    android:textOff="@string/Blinded"
+                    android:textOn="@string/Blinded" />
 
                 <ToggleButton
+                    android:id="@+id/toggleDazed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/toggleDazed"
-                    android:textOn="@string/Dazed"
-                    android:textOff="@string/Dazed" />
+                    android:textOff="@string/Dazed"
+                    android:textOn="@string/Dazed" />
 
                 <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
                     android:id="@+id/toggleDominated"
-                    android:textOn="@string/Dominated"
-                    android:textOff="@string/Dominated" />>
-
-                <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textOff="@string/Dominated"
+                    android:textOn="@string/Dominated" />
+
+                <ToggleButton
                     android:id="@+id/toggleGrabbed"
-                    android:textOn="@string/Grabbed"
-                    android:textOff="@string/Grabbed" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textOff="@string/Grabbed"
+                    android:textOn="@string/Grabbed" />
             </TableRow>
 
-            <TableRow android:layout_weight="1" >
+            <TableRow>
 
                 <ToggleButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
                     android:id="@+id/toggleMarked"
-                    android:textOn="@string/Marked"
-                    android:textOff="@string/Marked" />
-
-                <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textOff="@string/Marked"
+                    android:textOn="@string/Marked" />
+
+                <ToggleButton
                     android:id="@+id/toggleProne"
-                    android:textOn="@string/Prone"
-                    android:textOff="@string/Prone" />
-
-                <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textOff="@string/Prone"
+                    android:textOn="@string/Prone" />
+
+                <ToggleButton
                     android:id="@+id/toggleStunned"
-                    android:textOn="@string/Stunned"
-                    android:textOff="@string/Stunned" />
-
-                <ToggleButton
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textOff="@string/Stunned"
+                    android:textOn="@string/Stunned" />
+
+                <ToggleButton
                     android:id="@+id/toggleWeakened"
-                    android:textOn="@string/Weakened"
-                    android:textOff="@string/Weakened" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textOff="@string/Weakened"
+                    android:textOn="@string/Weakened" />
             </TableRow>
         </TableLayout>
 
         <!-- Center Right Tracker Buttons -->
+
         <RelativeLayout
             android:id="@+id/trackersLayout"
             android:layout_width="match_parent"
@@ -130,6 +134,7 @@
             android:orientation="vertical" >
 
             <!-- Death Saves -->
+
             <Button
                 android:id="@+id/DSSub"
                 android:layout_width="48dp"
@@ -155,6 +160,7 @@
                 android:text="+" />
 
             <!-- Healing Surges -->
+
             <Button
                 android:id="@+id/surgesSub"
                 android:layout_width="48dp"
@@ -180,6 +186,7 @@
                 android:text="+" />
 
             <!-- Ongoing/Regeneration -->
+
             <Button
                 android:id="@+id/ongoSub"
                 android:layout_width="48dp"
@@ -192,7 +199,7 @@
                 android:id="@+id/inputOngo"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-				android:layout_below="@+id/inputSurges"
+                android:layout_below="@+id/inputSurges"
                 android:layout_toLeftOf="@+id/ongoAdd"
                 android:layout_toRightOf="@+id/ongoSub" />
 
@@ -201,11 +208,12 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentRight="true"
-				android:layout_below="@+id/surgesAdd"
+                android:layout_below="@+id/surgesAdd"
                 android:text="+" />
         </RelativeLayout>
 
         <!-- Calculator Buttons -->
+
         <LinearLayout
             android:id="@+id/calculatorLayout"
             android:layout_width="fill_parent"
@@ -228,7 +236,7 @@
                     android:layout_height="fill_parent"
                     android:text="@string/Clear" />
             </LinearLayout>
-            
+
             <TableLayout
                 android:id="@+id/calculatorNumbersLayout"
                 android:layout_width="wrap_content"
