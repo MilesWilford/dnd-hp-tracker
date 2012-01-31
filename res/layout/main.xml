@@ -19,13 +19,21 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center" />
+        
+        <TextView
+            android:id="@+id/currentTHPView"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/currentHPView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
 
         <ScrollView
             android:id="@+id/showWorkScroller"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/currentEntryView"
-            android:layout_below="@+id/currentHPView"
+            android:layout_below="@+id/currentTHPView"
             android:layout_centerHorizontal="true"
             android:fillViewport="true" >
 
@@ -340,6 +348,13 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
+                <Button
+                    android:id="@+id/inputTHP"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/THP" />
+                
                 <Button
                     android:id="@+id/inputAdd"
                     android:layout_width="fill_parent"

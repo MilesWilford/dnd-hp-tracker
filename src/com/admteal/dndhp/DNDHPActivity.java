@@ -27,7 +27,7 @@ public class DNDHPActivity extends Activity {
 			toggleWeakened;
 
 	// Initialize the calculator function buttons
-	public Button inputAdd, inputSub, inputClear, inputHS;
+	public Button inputTHP, inputAdd, inputSub, inputClear, inputHS;
 
 	// Initialize the ongoing function buttons
 	public Button ongoAdd, ongoSub, inputOngo, inputDS;
@@ -38,7 +38,7 @@ public class DNDHPActivity extends Activity {
 	// Initialize the Death Saves function buttons
 	public Button DSAdd, DSSub;
 
-	public TextView currentEntryView, currentHPView;
+	public TextView currentEntryView, currentHPView, currentTHPView;
 	public LinearLayout showWorkLayout;
 	public ScrollView showWorkScroller;
 
@@ -158,6 +158,12 @@ public class DNDHPActivity extends Activity {
 		}
 
 		// Create the calculator function buttons
+		inputTHP = (Button) findViewById(R.id.inputTHP);
+		inputTHP.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				tempHPUpdater(currentEntry);
+			}
+		});
 		inputAdd = (Button) findViewById(R.id.inputAdd);
 		inputAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -268,10 +274,11 @@ public class DNDHPActivity extends Activity {
 
 		inputDS = (Button) findViewById(R.id.inputDS);
 
-		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
-		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
-		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
-		currentHPView = (TextView) findViewById(R.id.currentHPView);
+		currentEntryView= (TextView) findViewById(R.id.currentEntryView);
+		showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
+		showWorkLayout 	= (LinearLayout) findViewById(R.id.showWorkLayout);
+		currentHPView 	= (TextView) findViewById(R.id.currentHPView);
+		currentTHPView 	= (TextView) findViewById(R.id.currentTHPView);
 	}
 
 	/*
@@ -339,6 +346,18 @@ public class DNDHPActivity extends Activity {
 	    }
 	}
 
+	// Sets all toggle buttons to the states from the Player class
+	public void togglesUpdater() {
+		toggleBlinded.setChecked(player.isBlinded());
+		toggleDazed.setChecked(player.isDazed());
+		toggleDominated.setChecked(player.isDominated());
+		toggleGrabbed.setChecked(player.isGrabbed());
+		toggleMarked.setChecked(player.isMarked());
+		toggleProne.setChecked(player.isProne());
+		toggleStunned.setChecked(player.isStunned());
+		toggleWeakened.setChecked(player.isWeakened());
+	}
+
 	/*
 	 * Method injures or heals the player based on input, then calls for the
 	 * view maker to show work
@@ -358,19 +377,6 @@ public class DNDHPActivity extends Activity {
 
 		currentHPView.setText(Integer.toString(player.getHP()));
 	}
-
-	// Sets all toggle buttons to the states from the Player class
-	public void togglesUpdater() {
-		toggleBlinded.setChecked(player.isBlinded());
-		toggleDazed.setChecked(player.isDazed());
-		toggleDominated.setChecked(player.isDominated());
-		toggleGrabbed.setChecked(player.isGrabbed());
-		toggleMarked.setChecked(player.isMarked());
-		toggleProne.setChecked(player.isProne());
-		toggleStunned.setChecked(player.isStunned());
-		toggleWeakened.setChecked(player.isWeakened());
-	}
-
 	// Use the player's HP if an hpToList was not specified. Generally, this
 	// will be the case
 	public void showWorkViewMaker(int value) {
@@ -418,6 +424,25 @@ public class DNDHPActivity extends Activity {
 						showWorkLayout.getMeasuredHeight());
 			}
 		});
+		tempHPUpdater();
+	}
+	
+	//Controls adding temporary HP to player class
+	//TODO: also should control displaying THP somewhere in a view
+	public void tempHPUpdater(int value) {
+		player.addTHP(currentEntry);
+		currentTHPView.setTextColor(Color.GREEN);
+		if (player.getTHP() > 0) {
+			currentTHPView.setText("(" + player.getTHP() + ")");
+		} else {
+			currentTHPView.setText("");
+		}
+		clearEntry();
+	}
+	
+	//If no value is passed to tempHPUpdater, use a 0 value
+	public void tempHPUpdater() {
+		tempHPUpdater(0);
 	}
 
 	/*

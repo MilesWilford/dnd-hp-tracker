@@ -13,8 +13,8 @@ public class Player implements Serializable {
 		
     // The player's various stats and HPs are tracked in this class.
 
-	private int maxHP;
-    private int currentHP, currentHS, currentOngo, currentSurges, currentDeathSaves, bloodied;
+	private int maxHP, currentHP, currentTHP, currentHS, currentOngo;
+    private int currentSurges, currentDeathSaves, bloodied;
     /* 
      * Note: class uses int division because we round down in D&D.
      * 3÷2 should equal 1.
@@ -28,6 +28,7 @@ public class Player implements Serializable {
      	bloodied = 499;
     	currentHP = 0;
     	currentHP = 0;
+    	currentTHP = 0;
     	currentHS = 0;
      	currentOngo = 0;
      	currentSurges = 0;
@@ -70,13 +71,22 @@ public class Player implements Serializable {
     
     public void injure(int injureBy) {
     	int negBloodied = bloodied * -1;
-    	//injureBy was passed as a negative number.  Treat it using addition for subtraction.
-    	if (currentHP - injureBy <= negBloodied) { //No going below negative bloodied (you're dead)
+    	//No going below negative bloodied (you're dead)
+    	if (currentHP + currentTHP - injureBy <= negBloodied) { 
+    		currentTHP = 0;
     		changeHistory.add(negBloodied - currentHP);
     		currentHP = negBloodied;
     	} else {
-    		currentHP -= injureBy;
     		changeHistory.add(-injureBy); //We store injuries as a negative number in the history.
+        	/*
+        	 * Consume THP first, before affecting actual HP.
+        	 * We do not want either currentTHP or injureBy to drop below 0 at any point
+        	 */
+        	while (currentTHP > 0 && injureBy > 0) {
+        		currentTHP--;
+        		injureBy--;
+        	}
+    		currentHP -= injureBy;
     	}
     	HPHistory.add(currentHP);
     }
@@ -114,6 +124,18 @@ public class Player implements Serializable {
     	bloodied = newBloodied;
     }
 
+    //TEMPORARY HP
+    public int getTHP() {
+    	return currentTHP;
+    }
+    
+    //Only the largest THP number offered applies.
+    public void addTHP(int newTHP) {
+    	if (newTHP > currentTHP) {
+    		currentTHP = newTHP;
+    	}
+    }
+    
     //SURGES COUNT
     public int getSurges() {
         return currentSurges;
