@@ -430,7 +430,7 @@ public class DNDHPActivity extends Activity {
 	//Controls adding temporary HP to player class
 	//TODO: also should control displaying THP somewhere in a view
 	public void tempHPUpdater(int value) {
-		player.addTHP(currentEntry);
+		player.addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
 		if (player.getTHP() > 0) {
 			currentTHPView.setText("(" + player.getTHP() + ")");

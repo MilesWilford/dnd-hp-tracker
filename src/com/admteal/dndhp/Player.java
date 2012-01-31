@@ -82,10 +82,16 @@ public class Player implements Serializable {
         	 * Consume THP first, before affecting actual HP.
         	 * We do not want either currentTHP or injureBy to drop below 0 at any point
         	 */
-        	while (currentTHP > 0 && injureBy > 0) {
-        		currentTHP--;
-        		injureBy--;
-        	}
+    		if (injureBy > currentTHP) {
+    			injureBy -= currentTHP;
+    			currentTHP = 0;
+    		} else if (currentTHP > injureBy) {
+    			currentTHP -= injureBy;
+    			injureBy = 0;
+    		} else {
+    			currentTHP = 0;
+    			injureBy = 0;
+    		}
     		currentHP -= injureBy;
     	}
     	HPHistory.add(currentHP);
