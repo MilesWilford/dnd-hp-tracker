@@ -9,7 +9,7 @@ public class Player implements Serializable {
 	
 	private boolean blinded, dazed, deafened, dominated, dying, grabbed, 
 		helpless, immobile, marked, petrified, prone, restrained, 
-		stunned, unconscious, weakened = false;
+		stunned, unconscious, weakened;
 		
     // The player's various stats and HPs are tracked in this class.
 

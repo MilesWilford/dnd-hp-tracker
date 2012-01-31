@@ -66,7 +66,6 @@ public class DNDHPActivity extends Activity {
 				}
 			}
 		});
-		//toggleBlinded.setChecked(player.isBlinded()); UNCOMMENT ME TO SEE THE FORCE CLOSE
 		toggleDazed = (ToggleButton) findViewById(R.id.toggleDazed);
 		toggleDazed.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
