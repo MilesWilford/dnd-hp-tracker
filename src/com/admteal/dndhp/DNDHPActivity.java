@@ -126,6 +126,16 @@ public class DNDHPActivity extends Activity {
 				}
 			}
 		});
+		toggleWeakened = (ToggleButton) findViewById(R.id.toggleWeakened);
+		toggleWeakened.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (toggleStunned.isChecked()) {
+					player.weaken();
+				} else {
+					player.unweaken();
+				}
+			}
+		});
 
 		// Set the calculator number buttons and their onClickListeners.
 		// Creates the 10 buttons at once
@@ -324,16 +334,14 @@ public class DNDHPActivity extends Activity {
 
 	// Sets all toggle buttons to the states from the Player class
 	public void togglesUpdater() {
-		/*
-		 * toggleBlinded.setChecked(!player.isBlinded());
-		 * toggleDazed.setChecked(!player.isDazed());
-		 * toggleDominated.setChecked(!player.isDominated());
-		 * toggleGrabbed.setChecked(!player.isGrabbed());
-		 * toggleMarked.setChecked(!player.isMarked());
-		 * toggleProne.setChecked(!player.isProne());
-		 * toggleStunned.setChecked(!player.isStunned());
-		 * toggleWeakened.setChecked(!player.isWeakened());
-		 */
+		toggleBlinded.setChecked(player.isBlinded());
+		toggleDazed.setChecked(player.isDazed());
+		toggleDominated.setChecked(player.isDominated());
+		toggleGrabbed.setChecked(player.isGrabbed());
+		toggleMarked.setChecked(player.isMarked());
+		toggleProne.setChecked(player.isProne());
+		toggleStunned.setChecked(player.isStunned());
+		toggleWeakened.setChecked(player.isWeakened());
 	}
 
 	// Use the player's HP if an hpToList was not specified. Generally, this

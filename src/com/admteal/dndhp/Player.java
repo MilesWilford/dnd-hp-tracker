@@ -32,6 +32,7 @@ public class Player implements Serializable {
      	currentOngo = 0;
      	currentSurges = 0;
      	currentDeathSaves = 3;
+     	setToggles();
     }
     
     //create a new player at full HP
@@ -40,6 +41,7 @@ public class Player implements Serializable {
         maxHP = newHP;
         bloodied = newHP / 2;
         currentSurges = newSurges;
+     	setToggles();
     }
     
     //create a new player at less than full HP
@@ -48,6 +50,7 @@ public class Player implements Serializable {
     	currentHP = newMaxHP;
         bloodied = newMaxHP / 2;
         currentSurges = newSurges;
+     	setToggles();
     }
 
     // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
@@ -301,6 +304,24 @@ public class Player implements Serializable {
 	}
 	public void unweaken() {
 		weakened = false;
+	}
+	
+	private void setToggles() {
+		blinded = false;
+		dazed = false;
+		deafened = false;
+		dominated = false;
+		dying = false;
+		grabbed = false;
+		helpless = false;
+		immobile = false;
+		marked = false;
+		petrified = false;
+		prone = false;
+		restrained = false;
+		stunned = false;
+		unconscious = false;
+		weakened = false;	
 	}
     
 	//History trackers
