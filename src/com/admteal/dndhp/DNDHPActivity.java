@@ -3,8 +3,12 @@ package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import android.os.Bundle;
@@ -310,6 +314,29 @@ public class DNDHPActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 		currentEntry = savedInstanceState.getInt("currentEntry");
 		player = (Player) savedInstanceState.getSerializable("Player");
+	}
+	
+	//Inflate the menu options
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    case R.id.newPlayer:
+	    	player = new Player();
+	    	Intent intent = getIntent();
+	    	finish();
+	    	startActivity(intent);
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	/*

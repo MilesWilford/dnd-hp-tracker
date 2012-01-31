@@ -13,6 +13,7 @@
     <string name="blank"></string>
     <string name="colonspace">:</string>
     <string name="input">input</string>
+    <string name="new_player">New Player</string>
     <!-- Status effect toggles -->
     <string name="Blinded">BLND</string>
     <string name="Dazed">DAZE</string>

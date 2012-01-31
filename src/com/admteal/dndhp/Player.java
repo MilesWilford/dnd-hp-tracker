@@ -306,6 +306,7 @@ public class Player implements Serializable {
 		weakened = false;
 	}
 	
+	//Clears all the toggles.  Private because it should only be called by making a new Player
 	private void setToggles() {
 		blinded = false;
 		dazed = false;
