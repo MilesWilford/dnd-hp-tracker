@@ -151,10 +151,10 @@ public class Player implements Serializable {
     	return currentOngo;
     }
     	
-    	//regen is the opposite of ongoing damage
-	    public int getRegen() { 
-	    	return currentOngo * -1;
-	    }
+    //regen is the opposite of ongoing damage
+    public int getRegen() { 
+        return currentOngo * -1;
+    }
 	    
     public void addOngo() {
     	currentOngo++;
