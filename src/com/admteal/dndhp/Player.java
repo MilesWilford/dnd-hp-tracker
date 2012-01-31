@@ -69,33 +69,35 @@ public class Player implements Serializable {
     	HPHistory.add(currentHP);
     }
     
-    public void injure(int injureBy) {
-    	int negBloodied = bloodied * -1;
-    	//No going below negative bloodied (you're dead)
-    	if (currentHP + currentTHP - injureBy <= negBloodied) { 
-    		currentTHP = 0;
-    		changeHistory.add(negBloodied - currentHP);
-    		currentHP = negBloodied;
-    	} else {
-    		changeHistory.add(-injureBy); //We store injuries as a negative number in the history.
-        	/*
-        	 * Consume THP first, before affecting actual HP.
-        	 * We do not want either currentTHP or injureBy to drop below 0 at any point
-        	 */
-    		if (injureBy > currentTHP) {
-    			injureBy -= currentTHP;
-    			currentTHP = 0;
-    		} else if (currentTHP > injureBy) {
-    			currentTHP -= injureBy;
-    			injureBy = 0;
-    		} else {
-    			currentTHP = 0;
-    			injureBy = 0;
-    		}
-    		currentHP -= injureBy;
-    	}
-    	HPHistory.add(currentHP);
-    }
+	public void injure(int injureBy) {
+		int negBloodied = bloodied * -1;
+		// No going below negative bloodied (you're dead)
+		if (currentHP + currentTHP - injureBy <= negBloodied) {
+			currentTHP = 0;
+			changeHistory.add(negBloodied - currentHP);
+			currentHP = negBloodied;
+		} else {
+			// Negative to make it clear this was an injury in the history
+			changeHistory.add(-injureBy);
+			/*
+			 * Consume THP first, before affecting actual HP. We do not want
+			 * either currentTHP or injureBy to drop below 0 at any point
+			 */
+			if (injureBy > currentTHP) {
+				injureBy -= currentTHP;
+				currentTHP = 0;
+			} else if (currentTHP > injureBy) {
+				currentTHP -= injureBy;
+				injureBy = 0;
+			} else {
+				currentTHP = 0;
+				injureBy = 0;
+			}
+
+			currentHP -= injureBy;
+		}
+		HPHistory.add(currentHP);
+	}
 
     //HP VALUE
     public int getHP() {
