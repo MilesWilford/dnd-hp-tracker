@@ -34,6 +34,8 @@
     	<string name="Unconscious">UNCO</string>
     <string name="Weakened">WEAK</string>
     <!-- New Custom Player dialog strings -->
+    <string name="DIALOG_CUSTOM_PLAYER_title">What stats should this new player have?</string>
+    <string name="DIALOG_CLEAR_msg">Reset player to defaults?</string>
     <string name="newMaxHP">Max HP: </string>
     <string name="newCurrentHP">Current HP (optional): </string>
     <string name="newMaxSurges">Max Surges: </string>

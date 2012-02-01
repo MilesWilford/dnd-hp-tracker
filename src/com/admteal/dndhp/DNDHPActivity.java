@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -334,8 +335,8 @@ public class DNDHPActivity extends Activity {
 		Dialog dialog;
 		switch (id) {
 		case DIALOG_CLEAR:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Reset player to defaults?")
+			AlertDialog.Builder clearBuilder = new AlertDialog.Builder(this);
+			clearBuilder.setMessage(R.string.DIALOG_CLEAR_msg)
 					.setCancelable(true)
 					.setPositiveButton("Yes",
 							new DialogInterface.OnClickListener() {
@@ -352,13 +353,34 @@ public class DNDHPActivity extends Activity {
 									// Do nothing
 								}
 							});
-			dialog = builder.create();
+			dialog = clearBuilder.create();
 			break;
 		case DIALOG_NEW_CUSTOM_PLAYER:
-			dialog = new Dialog(this);
-			dialog.setContentView(R.layout.dialog_custom_player);
-			dialog.setTitle("New Custom Player");
-			break;
+			//TODO
+            // This example shows how to add a custom layout to an AlertDialog
+			AlertDialog.Builder customPlayerBuilder = new AlertDialog.Builder(this);
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View customizePlayerView = factory.inflate(R.layout.dialog_custom_player, null);
+            customPlayerBuilder.setTitle(R.string.DIALOG_CUSTOM_PLAYER_title)
+				.setCancelable(true)
+                .setView(customizePlayerView)
+            	.setTitle("Test test")
+                .setPositiveButton(R.string.savePlayer,
+						new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface arg0, int arg1) {
+							clearEntry();
+							player.extendedRest();
+							relaunchWithPlayer(player);
+						}
+					})
+                .setNegativeButton(R.string.abandonPlayer, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        /* User clicked cancel so do some stuff */
+                    }
+                });
+                dialog = customPlayerBuilder.create();
+                break;
 		default:
 			dialog = null;
 		}
