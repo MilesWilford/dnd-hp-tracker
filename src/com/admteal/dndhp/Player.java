@@ -9,12 +9,12 @@ public class Player implements Serializable {
 	
 	private boolean blinded, dazed, deafened, dominated, dying, grabbed, 
 		helpless, immobile, marked, petrified, prone, restrained, 
-		stunned, unconscious, weakened;
+		stunned, unconscious, weakened, usingDefaultPlayer;
 		
     // The player's various stats and HPs are tracked in this class.
 
-	private int maxHP, currentHP, currentTHP, currentHS, currentOngo;
-    private int currentSurges, currentDeathSaves, bloodied;
+	private int maxHP, maxSurges, currentTHP, currentHS, currentOngo;
+    private int currentHP, currentSurges, currentDeathSaves;
     /* 
      * Note: class uses int division because we round down in D&D.
      * 3÷2 should equal 1.
@@ -25,36 +25,37 @@ public class Player implements Serializable {
     //default constructor for if we aren't passing a real max hp
     public Player() {
     	maxHP = 999;
-     	bloodied = 499;
     	currentHP = 0;
     	currentHP = 0;
     	currentTHP = 0;
     	currentHS = 0;
      	currentOngo = 0;
+     	maxSurges = 99;
      	currentSurges = 0;
      	currentDeathSaves = 3;
-     	setToggles();
+     	clearToggles();
+     	usingDefaultPlayer = true;
     }
     
     //create a new player at full HP
     public Player(int newHP, int newSurges) {
     	currentHP = newHP;
         maxHP = newHP;
-        bloodied = newHP / 2;
-        currentSurges = newSurges;
-     	setToggles();
+        maxSurges = newSurges;
+        currentSurges = maxSurges;
+        clearToggles();
+     	usingDefaultPlayer = false;
     }
     
     //create a new player at less than full HP
-    public Player(int newHP, int newMaxHP, int newSurges) {
+    public Player(int newHP, int newMaxHP, int newSurges, int newMaxSurges) {
     	currentHP = newHP;
     	currentHP = newMaxHP;
-        bloodied = newMaxHP / 2;
         currentSurges = newSurges;
-     	setToggles();
+        maxSurges = newMaxSurges;
+        clearToggles();
+     	usingDefaultPlayer = false;
     }
-
-    // TODO: TRACK HP ABOVE MAX HP AS TEMPORARY HP?  SOMETHING NEEDS TO BE DONE TO ACCOUNT FOR THP
     
     public void heal(int healBy) {
     	if (currentHP + healBy > maxHP) { //No going above max.
@@ -70,7 +71,7 @@ public class Player implements Serializable {
     }
     
 	public void injure(int injureBy) {
-		int negBloodied = bloodied * -1;
+		int negBloodied = -maxHP / 2;
 		// No going below negative bloodied (you're dead)
 		if (currentHP + currentTHP - injureBy <= negBloodied) {
 			currentTHP = 0;
@@ -115,21 +116,15 @@ public class Player implements Serializable {
 
     public void setMaxHP(int newMaxHP) {
         maxHP = newMaxHP;
-        bloodied = maxHP / 2; 
     }
-    	
-    	public void setMaxHP(int newMaxHP, int newBloodied) {
-    		maxHP = newMaxHP;
-    		bloodied = newBloodied;
-    	}
     	
     //BLOODIED VALUE
-    public int getBloodied() {
-    	return bloodied;
-    }
-    
-    public void setBloodied(int newBloodied) {
-    	bloodied = newBloodied;
+    public boolean isBloodied() {
+    	if (currentHP <= maxHP/2) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     //TEMPORARY HP
@@ -337,7 +332,7 @@ public class Player implements Serializable {
 	}
 	
 	//Clears all the toggles.  Private because it should only be called by making a new Player
-	private void setToggles() {
+	private void clearToggles() {
 		blinded = false;
 		dazed = false;
 		deafened = false;
@@ -354,6 +349,17 @@ public class Player implements Serializable {
 		unconscious = false;
 		weakened = false;	
 	}
+	
+	public void extendedRest() {
+		clearToggles();
+		if (usingDefaultPlayer) {
+			currentHP = 0;
+			currentSurges = 0;
+		} else {
+			currentHP = maxHP;
+			currentSurges = maxSurges;
+		}
+	}
     
 	//History trackers
     public ArrayList<Integer> getChangeHistory() {
@@ -363,4 +369,5 @@ public class Player implements Serializable {
     public ArrayList<Integer> getHPHistory() {
     	return HPHistory;
     }
+
 }

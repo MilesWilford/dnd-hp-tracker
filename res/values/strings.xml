@@ -9,6 +9,7 @@
     <string name="ds">Death Saves</string>
     <string name="hs">HS</string>
     <string name="new_player">New Player</string>
+    <string name="custom_player">Custom Player</string>
     <string name="THP">THP</string>
     <!-- String literals for use in the programatic app -->
     <string name="minus">minus</string>

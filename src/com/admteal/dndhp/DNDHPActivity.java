@@ -3,6 +3,8 @@ package com.admteal.dndhp;
 
 import com.admteal.dndhp.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -18,6 +20,8 @@ public class DNDHPActivity extends Activity {
 
 	// Some variables for cleanliness's sake
 	public static String PLUS, MINUS, BLANK, COLON_SPACE, INPUT;
+	
+	public final int DIALOG_CLEAR = 0;
 
 	public int currentEntry;
 
@@ -179,8 +183,7 @@ public class DNDHPActivity extends Activity {
 		inputClear = (Button) findViewById(R.id.inputClear);
 		inputClear.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
-				clearEntry();
-				showWorkLayout.removeAllViews();
+				showDialog(DIALOG_CLEAR);
 				return true; // stops click event from also being processed
 			}
 		});
@@ -321,6 +324,38 @@ public class DNDHPActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 		currentEntry = savedInstanceState.getInt("currentEntry");
 		player = (Player) savedInstanceState.getSerializable("Player");
+	}
+
+	// Generate my alert dialogs
+	@Override
+	protected AlertDialog onCreateDialog(int id) {
+		AlertDialog dialog;
+		switch (id) {
+		case DIALOG_CLEAR:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Reset player to defaults?")
+					.setCancelable(true)
+					.setPositiveButton("Yes",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0, int arg1) {
+									clearEntry();
+									showWorkLayout.removeAllViews();
+									player.extendedRest();
+								}
+							})
+					.setNegativeButton("No",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									// Do nothing
+								}
+							});
+			dialog = builder.create();
+			break;
+		default:
+			dialog = null;
+		}
+		return dialog;
 	}
 	
 	//Inflate the menu options
