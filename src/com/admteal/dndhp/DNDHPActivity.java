@@ -339,8 +339,8 @@ public class DNDHPActivity extends Activity {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0, int arg1) {
 									clearEntry();
-									showWorkLayout.removeAllViews();
 									player.extendedRest();
+									relaunchWithPlayer(player);
 								}
 							})
 					.setNegativeButton("No",
@@ -371,14 +371,18 @@ public class DNDHPActivity extends Activity {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	    case R.id.newPlayer:
-	    	player = new Player();
-	    	Intent intent = getIntent();
-	    	finish();
-	    	startActivity(intent);
+	    	relaunchWithPlayer(new Player());
 	        return true;
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	public void relaunchWithPlayer(Player newPlayer) {
+    	player = newPlayer;
+    	Intent intent = getIntent();
+    	finish();
+    	startActivity(intent);
 	}
 
 	// Sets all toggle buttons to the states from the Player class
