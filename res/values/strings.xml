@@ -33,6 +33,13 @@
     <string name="Stunned">STUN</string>
     	<string name="Unconscious">UNCO</string>
     <string name="Weakened">WEAK</string>
-    
+    <!-- New Custom Player dialog strings -->
+    <string name="newMaxHP">Max HP: </string>
+    <string name="newCurrentHP">Current HP (optional): </string>
+    <string name="newMaxSurges">Max Surges: </string>
+    <string name="newCurrentSurges">Current Surges (optional): </string>
+    <string name="newHS">Surge Value: </string>
+    <string name="savePlayer">Save Player</string>
+    <string name="abandonPlayer">Abandon Player</string>
 
 </resources>

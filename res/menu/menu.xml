@@ -3,7 +3,7 @@
     <item android:id="@+id/newPlayer"
         android:title="@string/new_player"
 		android:showAsAction="ifRoom|withText" />
-    <!-- <item android:id="@+id/newCustomPlayer"
+    <item android:id="@+id/newCustomPlayer"
         android:title="@string/custom_player"
-		android:showAsAction="ifRoom|withText" /> -->
+		android:showAsAction="ifRoom|withText" />
 </menu>

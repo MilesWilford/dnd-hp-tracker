@@ -4,6 +4,7 @@ package com.admteal.dndhp;
 import com.admteal.dndhp.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ public class DNDHPActivity extends Activity {
 	public static String PLUS, MINUS, BLANK, COLON_SPACE, INPUT;
 	
 	public final int DIALOG_CLEAR = 0;
+	public final int DIALOG_NEW_CUSTOM_PLAYER = 1;
 
 	public int currentEntry;
 
@@ -328,8 +330,8 @@ public class DNDHPActivity extends Activity {
 
 	// Generate my alert dialogs
 	@Override
-	protected AlertDialog onCreateDialog(int id) {
-		AlertDialog dialog;
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog;
 		switch (id) {
 		case DIALOG_CLEAR:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -352,6 +354,11 @@ public class DNDHPActivity extends Activity {
 							});
 			dialog = builder.create();
 			break;
+		case DIALOG_NEW_CUSTOM_PLAYER:
+			dialog = new Dialog(this);
+			dialog.setContentView(R.layout.dialog_custom_player);
+			dialog.setTitle("New Custom Player");
+			break;
 		default:
 			dialog = null;
 		}
@@ -373,6 +380,8 @@ public class DNDHPActivity extends Activity {
 	    case R.id.newPlayer:
 	    	relaunchWithPlayer(new Player());
 	        return true;
+	    case R.id.newCustomPlayer:
+	    	showDialog(DIALOG_NEW_CUSTOM_PLAYER);
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
@@ -467,7 +476,6 @@ public class DNDHPActivity extends Activity {
 	}
 	
 	//Controls adding temporary HP to player class
-	//TODO: also should control displaying THP somewhere in a view
 	public void tempHPUpdater(int value) {
 		player.addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
