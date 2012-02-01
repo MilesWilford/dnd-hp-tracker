@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/newMaxHPText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/maxHPEdit"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/newCurrentSurgesText"
+        android:gravity="center"
+        android:text="@string/newMaxHP"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/maxHPEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/newMaxHPText"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/newCurrentHPText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/currentHPEdit"
+        android:layout_alignTop="@+id/currentHPEdit"
+        android:layout_below="@+id/newMaxHPText"
+        android:layout_alignRight="@+id/newCurrentSurgesText"
+        android:gravity="center"
+        android:text="@string/newCurrentHP"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/currentHPEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/maxHPEdit"
+        android:layout_toRightOf="@+id/newCurrentHPText"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/newMaxSurgesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/maxSurgesEdit"
+        android:layout_alignRight="@+id/newCurrentSurgesText"
+        android:layout_below="@+id/newCurrentHPText"
+        android:gravity="center"
+        android:text="@string/newMaxSurges"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/maxSurgesEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/currentHPEdit"
+        android:layout_toRightOf="@+id/newMaxSurgesText"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/newCurrentSurgesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/currentSurgesEdit"
+        android:layout_below="@+id/newMaxSurgesText"
+        android:gravity="center"
+        android:text="@string/newCurrentSurges"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/currentSurgesEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/maxSurgesEdit"
+        android:layout_toRightOf="@+id/newCurrentSurgesText"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/newHSText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/currentHSEdit"
+        android:layout_alignRight="@+id/newCurrentSurgesText"
+        android:layout_below="@+id/newCurrentSurgesText"
+        android:gravity="center"
+        android:text="@string/newHS"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/currentHSEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/currentSurgesEdit"
+        android:layout_toRightOf="@+id/newHSText"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newHSText"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/d_customPlayerSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/savePlayer" />
+
+        <Button
+            android:id="@+id/d_customPlayerAbandon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/abandonPlayer" />
+    </LinearLayout>
+
+</RelativeLayout>
