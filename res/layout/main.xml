@@ -14,16 +14,16 @@
 
         <TextView
             android:id="@+id/currentHPView"
+            style="@style/SmallButton"
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center" />
-        
+
         <TextView
             android:id="@+id/currentTHPView"
+            style="@style/SmallButton"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
             android:layout_below="@+id/currentHPView"
             android:layout_centerHorizontal="true"
             android:gravity="center" />
@@ -46,8 +46,8 @@
 
         <TextView
             android:id="@+id/currentEntryView"
+            style="@style/SmallButton"
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="center" />
@@ -74,29 +74,25 @@
 
                 <ToggleButton
                     android:id="@+id/toggleBlinded"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Blinded"
                     android:textOn="@string/Blinded" />
 
                 <ToggleButton
                     android:id="@+id/toggleDazed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/SmallButton"
                     android:textOff="@string/Dazed"
                     android:textOn="@string/Dazed" />
 
                 <ToggleButton
                     android:id="@+id/toggleDominated"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Dominated"
                     android:textOn="@string/Dominated" />
 
                 <ToggleButton
                     android:id="@+id/toggleGrabbed"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Grabbed"
                     android:textOn="@string/Grabbed" />
             </TableRow>
@@ -105,29 +101,25 @@
 
                 <ToggleButton
                     android:id="@+id/toggleMarked"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Marked"
                     android:textOn="@string/Marked" />
 
                 <ToggleButton
                     android:id="@+id/toggleProne"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Prone"
                     android:textOn="@string/Prone" />
 
                 <ToggleButton
                     android:id="@+id/toggleStunned"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Stunned"
                     android:textOn="@string/Stunned" />
 
                 <ToggleButton
                     android:id="@+id/toggleWeakened"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/SmallButton"
                     android:textOff="@string/Weakened"
                     android:textOn="@string/Weakened" />
             </TableRow>
@@ -145,24 +137,21 @@
 
             <Button
                 android:id="@+id/DSSub"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:text="-" />
 
             <Button
                 android:id="@+id/inputDS"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/DSAdd"
                 android:layout_toRightOf="@+id/DSSub" />
 
             <Button
                 android:id="@+id/DSAdd"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="+" />
@@ -171,24 +160,21 @@
 
             <Button
                 android:id="@+id/surgesSub"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/DSSub"
                 android:text="-" />
 
             <Button
                 android:id="@+id/inputSurges"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_below="@+id/inputDS"
                 android:layout_toLeftOf="@+id/surgesAdd"
                 android:layout_toRightOf="@+id/surgesSub" />
 
             <Button
                 android:id="@+id/surgesAdd"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/DSAdd"
                 android:text="+" />
@@ -197,24 +183,21 @@
 
             <Button
                 android:id="@+id/ongoSub"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/surgesSub"
                 android:text="-" />
 
             <Button
                 android:id="@+id/inputOngo"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_below="@+id/inputSurges"
                 android:layout_toLeftOf="@+id/ongoAdd"
                 android:layout_toRightOf="@+id/ongoSub" />
 
             <Button
                 android:id="@+id/ongoAdd"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                style="@style/SmallButton"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/surgesAdd"
                 android:text="+" />
@@ -233,15 +216,13 @@
 
             <LinearLayout
                 android:id="@+id/calculatorLeftSideLayout"
+                style="@style/fill_parent"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
                 android:orientation="vertical" >
 
                 <Button
                     android:id="@+id/inputClear"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    style="@style/fill_parent"
                     android:text="@string/Clear" />
             </LinearLayout>
 
@@ -255,23 +236,17 @@
 
                     <Button
                         android:id="@+id/input1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="1" />
 
                     <Button
                         android:id="@+id/input2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="2" />
 
                     <Button
                         android:id="@+id/input3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="3" />
                 </TableRow>
 
@@ -279,23 +254,17 @@
 
                     <Button
                         android:id="@+id/input4"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="4" />
 
                     <Button
                         android:id="@+id/input5"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="5" />
 
                     <Button
                         android:id="@+id/input6"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="6" />
                 </TableRow>
 
@@ -303,23 +272,17 @@
 
                     <Button
                         android:id="@+id/input7"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="7" />
 
                     <Button
                         android:id="@+id/input8"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="8" />
 
                     <Button
                         android:id="@+id/input9"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="9" />
                 </TableRow>
 
@@ -327,15 +290,12 @@
 
                     <Button
                         android:id="@+id/input0"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
+                        style="@style/fill_parent"
                         android:text="0" />
 
                     <Button
                         android:id="@+id/inputHS"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        style="@style/fill_parent"
                         android:layout_span="2"
                         android:layout_weight="2" />
                 </TableRow>
@@ -350,23 +310,20 @@
 
                 <Button
                     android:id="@+id/inputTHP"
-                    android:layout_width="fill_parent"
+                    style="@style/fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/THP" />
-                
+
                 <Button
                     android:id="@+id/inputAdd"
-                    android:layout_width="fill_parent"
+                    style="@style/fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="+" />
 
                 <Button
                     android:id="@+id/inputSub"
-                    android:layout_width="fill_parent"
+                    style="@style/fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="-" />
             </LinearLayout>
         </LinearLayout>
