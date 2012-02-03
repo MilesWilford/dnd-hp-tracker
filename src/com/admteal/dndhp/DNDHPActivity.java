@@ -347,7 +347,8 @@ public class DNDHPActivity extends Activity {
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							}).setNegativeButton("No", null).create();
+							})
+					.setNegativeButton("No", null).create();
 		case DIALOG_NEW_CUSTOM_PLAYER:
 			// TODO WORKING HERE
 			final View customizePlayerView = View.inflate(this,
@@ -393,9 +394,11 @@ public class DNDHPActivity extends Activity {
 										return;
 									} else {
 										if (customPlayerNewHS.equals("")) {
-											int customPlayerNewHSInt = Integer.parseInt(customPlayerNewMaxHP) / 2;
+											int customPlayerNewHSInt = Integer
+													.parseInt(customPlayerNewMaxHP) / 2;
 											customPlayerNewHSInt = (customPlayerNewHSInt / 2) / 2;
-											customPlayerNewHS = Integer.toString(customPlayerNewHSInt);
+											customPlayerNewHS = Integer
+													.toString(customPlayerNewHSInt);
 										}
 										player = new Player(
 												Integer.parseInt(customPlayerNewMaxHP),
@@ -404,8 +407,9 @@ public class DNDHPActivity extends Activity {
 									}
 
 								}
-							}).setNegativeButton(R.string.abandonPlayer, null)
-					.show();
+							})
+					.setNegativeButton(R.string.abandonPlayer, null)
+					.create();
 		default:
 			return null;
 		}
