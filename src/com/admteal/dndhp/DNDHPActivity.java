@@ -378,11 +378,23 @@ public class DNDHPActivity extends Activity {
 											customPlayerNewHS = Integer
 													.toString(customPlayerNewHSInt);
 										}
-										player = new Player(
-												Integer.parseInt(customPlayerNewMaxHP),
-												Integer.parseInt(customPlayerNewMaxSurges),
-												Integer.parseInt(customPlayerNewHS));
-										relaunchWithPlayer(player);
+										if (customPlayerNewCurrentHP.equals("")
+												|| customPlayerNewCurrentSurges
+														.equals("")) {
+											player = new Player(
+													Integer.parseInt(customPlayerNewMaxHP),
+													Integer.parseInt(customPlayerNewMaxSurges),
+													Integer.parseInt(customPlayerNewHS));
+											relaunchWithPlayer(player);
+										} else {
+											player = new Player(
+													Integer.parseInt(customPlayerNewMaxHP),
+													Integer.parseInt(customPlayerNewCurrentHP),
+													Integer.parseInt(customPlayerNewMaxSurges),
+													Integer.parseInt(customPlayerNewCurrentSurges),
+													Integer.parseInt(customPlayerNewHS));
+											relaunchWithPlayer(player);
+										}
 									}
 
 								}
