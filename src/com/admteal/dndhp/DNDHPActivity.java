@@ -29,7 +29,7 @@ public class DNDHPActivity extends Activity {
 
 	public int currentEntry;
 
-	// Initialize the toggles we use
+	// Initialize the status toggles
 	public ToggleButton toggleBlinded, toggleDazed, toggleDominated,
 			toggleGrabbed, toggleMarked, toggleProne, toggleStunned,
 			toggleWeakened;
@@ -46,9 +46,10 @@ public class DNDHPActivity extends Activity {
 	// Initialize the Death Saves function buttons
 	public Button DSAdd, DSSub;
 
+	// Initialize our important views
 	public TextView currentEntryView, currentHPView, currentTHPView;
-	public LinearLayout showWorkLayout;
 	public ScrollView showWorkScroller;
+	public LinearLayout showWorkLayout;
 
 	// Called when the activity is first created.
 	@Override
@@ -170,6 +171,7 @@ public class DNDHPActivity extends Activity {
 		inputTHP.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				tempHPUpdater(currentEntry);
+				clearEntry();
 			}
 		});
 		inputAdd = (Button) findViewById(R.id.inputAdd);
@@ -522,8 +524,7 @@ public class DNDHPActivity extends Activity {
 		adjustment.setText(operation + Integer.toString(value));
 		adjustment.setGravity(Gravity.RIGHT);
 		// 14 px converted to 14 dip
-		adjustment
-				.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);
+		adjustment.setTextSize(dpi(14));
 		// Second line shows new total number
 		sum.setText(Integer.toString(hpToList));
 		sum.setGravity(Gravity.LEFT);
@@ -537,7 +538,7 @@ public class DNDHPActivity extends Activity {
 		}
 
 		// 14 px converted to 14 dip
-		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);
+		sum.setTextSize(dpi(14));
 		// Now commit those lines to the view
 		showWorkLayout.addView(adjustment);
 		showWorkLayout.addView(sum);
@@ -562,7 +563,6 @@ public class DNDHPActivity extends Activity {
 		} else {
 			currentTHPView.setText("");
 		}
-		clearEntry();
 	}
 
 	// If no value is passed to tempHPUpdater, use a 0 value
@@ -638,5 +638,10 @@ public class DNDHPActivity extends Activity {
 	public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));
+	}
+	
+	// Turns a pixel size (int) to a dpi size.
+	public float dpi(int px) {
+		return px * getResources().getDisplayMetrics().density + 0.5f;
 	}
 }

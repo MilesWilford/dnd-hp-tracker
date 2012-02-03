@@ -147,7 +147,8 @@
                 style="@style/SmallButton"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/DSAdd"
-                android:layout_toRightOf="@+id/DSSub" />
+                android:layout_toRightOf="@+id/DSSub"
+                android:enabled="false" />
 
             <Button
                 android:id="@+id/DSAdd"
