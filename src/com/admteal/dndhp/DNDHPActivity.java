@@ -385,6 +385,10 @@ public class DNDHPActivity extends Activity {
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
 													Integer.parseInt(customPlayerNewHS));
+											Toast.makeText(
+													getApplicationContext(),
+													getString(R.string.TOAST_madeFullHPPlayer),
+													Toast.LENGTH_SHORT).show();
 											relaunchWithPlayer(player);
 										} else {
 											player = new Player(
@@ -393,6 +397,10 @@ public class DNDHPActivity extends Activity {
 													Integer.parseInt(customPlayerNewMaxSurges),
 													Integer.parseInt(customPlayerNewCurrentSurges),
 													Integer.parseInt(customPlayerNewHS));
+											Toast.makeText(
+													getApplicationContext(),
+													getString(R.string.TOAST_madePartialHPPlayer),
+													Toast.LENGTH_SHORT).show();
 											relaunchWithPlayer(player);
 										}
 									}
@@ -419,6 +427,10 @@ public class DNDHPActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.newPlayer:
 			relaunchWithPlayer(new Player());
+			Toast.makeText(
+					getApplicationContext(),
+					getString(R.string.TOAST_madeDefaultPlayer),
+					Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.newCustomPlayer:
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);

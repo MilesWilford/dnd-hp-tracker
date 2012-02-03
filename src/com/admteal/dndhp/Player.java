@@ -26,12 +26,11 @@ public class Player implements Serializable {
     public Player() {
     	maxHP = 999;
     	currentHP = 0;
-    	currentHP = 0;
     	currentTHP = 0;
-    	currentHS = 0;
      	currentOngo = 0;
      	maxSurges = 99;
      	currentSurges = 0;
+    	currentHS = 0;
      	currentDeathSaves = 3;
      	clearToggles();
      	usingDefaultPlayer = true;
@@ -39,28 +38,27 @@ public class Player implements Serializable {
     
     // Create a new player at full HP
     public Player(int newHP, int newSurges, int newCurrentHS) {
-    	currentHP = newHP;
         maxHP = newHP;
+    	currentHP = newHP;
+    	currentTHP = 0;
         maxSurges = newSurges;
-        currentSurges = maxSurges;
+        currentSurges = newSurges;
         currentHS = newCurrentHS;
+     	currentDeathSaves = 3;
         clearToggles();
      	usingDefaultPlayer = false;
     }
     
     // Create a new player at partial HP
     public Player(int newMaxHP, int newCurrentHP,
-    		int newMaxSurges, int newCurrentSurges, int currentHS) {
-    	if (newCurrentHP == -1) {
-    		currentHP = newMaxHP;
-    	}
-    	if (newCurrentSurges == -1) {
-    		currentSurges = newMaxSurges;
-    	}
+    		int newMaxSurges, int newCurrentSurges, int newCurrentHS) {
+    	maxHP = newMaxHP;
     	currentHP = newCurrentHP;
-    	currentHP = newMaxHP;
-        currentSurges = newCurrentSurges;
+    	currentTHP = 0;
         maxSurges = newMaxSurges;
+        currentSurges = newCurrentSurges;
+        currentHS = newCurrentHS;
+     	currentDeathSaves = 3;
         clearToggles();
      	usingDefaultPlayer = false;
     }
