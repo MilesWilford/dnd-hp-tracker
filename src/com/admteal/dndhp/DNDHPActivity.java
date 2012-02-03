@@ -288,32 +288,11 @@ public class DNDHPActivity extends Activity {
 		currentTHPView = (TextView) findViewById(R.id.currentTHPView);
 	}
 
-	/*
-	 * Refills UI elements after the activity has been killed for some reason,
-	 * e.g., orientation change(non-Javadoc) @see
-	 * android.app.Activity#onResume()
-	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
+		relaunchWithPlayer(player);
 		currentEntryView.setText(Integer.toString(currentEntry));
-		currentHPView.setText(Integer.toString(player.getHP()));
-		inputSurges.setText(getResources().getString(R.string.surges)
-				+ COLON_SPACE + Integer.toString(player.getSurges()));
-		ongoUpdater(BLANK);
-		DSUpdater(BLANK);
-		surgesUpdater(BLANK);
-		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE
-				+ Integer.toString(player.getHS()));
-		togglesUpdater();
-		/*
-		 * Because of the way they're created, player.changeHistory and
-		 * player.HPHistory are always the same length
-		 */
-		for (int i = 0; i < player.getChangeHistory().size(); i++) {
-			showWorkViewMaker(player.getChangeHistory().get(i), player
-					.getHPHistory().get(i));
-		}
 	}
 
 	@Override
@@ -333,7 +312,6 @@ public class DNDHPActivity extends Activity {
 	// Generate my alert dialogs
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		Dialog dialog;
 		switch (id) {
 		case DIALOG_CLEAR:
 			return new AlertDialog.Builder(this)
@@ -404,6 +382,7 @@ public class DNDHPActivity extends Activity {
 												Integer.parseInt(customPlayerNewMaxHP),
 												Integer.parseInt(customPlayerNewMaxSurges),
 												Integer.parseInt(customPlayerNewHS));
+										relaunchWithPlayer(player);
 									}
 
 								}
@@ -439,9 +418,26 @@ public class DNDHPActivity extends Activity {
 
 	public void relaunchWithPlayer(Player newPlayer) {
 		player = newPlayer;
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
+		currentHPView.setText(Integer.toString(player.getHP()));
+		inputSurges.setText(getResources().getString(R.string.surges)
+				+ COLON_SPACE + Integer.toString(player.getSurges()));
+		ongoUpdater(BLANK);
+		DSUpdater(BLANK);
+		surgesUpdater(BLANK);
+		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE
+				+ Integer.toString(player.getHS()));
+		togglesUpdater();
+		tempHPUpdater();
+		/*
+		 * Because of the way they're created, player.changeHistory and
+		 * player.HPHistory are always the same length.
+		 * First, removeAllViews just in case any were already here.
+		 */
+		showWorkLayout.removeAllViews();
+		for (int i = 0; i < player.getChangeHistory().size(); i++) {
+			showWorkViewMaker(player.getChangeHistory().get(i), player
+					.getHPHistory().get(i));
+		}
 	}
 
 	// Sets all toggle buttons to the states from the Player class
@@ -511,6 +507,15 @@ public class DNDHPActivity extends Activity {
 		// Second line shows new total number
 		sum.setText(Integer.toString(hpToList));
 		sum.setGravity(Gravity.LEFT);
+
+		if (hpToList == player.getMaxHP() && !player.isDefaultPlayer()) {
+			sum.setTextColor(Color.GREEN);
+		} else if (player.isBloodied() && !player.isDefaultPlayer()) {
+			sum.setTextColor(Color.YELLOW);
+		} else if (player.isDying()) {
+			sum.setTextColor(Color.RED);
+		}
+		
 		// 14 px converted to 14 dip
 		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);
 		// Now commit those lines to the view

@@ -66,6 +66,11 @@ public class Player implements Serializable {
     }
     
     public void heal(int healBy) {
+    	dying = false;
+    	if (healBy > 0 && currentHP < 0) {
+    		currentHP = 0;
+    		dying = false;
+    	}
     	if (currentHP + healBy > maxHP) { //No going above max.
     		changeHistory.add(maxHP-currentHP);
     		currentHP = maxHP;
@@ -106,6 +111,9 @@ public class Player implements Serializable {
 			currentHP -= injureBy;
 		}
 		HPHistory.add(currentHP);
+		if (currentHP <= 0) {
+			dying = true;
+		}
 	}
 
     // HP VALUE
@@ -367,6 +375,10 @@ public class Player implements Serializable {
 			currentHP = maxHP;
 			currentSurges = maxSurges;
 		}
+	}
+	
+	public boolean isDefaultPlayer() {
+		return usingDefaultPlayer;
 	}
     
 	// History trackers
