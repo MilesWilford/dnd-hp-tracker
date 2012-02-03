@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <!-- Left Main Column -->
+
+    <RelativeLayout
+        android:id="@+id/displaysLayout"
+        android:layout_width="64dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/currentHPView"
+            style="@style/SmallButton"
+            android:layout_width="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/currentTHPView"
+            style="@style/SmallButton"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/currentHPView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+        <ScrollView
+            android:id="@+id/showWorkScroller"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/currentEntryView"
+            android:layout_below="@+id/currentTHPView"
+            android:layout_centerHorizontal="true"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:id="@+id/showWorkLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/currentEntryView"
+            style="@style/SmallButton"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+    </RelativeLayout>
+
+    <!-- Right Main Column -->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <!-- Top Right Toggles -->
+
+        <LinearLayout
+            android:id="@+id/leftToggleCol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical" >
+
+            <ToggleButton
+                android:id="@+id/toggleBlinded"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Blinded"
+                android:textOn="@string/Blinded" />
+
+            <ToggleButton
+                android:id="@+id/toggleDazed"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Dazed"
+                android:textOn="@string/Dazed" />
+
+            <ToggleButton
+                android:id="@+id/toggleDominated"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Dominated"
+                android:textOn="@string/Dominated" />
+
+            <ToggleButton
+                android:id="@+id/toggleGrabbed"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Grabbed"
+                android:textOn="@string/Grabbed" />
+
+            <Button
+                android:id="@+id/inputClear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Clear" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rightToggleCol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/leftToggleCol"
+            android:orientation="vertical" >
+
+            <ToggleButton
+                android:id="@+id/toggleMarked"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Marked"
+                android:textOn="@string/Marked" />
+
+            <ToggleButton
+                android:id="@+id/toggleProne"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Prone"
+                android:textOn="@string/Prone" />
+
+            <ToggleButton
+                android:id="@+id/toggleStunned"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Stunned"
+                android:textOn="@string/Stunned" />
+
+            <ToggleButton
+                android:id="@+id/toggleWeakened"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:textOff="@string/Weakened"
+                android:textOn="@string/Weakened" />
+
+            <Button
+                android:id="@+id/inputHS"
+                style="@style/SmallButton"
+                android:layout_width="fill_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <!-- Center Right Tracker Buttons -->
+
+        <RelativeLayout
+            android:id="@+id/trackersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/rightToggleCol"
+            android:orientation="vertical" >
+
+            <!-- Death Saves -->
+
+            <Button
+                android:id="@+id/DSSub"
+                style="@style/SmallButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/inputDS"
+                style="@style/SmallButton"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/DSAdd"
+                android:layout_toRightOf="@+id/DSSub" />
+
+            <Button
+                android:id="@+id/DSAdd"
+                style="@style/SmallButton"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="+" />
+
+            <!-- Healing Surges -->
+
+            <Button
+                android:id="@+id/surgesSub"
+                style="@style/SmallButton"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/DSSub"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/inputSurges"
+                style="@style/SmallButton"
+                android:layout_below="@+id/inputDS"
+                android:layout_toLeftOf="@+id/surgesAdd"
+                android:layout_toRightOf="@+id/surgesSub" />
+
+            <Button
+                android:id="@+id/surgesAdd"
+                style="@style/SmallButton"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/DSAdd"
+                android:text="+" />
+
+            <!-- Ongoing/Regeneration -->
+
+            <Button
+                android:id="@+id/ongoSub"
+                style="@style/SmallButton"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/surgesSub"
+                android:text="-" />
+
+            <Button
+                android:id="@+id/inputOngo"
+                style="@style/SmallButton"
+                android:layout_alignRight="@+id/inputSurges"
+                android:layout_below="@+id/inputSurges"
+                android:layout_toRightOf="@+id/ongoSub" />
+
+            <Button
+                android:id="@+id/ongoAdd"
+                style="@style/SmallButton"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/surgesAdd"
+                android:text="+" />
+        </RelativeLayout>
+
+        <!-- Calculator Buttons -->
+
+        <LinearLayout
+            android:id="@+id/calculatorLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/trackersLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/trackersLayout"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TableLayout
+                android:id="@+id/calculatorNumbersLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="3" >
+
+                <TableRow android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/input1"
+                        style="@style/fill_parent"
+                        android:text="1" />
+
+                    <Button
+                        android:id="@+id/input2"
+                        style="@style/fill_parent"
+                        android:text="2" />
+
+                    <Button
+                        android:id="@+id/input3"
+                        style="@style/fill_parent"
+                        android:text="3" />
+                </TableRow>
+
+                <TableRow android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/input4"
+                        style="@style/fill_parent"
+                        android:text="4" />
+
+                    <Button
+                        android:id="@+id/input5"
+                        style="@style/fill_parent"
+                        android:text="5" />
+
+                    <Button
+                        android:id="@+id/input6"
+                        style="@style/fill_parent"
+                        android:text="6" />
+                </TableRow>
+
+                <TableRow android:layout_weight="1" >
+
+                    <Button
+                        android:id="@+id/input7"
+                        style="@style/fill_parent"
+                        android:text="7" />
+
+                    <Button
+                        android:id="@+id/input8"
+                        style="@style/fill_parent"
+                        android:text="8" />
+
+                    <Button
+                        android:id="@+id/input9"
+                        style="@style/fill_parent"
+                        android:text="9" />
+                </TableRow>
+            </TableLayout>
+
+            <Button
+                android:id="@+id/input0"
+                style="@style/SmallButton"
+                android:layout_height="match_parent"
+                android:text="0" />
+
+            <LinearLayout
+                android:id="@+id/calculatorRightSideLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/inputTHP"
+                    style="@style/fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/THP" />
+
+                <Button
+                    android:id="@+id/inputAdd"
+                    style="@style/fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/inputSub"
+                    style="@style/fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
