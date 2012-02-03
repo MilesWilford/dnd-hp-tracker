@@ -319,7 +319,7 @@ public class DNDHPActivity extends Activity {
 			return new AlertDialog.Builder(this)
 					.setMessage(R.string.DIALOG_CLEAR_msg)
 					.setCancelable(true)
-					.setPositiveButton("Yes",
+					.setPositiveButton(R.string.YES,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0,
 										int arg1) {
@@ -327,7 +327,7 @@ public class DNDHPActivity extends Activity {
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							}).setNegativeButton("No", null).create();
+							}).setNegativeButton(R.string.NO, null).create();
 		case DIALOG_NEW_CUSTOM_PLAYER:
 			final View customizePlayerView = View.inflate(this,
 					R.layout.dialog_custom_player, null);
@@ -346,7 +346,6 @@ public class DNDHPActivity extends Activity {
 					.setTitle(R.string.DIALOG_CUSTOM_PLAYER_title)
 					.setCancelable(true)
 					.setView(customizePlayerView)
-					.setTitle("Test test")
 					.setPositiveButton(R.string.savePlayer,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0,

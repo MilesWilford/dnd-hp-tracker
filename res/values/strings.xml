@@ -11,6 +11,8 @@
     <string name="new_player">New Player</string>
     <string name="custom_player">Custom Player</string>
     <string name="THP">THP</string>
+    <string name="YES">Yes</string>
+    <string name="NO">No</string>
     <!-- String literals for use in the programatic app -->
     <string name="minus">minus</string>
     <string name="plus">plus</string>
@@ -34,7 +36,7 @@
     	<string name="Unconscious">UNCO</string>
     <string name="Weakened">WEAK</string>
     <!-- New Custom Player dialog strings -->
-    <string name="DIALOG_CUSTOM_PLAYER_title">What stats should this new player have?</string>
+    <string name="DIALOG_CUSTOM_PLAYER_title">What stats should the new player have?</string>
     <string name="DIALOG_CLEAR_msg">Reset player to defaults?</string>
     <string name="newMaxHP">Max HP*: </string>
     <string name="newCurrentHP">Current HP: </string>
