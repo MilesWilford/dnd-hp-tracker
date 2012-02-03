@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Editable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +23,7 @@ public class DNDHPActivity extends Activity {
 
 	// Some variables for cleanliness's sake
 	public static String PLUS, MINUS, BLANK, COLON_SPACE, INPUT;
-	
+
 	public final int DIALOG_CLEAR = 0;
 	public final int DIALOG_NEW_CUSTOM_PLAYER = 1;
 
@@ -55,11 +56,11 @@ public class DNDHPActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		PLUS		= getString(R.string.plus);
-		MINUS		= getString(R.string.minus);
-		BLANK		= getString(R.string.blank);
+		PLUS = getString(R.string.plus);
+		MINUS = getString(R.string.minus);
+		BLANK = getString(R.string.blank);
 		COLON_SPACE = getString(R.string.colonspace);
-		INPUT		= getString(R.string.input);
+		INPUT = getString(R.string.input);
 
 		// Create the new default player if there isn't one already
 		if (savedInstanceState == null) {
@@ -280,11 +281,11 @@ public class DNDHPActivity extends Activity {
 
 		inputDS = (Button) findViewById(R.id.inputDS);
 
-		currentEntryView= (TextView) findViewById(R.id.currentEntryView);
-		showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
-		showWorkLayout 	= (LinearLayout) findViewById(R.id.showWorkLayout);
-		currentHPView 	= (TextView) findViewById(R.id.currentHPView);
-		currentTHPView 	= (TextView) findViewById(R.id.currentTHPView);
+		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
+		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
+		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
+		currentHPView = (TextView) findViewById(R.id.currentHPView);
+		currentTHPView = (TextView) findViewById(R.id.currentTHPView);
 	}
 
 	/*
@@ -335,85 +336,107 @@ public class DNDHPActivity extends Activity {
 		Dialog dialog;
 		switch (id) {
 		case DIALOG_CLEAR:
-			AlertDialog.Builder clearBuilder = new AlertDialog.Builder(this);
-			clearBuilder.setMessage(R.string.DIALOG_CLEAR_msg)
+			return new AlertDialog.Builder(this)
+					.setMessage(R.string.DIALOG_CLEAR_msg)
 					.setCancelable(true)
 					.setPositiveButton("Yes",
 							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface arg0, int arg1) {
+								public void onClick(DialogInterface arg0,
+										int arg1) {
 									clearEntry();
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							})
-					.setNegativeButton("No",
+							}).setNegativeButton("No", null).create();
+		case DIALOG_NEW_CUSTOM_PLAYER:
+			// TODO WORKING HERE
+			final View customizePlayerView = View.inflate(this,
+					R.layout.dialog_custom_player, null);
+			final EditText newMaxHPEdit = (EditText) customizePlayerView
+					.findViewById(R.id.maxHPEdit);
+			final EditText newCurrentHPEdit = (EditText) customizePlayerView
+					.findViewById(R.id.currentHPEdit);
+			final EditText newMaxSurgesEdit = (EditText) customizePlayerView
+					.findViewById(R.id.maxSurgesEdit);
+			final EditText newCurrentSurgesEdit = (EditText) customizePlayerView
+					.findViewById(R.id.currentSurgesEdit);
+			final EditText newCurrentHSEdit = (EditText) customizePlayerView
+					.findViewById(R.id.currentHSEdit);
+
+			return new AlertDialog.Builder(this)
+					.setTitle(R.string.DIALOG_CUSTOM_PLAYER_title)
+					.setCancelable(true)
+					.setView(customizePlayerView)
+					.setTitle("Test test")
+					.setPositiveButton(R.string.savePlayer,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0,
 										int arg1) {
-									// Do nothing
-								}
-							});
-			dialog = clearBuilder.create();
-			break;
-		case DIALOG_NEW_CUSTOM_PLAYER:
-			//TODO
-            // This example shows how to add a custom layout to an AlertDialog
-			AlertDialog.Builder customPlayerBuilder = new AlertDialog.Builder(this);
-            LayoutInflater factory = LayoutInflater.from(this);
-            final View customizePlayerView = factory.inflate(R.layout.dialog_custom_player, null);
-            customPlayerBuilder.setTitle(R.string.DIALOG_CUSTOM_PLAYER_title)
-				.setCancelable(true)
-                .setView(customizePlayerView)
-            	.setTitle("Test test")
-                .setPositiveButton(R.string.savePlayer,
-						new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface arg0, int arg1) {
-							clearEntry();
-							player.extendedRest();
-							relaunchWithPlayer(player);
-						}
-					})
-                .setNegativeButton(R.string.abandonPlayer, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+									String customPlayerNewMaxHP = newMaxHPEdit
+											.getText().toString();
+									String customPlayerNewCurrentHP = newCurrentHPEdit
+											.getText().toString();
+									String customPlayerNewMaxSurges = newMaxSurgesEdit
+											.getText().toString();
+									String customPlayerNewCurrentSurges = newCurrentSurgesEdit
+											.getText().toString();
+									String customPlayerNewHS = newCurrentHSEdit
+											.getText().toString();
 
-                        /* User clicked cancel so do some stuff */
-                    }
-                });
-                dialog = customPlayerBuilder.create();
-                break;
+									if (customPlayerNewMaxHP.equals("")
+											|| customPlayerNewMaxSurges
+													.equals("")) {
+										Toast.makeText(
+												getApplicationContext(),
+												getString(R.string.TOAST_couldNotMakePlayer),
+												Toast.LENGTH_SHORT).show();
+										return;
+									} else {
+										if (customPlayerNewHS.equals("")) {
+											int customPlayerNewHSInt = Integer.parseInt(customPlayerNewMaxHP) / 2;
+											customPlayerNewHSInt = (customPlayerNewHSInt / 2) / 2;
+											customPlayerNewHS = Integer.toString(customPlayerNewHSInt);
+										}
+										player = new Player(
+												Integer.parseInt(customPlayerNewMaxHP),
+												Integer.parseInt(customPlayerNewMaxSurges),
+												Integer.parseInt(customPlayerNewHS));
+									}
+
+								}
+							}).setNegativeButton(R.string.abandonPlayer, null)
+					.show();
 		default:
-			dialog = null;
+			return null;
 		}
-		return dialog;
 	}
-	
-	//Inflate the menu options
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu, menu);
-	    return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	    case R.id.newPlayer:
-	    	relaunchWithPlayer(new Player());
-	        return true;
-	    case R.id.newCustomPlayer:
-	    	showDialog(DIALOG_NEW_CUSTOM_PLAYER);
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.newPlayer:
+			relaunchWithPlayer(new Player());
+			return true;
+		case R.id.newCustomPlayer:
+			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	public void relaunchWithPlayer(Player newPlayer) {
-    	player = newPlayer;
-    	Intent intent = getIntent();
-    	finish();
-    	startActivity(intent);
+		player = newPlayer;
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
 	}
 
 	// Sets all toggle buttons to the states from the Player class
@@ -447,8 +470,11 @@ public class DNDHPActivity extends Activity {
 
 		currentHPView.setText(Integer.toString(player.getHP()));
 	}
-	// Use the player's HP if an hpToList was not specified. Generally, this
-	// will be the case
+
+	/*
+	 * Use the player's HP if an hpToList was not specified. Generally, this
+	 * will be the case
+	 */
 	public void showWorkViewMaker(int value) {
 		showWorkViewMaker(value, player.getHP());
 	}
@@ -496,8 +522,8 @@ public class DNDHPActivity extends Activity {
 		});
 		tempHPUpdater();
 	}
-	
-	//Controls adding temporary HP to player class
+
+	// Controls adding temporary HP to player class
 	public void tempHPUpdater(int value) {
 		player.addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
@@ -508,8 +534,8 @@ public class DNDHPActivity extends Activity {
 		}
 		clearEntry();
 	}
-	
-	//If no value is passed to tempHPUpdater, use a 0 value
+
+	// If no value is passed to tempHPUpdater, use a 0 value
 	public void tempHPUpdater() {
 		tempHPUpdater(0);
 	}
@@ -567,8 +593,10 @@ public class DNDHPActivity extends Activity {
 		inputOngo.setText(dotOrHot + COLON_SPACE + valueToUse);
 	}
 
-	// Displays the numbers that represent the current entry based on key
-	// presses.
+	/*
+	 * Displays the numbers that represent the current entry based on key
+	 * presses.
+	 */
 	public void currentEntryViewUpdater(int updateWith) {
 		if (currentEntry * 10 > 999) {
 			return;
@@ -577,7 +605,6 @@ public class DNDHPActivity extends Activity {
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
 
-	// Zeroes the currentEntry
 	public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));

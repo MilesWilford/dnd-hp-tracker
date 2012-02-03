@@ -36,12 +36,16 @@
     <!-- New Custom Player dialog strings -->
     <string name="DIALOG_CUSTOM_PLAYER_title">What stats should this new player have?</string>
     <string name="DIALOG_CLEAR_msg">Reset player to defaults?</string>
-    <string name="newMaxHP">Max HP: </string>
-    <string name="newCurrentHP">Current HP (optional): </string>
-    <string name="newMaxSurges">Max Surges: </string>
-    <string name="newCurrentSurges">Current Surges (optional): </string>
+    <string name="newMaxHP">Max HP*: </string>
+    <string name="newCurrentHP">Current HP: </string>
+    <string name="newMaxSurges">Max Surges*: </string>
+    <string name="newCurrentSurges">Current Surges: </string>
     <string name="newHS">Surge Value: </string>
     <string name="savePlayer">Save Player</string>
     <string name="abandonPlayer">Abandon Player</string>
+    <string name="starsNecessary">Values marked with a * are necessary.</string>
+    <string name="TOAST_couldNotMakePlayer">Necessary values were blank, so new custom player could not be made.</string>
+    <string name="TOAST_madeFullHPPlayer">Made a new player at full HP</string>
+    <string name="TOAST_madeNonFullHPPlayer">Made a new player at partial HP</string>
 
 </resources>

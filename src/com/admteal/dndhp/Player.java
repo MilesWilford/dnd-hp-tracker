@@ -22,7 +22,7 @@ public class Player implements Serializable {
     private ArrayList<Integer> changeHistory = new ArrayList<Integer>();
     private ArrayList<Integer> HPHistory = new ArrayList<Integer>();
     
-    //default constructor for if we aren't passing a real max hp
+    // Default constructor for if we aren't passing a real max hp
     public Player() {
     	maxHP = 999;
     	currentHP = 0;
@@ -37,21 +37,29 @@ public class Player implements Serializable {
      	usingDefaultPlayer = true;
     }
     
-    //create a new player at full HP
-    public Player(int newHP, int newSurges) {
+    // Create a new player at full HP
+    public Player(int newHP, int newSurges, int newCurrentHS) {
     	currentHP = newHP;
         maxHP = newHP;
         maxSurges = newSurges;
         currentSurges = maxSurges;
+        currentHS = newCurrentHS;
         clearToggles();
      	usingDefaultPlayer = false;
     }
     
-    //create a new player at less than full HP
-    public Player(int newHP, int newMaxHP, int newSurges, int newMaxSurges) {
-    	currentHP = newHP;
+    // Create a new player at partial HP
+    public Player(int newMaxHP, int newCurrentHP,
+    		int newMaxSurges, int newCurrentSurges, int currentHS) {
+    	if (newCurrentHP == -1) {
+    		currentHP = newMaxHP;
+    	}
+    	if (newCurrentSurges == -1) {
+    		currentSurges = newMaxSurges;
+    	}
+    	currentHP = newCurrentHP;
     	currentHP = newMaxHP;
-        currentSurges = newSurges;
+        currentSurges = newCurrentSurges;
         maxSurges = newMaxSurges;
         clearToggles();
      	usingDefaultPlayer = false;
@@ -100,7 +108,7 @@ public class Player implements Serializable {
 		HPHistory.add(currentHP);
 	}
 
-    //HP VALUE
+    // HP VALUE
     public int getHP() {
         return currentHP;
     }
@@ -109,7 +117,7 @@ public class Player implements Serializable {
         currentHP = newHP;
     }
 
-    //MAX HP VALUE
+    // MAX HP VALUE
     public int getMaxHP() {
         return maxHP;
     }
@@ -118,7 +126,7 @@ public class Player implements Serializable {
         maxHP = newMaxHP;
     }
     	
-    //BLOODIED VALUE
+    // BLOODIED VALUE
     public boolean isBloodied() {
     	if (currentHP <= maxHP/2) {
     		return true;
@@ -127,19 +135,19 @@ public class Player implements Serializable {
     	}
     }
 
-    //TEMPORARY HP
+    // TEMPORARY HP
     public int getTHP() {
     	return currentTHP;
     }
     
-    //Only the largest THP number offered applies.
+    // Only the largest THP number offered applies.
     public void addTHP(int newTHP) {
     	if (newTHP > currentTHP) {
     		currentTHP = newTHP;
     	}
     }
     
-    //SURGES COUNT
+    // SURGES COUNT
     public int getSurges() {
         return currentSurges;
     }
@@ -161,7 +169,7 @@ public class Player implements Serializable {
     	currentSurges--;
     }
     
-    //SURGE VALUE
+    // SURGE VALUE
     public void setHS(int newHS) {
     	currentHS = newHS;
     }
@@ -170,7 +178,7 @@ public class Player implements Serializable {
     	return currentHS;
     }
     
-    //ONGOING VALUE
+    // ONGOING VALUE
     public void setOngo(int newOngo) {
     	currentOngo = newOngo;
     }
@@ -179,7 +187,7 @@ public class Player implements Serializable {
     	return currentOngo;
     }
     	
-    //regen is the opposite of ongoing damage
+    // Regen is the opposite of ongoing damage
     public int getRegen() { 
         return currentOngo * -1;
     }
@@ -192,7 +200,7 @@ public class Player implements Serializable {
     	currentOngo--;
     }
     
-    //DEATH SAVES COUNT
+    // DEATH SAVES COUNT
     public void setDeathSaves(int newDeathSaves) {
     	currentDeathSaves = newDeathSaves;
     }
@@ -209,7 +217,7 @@ public class Player implements Serializable {
     	currentDeathSaves--;
     }
     
-    //STATUS EFFECTS    
+    // STATUS EFFECTS    
 	public boolean isBlinded() {return blinded;}
 	public void blind() {
 		blinded = true;
@@ -295,7 +303,7 @@ public class Player implements Serializable {
 	public void knockProne() {
 		prone = true;
 	}
-	public void getUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockProne SOUNDS STUPID
+	public void getUp() {  // NOTE THIS BREAKS THE FORM BECAUSE unknockProne SOUNDS STUPID
 		prone = false;
 	}
 	
@@ -319,7 +327,7 @@ public class Player implements Serializable {
 	public void knockOut() {
 		unconscious = true;
 	}
-	public void wakeUp() {  //NOTE THIS BREAKS THE FORM BECAUSE unknockOut SOUNDS STUPID
+	public void wakeUp() {  // NOTE THIS BREAKS THE FORM BECAUSE unknockOut SOUNDS STUPID
 		unconscious = false;
 	}
 	
@@ -331,7 +339,7 @@ public class Player implements Serializable {
 		weakened = false;
 	}
 	
-	//Clears all the toggles.  Private because it should only be called by making a new Player
+	// Clears all the toggles.  Private because it should only be called by making a new Player
 	private void clearToggles() {
 		blinded = false;
 		dazed = false;
@@ -361,7 +369,7 @@ public class Player implements Serializable {
 		}
 	}
     
-	//History trackers
+	// History trackers
     public ArrayList<Integer> getChangeHistory() {
     	return changeHistory;
     }
