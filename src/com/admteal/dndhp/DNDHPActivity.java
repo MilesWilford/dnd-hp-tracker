@@ -6,23 +6,28 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.text.Editable;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
 	public Player player;
 
 	// Some variables for cleanliness's sake
-	public static String PLUS, MINUS, BLANK, COLON_SPACE, INPUT;
+	public static String PLUS, MINUS, BLANK, INPUT;
+	public static String CURRENT_ENTRY_STRING = "currentEntry";
+	public static String PLAYER_STRING = "player";
 
 	public final int DIALOG_CLEAR = 0;
 	public final int DIALOG_NEW_CUSTOM_PLAYER = 1;
@@ -60,7 +65,6 @@ public class DNDHPActivity extends Activity {
 		PLUS = getString(R.string.plus);
 		MINUS = getString(R.string.minus);
 		BLANK = getString(R.string.blank);
-		COLON_SPACE = getString(R.string.colonspace);
 		INPUT = getString(R.string.input);
 
 		// Create the new default player if there isn't one already
@@ -155,7 +159,7 @@ public class DNDHPActivity extends Activity {
 		for (int i = 0; i < 10; i++) {
 			String buttonID = INPUT + Integer.toString(i);
 			int resourceID = getResources().getIdentifier(buttonID, "id",
-					"com.admteal.dndhp");
+					getString(R.string.packageName));
 			Button b = (Button) findViewById(resourceID);
 			final int j = i; // allows passing i into a new
 								// View.OnClickListener's onClick
@@ -213,7 +217,7 @@ public class DNDHPActivity extends Activity {
 			public boolean onLongClick(View v) {
 				player.setHS(currentEntry);
 				inputHS.setText(getResources().getString(R.string.hs)
-						+ COLON_SPACE + Integer.toString(currentEntry));
+						+ ": " + Integer.toString(currentEntry));
 				clearEntry();
 				return true;
 			}
@@ -300,15 +304,15 @@ public class DNDHPActivity extends Activity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt("currentEntry", currentEntry);
-		savedInstanceState.putSerializable("Player", player);
+		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry);
+		savedInstanceState.putSerializable(PLAYER_STRING, player);
 	}
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		currentEntry = savedInstanceState.getInt("currentEntry");
-		player = (Player) savedInstanceState.getSerializable("Player");
+		currentEntry = savedInstanceState.getInt(CURRENT_ENTRY_STRING);
+		player = (Player) savedInstanceState.getSerializable(PLAYER_STRING);
 	}
 
 	// Generate my alert dialogs
@@ -319,7 +323,7 @@ public class DNDHPActivity extends Activity {
 			return new AlertDialog.Builder(this)
 					.setMessage(R.string.DIALOG_CLEAR_msg)
 					.setCancelable(true)
-					.setPositiveButton("Yes",
+					.setPositiveButton(getString(R.string.yes),
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0,
 										int arg1) {
@@ -327,7 +331,7 @@ public class DNDHPActivity extends Activity {
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							}).setNegativeButton("No", null).create();
+							}).setNegativeButton(getString(R.string.no), null).create();
 		case DIALOG_NEW_CUSTOM_PLAYER:
 			final View customizePlayerView = View.inflate(this,
 					R.layout.dialog_custom_player, null);
@@ -346,7 +350,6 @@ public class DNDHPActivity extends Activity {
 					.setTitle(R.string.DIALOG_CUSTOM_PLAYER_title)
 					.setCancelable(true)
 					.setView(customizePlayerView)
-					.setTitle("Test test")
 					.setPositiveButton(R.string.savePlayer,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface arg0,
@@ -362,25 +365,25 @@ public class DNDHPActivity extends Activity {
 									String customPlayerNewHS = newCurrentHSEdit
 											.getText().toString();
 
-									if (customPlayerNewMaxHP.equals("")
+									if (customPlayerNewMaxHP.equals(BLANK)
 											|| customPlayerNewMaxSurges
-													.equals("")) {
+													.equals(BLANK)) {
 										Toast.makeText(
 												getApplicationContext(),
 												getString(R.string.TOAST_couldNotMakePlayer),
 												Toast.LENGTH_SHORT).show();
 										return;
 									} else {
-										if (customPlayerNewHS.equals("")) {
+										if (customPlayerNewHS.equals(BLANK)) {
 											int customPlayerNewHSInt = Integer
 													.parseInt(customPlayerNewMaxHP) / 2;
 											customPlayerNewHSInt = (customPlayerNewHSInt / 2) / 2;
 											customPlayerNewHS = Integer
 													.toString(customPlayerNewHSInt);
 										}
-										if (customPlayerNewCurrentHP.equals("")
+										if (customPlayerNewCurrentHP.equals(BLANK)
 												|| customPlayerNewCurrentSurges
-														.equals("")) {
+														.equals(BLANK)) {
 											player = new Player(
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
@@ -442,11 +445,11 @@ public class DNDHPActivity extends Activity {
 		player = newPlayer;
 		currentHPView.setText(Integer.toString(player.getHP()));
 		inputSurges.setText(getResources().getString(R.string.surges)
-				+ COLON_SPACE + Integer.toString(player.getSurges()));
+				+ ": " + Integer.toString(player.getSurges()));
 		ongoUpdater(BLANK);
 		DSUpdater(BLANK);
 		surgesUpdater(BLANK);
-		inputHS.setText(getResources().getString(R.string.hs) + COLON_SPACE
+		inputHS.setText(getResources().getString(R.string.hs) + ": "
 				+ Integer.toString(player.getHS()));
 		togglesUpdater();
 		tempHPUpdater();
@@ -561,7 +564,7 @@ public class DNDHPActivity extends Activity {
 		if (player.getTHP() > 0) {
 			currentTHPView.setText("(" + player.getTHP() + ")");
 		} else {
-			currentTHPView.setText("");
+			currentTHPView.setText(BLANK);
 		}
 	}
 
@@ -580,7 +583,7 @@ public class DNDHPActivity extends Activity {
 		} else if (how.equals(MINUS)) {
 			player.remDeathSave();
 		}
-		inputDS.setText(getResources().getString(R.string.ds) + COLON_SPACE
+		inputDS.setText(getResources().getString(R.string.ds) + ": "
 				+ Integer.toString(player.getDeathSaves()));
 	}
 
@@ -595,7 +598,7 @@ public class DNDHPActivity extends Activity {
 			player.remSurge();
 		}
 		inputSurges.setText(getResources().getString(R.string.surges)
-				+ COLON_SPACE + Integer.toString(player.getSurges()));
+				+ ": " + Integer.toString(player.getSurges()));
 	}
 
 	/*
@@ -620,7 +623,7 @@ public class DNDHPActivity extends Activity {
 			valueToUse = Integer.toString(player.getOngo());
 		}
 		// Change the button text to reflect variable
-		inputOngo.setText(dotOrHot + COLON_SPACE + valueToUse);
+		inputOngo.setText(dotOrHot + ": " + valueToUse);
 	}
 
 	/*

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">DND HP</string>
+    <string name="packageName">com.admteal.dndhp</string>
     <string name="Clear">C</string>
     <string name="regen">Regen</string>
     <string name="ongoing">Ongoing</string>
@@ -11,6 +12,8 @@
     <string name="new_player">New Player</string>
     <string name="custom_player">Custom Player</string>
     <string name="THP">THP</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <!-- String literals for use in the programatic app -->
     <string name="minus">minus</string>
     <string name="plus">plus</string>
