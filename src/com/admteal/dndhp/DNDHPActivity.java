@@ -325,10 +325,8 @@ public class DNDHPActivity extends Activity {
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							})
-					.setNegativeButton("No", null).create();
+							}).setNegativeButton("No", null).create();
 		case DIALOG_NEW_CUSTOM_PLAYER:
-			// TODO WORKING HERE
 			final View customizePlayerView = View.inflate(this,
 					R.layout.dialog_custom_player, null);
 			final EditText newMaxHPEdit = (EditText) customizePlayerView
@@ -406,8 +404,7 @@ public class DNDHPActivity extends Activity {
 									}
 
 								}
-							})
-					.setNegativeButton(R.string.abandonPlayer, null)
+							}).setNegativeButton(R.string.abandonPlayer, null)
 					.create();
 		default:
 			return null;
@@ -427,8 +424,7 @@ public class DNDHPActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.newPlayer:
 			relaunchWithPlayer(new Player());
-			Toast.makeText(
-					getApplicationContext(),
+			Toast.makeText(getApplicationContext(),
 					getString(R.string.TOAST_madeDefaultPlayer),
 					Toast.LENGTH_SHORT).show();
 			return true;
@@ -454,8 +450,8 @@ public class DNDHPActivity extends Activity {
 		tempHPUpdater();
 		/*
 		 * Because of the way they're created, player.changeHistory and
-		 * player.HPHistory are always the same length.
-		 * First, removeAllViews just in case any were already here.
+		 * player.HPHistory are always the same length. First, removeAllViews
+		 * just in case any were already here.
 		 */
 		showWorkLayout.removeAllViews();
 		for (int i = 0; i < player.getChangeHistory().size(); i++) {
@@ -539,7 +535,7 @@ public class DNDHPActivity extends Activity {
 		} else if (player.isDying()) {
 			sum.setTextColor(Color.RED);
 		}
-		
+
 		// 14 px converted to 14 dip
 		sum.setTextSize(14 * getResources().getDisplayMetrics().density + 0.5f);
 		// Now commit those lines to the view
