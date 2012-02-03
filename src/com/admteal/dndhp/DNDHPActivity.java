@@ -427,6 +427,7 @@ public class DNDHPActivity extends Activity {
 			return true;
 		case R.id.newCustomPlayer:
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
