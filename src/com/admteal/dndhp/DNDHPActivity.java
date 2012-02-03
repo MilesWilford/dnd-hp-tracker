@@ -25,9 +25,10 @@ public class DNDHPActivity extends Activity {
 	public Player player;
 
 	// Some variables for cleanliness's sake
-	public static String PLUS, MINUS, BLANK, INPUT;
+	public static String PLUS, MINUS, INPUT;
 	public static String CURRENT_ENTRY_STRING = "currentEntry";
 	public static String PLAYER_STRING = "player";
+	public static String BLANK = "";
 
 	public final int DIALOG_CLEAR = 0;
 	public final int DIALOG_NEW_CUSTOM_PLAYER = 1;
@@ -64,7 +65,6 @@ public class DNDHPActivity extends Activity {
 
 		PLUS = getString(R.string.plus);
 		MINUS = getString(R.string.minus);
-		BLANK = getString(R.string.blank);
 		INPUT = getString(R.string.input);
 
 		// Create the new default player if there isn't one already
@@ -241,7 +241,7 @@ public class DNDHPActivity extends Activity {
 			public void onClick(View v) {
 				/*
 				 * current ongo stores the number backwards, so it is
-				 * invertedfirst
+				 * inverted first
 				 */
 				showWorkUpdater(-player.getOngo());
 			}
@@ -285,13 +285,12 @@ public class DNDHPActivity extends Activity {
 			}
 		});
 
-		inputDS = (Button) findViewById(R.id.inputDS);
-
-		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
-		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
-		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
-		currentHPView = (TextView) findViewById(R.id.currentHPView);
-		currentTHPView = (TextView) findViewById(R.id.currentTHPView);
+		inputDS 		= (Button) findViewById(R.id.inputDS);
+		currentEntryView= (TextView) findViewById(R.id.currentEntryView);
+		showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
+		showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
+		currentHPView	= (TextView) findViewById(R.id.currentHPView);
+		currentTHPView	= (TextView) findViewById(R.id.currentTHPView);
 	}
 
 	@Override
@@ -446,9 +445,9 @@ public class DNDHPActivity extends Activity {
 		currentHPView.setText(Integer.toString(player.getHP()));
 		inputSurges.setText(getResources().getString(R.string.surges)
 				+ ": " + Integer.toString(player.getSurges()));
-		ongoUpdater(BLANK);
-		DSUpdater(BLANK);
-		surgesUpdater(BLANK);
+		ongoUpdater();
+		DSUpdater();
+		surgesUpdater();
 		inputHS.setText(getResources().getString(R.string.hs) + ": "
 				+ Integer.toString(player.getHS()));
 		togglesUpdater();
@@ -583,6 +582,10 @@ public class DNDHPActivity extends Activity {
 		} else if (how.equals(MINUS)) {
 			player.remDeathSave();
 		}
+		DSUpdater();
+	}
+	
+	public void DSUpdater() {
 		inputDS.setText(getResources().getString(R.string.ds) + ": "
 				+ Integer.toString(player.getDeathSaves()));
 	}
@@ -597,6 +600,10 @@ public class DNDHPActivity extends Activity {
 		} else if (how.equals(MINUS)) {
 			player.remSurge();
 		}
+		surgesUpdater();
+	}
+	
+	public void surgesUpdater() {
 		inputSurges.setText(getResources().getString(R.string.surges)
 				+ ": " + Integer.toString(player.getSurges()));
 	}
@@ -607,13 +614,17 @@ public class DNDHPActivity extends Activity {
 	 * regen in negative numbers may be confusing.
 	 */
 	public void ongoUpdater(String how) {
-		String dotOrHot, valueToUse;
 		// Pick operation and adjust currentOngo number
 		if (how.equals(PLUS)) {
 			player.addOngo();
 		} else if (how.equals(MINUS)) {
 			player.remOngo();
 		}
+		ongoUpdater();
+	}
+	
+	public void ongoUpdater() {
+		String dotOrHot, valueToUse;
 		// It's a regen if it is under 0, otherwise it is ongoing
 		if (player.getOngo() < 0) {
 			dotOrHot = getResources().getString(R.string.regen);
@@ -624,6 +635,7 @@ public class DNDHPActivity extends Activity {
 		}
 		// Change the button text to reflect variable
 		inputOngo.setText(dotOrHot + ": " + valueToUse);
+		
 	}
 
 	/*
