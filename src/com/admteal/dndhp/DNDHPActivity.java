@@ -216,10 +216,10 @@ public class DNDHPActivity extends Activity {
 		inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				player.setHS(currentEntry);
-				inputHS.setText(getResources().getString(R.string.hs)
+				inputHS.setText(getString(R.string.hs)
 						+ ": " + Integer.toString(currentEntry));
 				clearEntry();
-				return true;
+				return true; // stops click event from also being processed
 			}
 		});
 
@@ -454,7 +454,7 @@ public class DNDHPActivity extends Activity {
 		tempHPUpdater();
 		/*
 		 * Because of the way they're created, player.changeHistory and
-		 * player.HPHistory are always the same length. First, removeAllViews
+		 * player.HPHistory are *always* the same length. First, removeAllViews
 		 * just in case any were already here.
 		 */
 		showWorkLayout.removeAllViews();
@@ -497,14 +497,6 @@ public class DNDHPActivity extends Activity {
 	}
 
 	/*
-	 * Use the player's HP if an hpToList was not specified. Generally, this
-	 * will be the case
-	 */
-	public void showWorkViewMaker(int value) {
-		showWorkViewMaker(value, player.getHP());
-	}
-
-	/*
 	 * Method which adds the red or green numbers and new current HP values to
 	 * showWorkView
 	 */
@@ -522,14 +514,16 @@ public class DNDHPActivity extends Activity {
 			 */
 			operation = BLANK;
 		}
+		
 		// First line shows how much was added or subtracted as +n or -n
 		adjustment.setText(operation + Integer.toString(value));
 		adjustment.setGravity(Gravity.RIGHT);
-		// 14 px converted to 14 dip
 		adjustment.setTextSize(dpi(14));
+		
 		// Second line shows new total number
 		sum.setText(Integer.toString(hpToList));
 		sum.setGravity(Gravity.LEFT);
+		sum.setTextSize(dpi(14));
 
 		if (hpToList == player.getMaxHP() && !player.isDefaultPlayer()) {
 			sum.setTextColor(Color.GREEN);
@@ -538,26 +532,34 @@ public class DNDHPActivity extends Activity {
 		} else if (player.isDying()) {
 			sum.setTextColor(Color.RED);
 		}
-
-		// 14 px converted to 14 dip
-		sum.setTextSize(dpi(14));
+		
 		// Now commit those lines to the view
 		showWorkLayout.addView(adjustment);
 		showWorkLayout.addView(sum);
 		showWorkScroller.post(new Runnable() {
 			public void run() {
-				// I tried a .fullScroll(ScrollView.FOCUS_DOWN), but this
-				// failed to scroll ALL the way
-				// This solution provides an alternative.
+				/*
+				 * I tried a .fullScroll(ScrollView.FOCUS_DOWN), but this failed
+				 * to scroll ALL the way. This solution provides an alternative.
+				 */
 				showWorkScroller.scrollTo(showWorkLayout.getMeasuredWidth(),
 						showWorkLayout.getMeasuredHeight());
 			}
 		});
 		tempHPUpdater();
 	}
+	
+	/*
+	 * Use the player's HP if an hpToList was not specified. Generally, this
+	 * will be the case
+	 */
+	public void showWorkViewMaker(int value) {
+		showWorkViewMaker(value, player.getHP());
+	}
 
 	// Controls adding temporary HP to player class
 	public void tempHPUpdater(int value) {
+		// No need to check for negatives since app doesn't allow negative numbers
 		player.addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
 		if (player.getTHP() > 0) {
@@ -567,9 +569,8 @@ public class DNDHPActivity extends Activity {
 		}
 	}
 
-	// If no value is passed to tempHPUpdater, use a 0 value
 	public void tempHPUpdater() {
-		tempHPUpdater(0);
+		tempHPUpdater(0); // Update, but do not change the value
 	}
 
 	/*
@@ -635,7 +636,6 @@ public class DNDHPActivity extends Activity {
 		}
 		// Change the button text to reflect variable
 		inputOngo.setText(dotOrHot + ": " + valueToUse);
-		
 	}
 
 	/*
@@ -645,7 +645,8 @@ public class DNDHPActivity extends Activity {
 	public void currentEntryViewUpdater(int updateWith) {
 		if (currentEntry * 10 > 999) {
 			return;
-		} // Max 3 digit number in currentEntry
+		}
+		// Max 3 digit number in currentEntry
 		currentEntry = (currentEntry * 10) + updateWith;
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}

@@ -366,9 +366,12 @@ public class Player implements Serializable {
 	
 	public void extendedRest() {
 		clearToggles();
+		currentOngo = 0;
+		currentDeathSaves = 0;
 		if (usingDefaultPlayer) {
 			currentHP = 0;
 			currentSurges = 0;
+			currentOngo = 0;
 		} else {
 			currentHP = maxHP;
 			currentSurges = maxSurges;
@@ -379,13 +382,21 @@ public class Player implements Serializable {
 		return usingDefaultPlayer;
 	}
     
-	// History trackers
+	// History trackers.  These must be the same size or it will cause problems.
     public ArrayList<Integer> getChangeHistory() {
-    	return changeHistory;
+    	if (changeHistory.size() != HPHistory.size()) {
+    		return null;
+    	} else {
+    		return changeHistory;
+    	}
     }
     
     public ArrayList<Integer> getHPHistory() {
-    	return HPHistory;
+    	if (changeHistory.size() != HPHistory.size()) {
+    		return null;
+    	} else {
+    		return HPHistory;
+    	}
     }
 
 }
