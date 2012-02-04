@@ -367,6 +367,7 @@ public class Player implements Serializable {
 	public void extendedRest() {
 		clearToggles();
 		currentOngo = 0;
+		currentTHP = 0;
 		currentDeathSaves = 0;
 		if (usingDefaultPlayer) {
 			currentHP = 0;
