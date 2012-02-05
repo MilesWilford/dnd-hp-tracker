@@ -442,16 +442,7 @@ public class DNDHPActivity extends Activity {
 
 	public void relaunchWithPlayer(Player newPlayer) {
 		player = newPlayer;
-		currentHPView.setText(Integer.toString(player.getHP()));
-		inputSurges.setText(getResources().getString(R.string.surges)
-				+ ": " + Integer.toString(player.getSurges()));
-		ongoUpdater();
-		DSUpdater();
-		surgesUpdater();
-		inputHS.setText(getResources().getString(R.string.hs) + ": "
-				+ Integer.toString(player.getHS()));
-		togglesUpdater();
-		tempHPUpdater();
+		updateAll();
 		/*
 		 * Because of the way they're created, player.changeHistory and
 		 * player.HPHistory are *always* the same length. First, removeAllViews
@@ -462,6 +453,16 @@ public class DNDHPActivity extends Activity {
 			showWorkViewMaker(player.getChangeHistory().get(i), player
 					.getHPHistory().get(i));
 		}
+	}
+	
+	public void updateAll() {
+		currentHPView.setText(Integer.toString(player.getHP()));
+		ongoUpdater();
+		DSUpdater();
+		surgesUpdater();
+		togglesUpdater();
+		tempHPUpdater();
+		
 	}
 
 	// Sets all toggle buttons to the states from the Player class
