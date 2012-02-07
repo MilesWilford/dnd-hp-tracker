@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.Menu;
@@ -23,9 +24,10 @@ import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
 	public Player player;
+	Intent intent = new Intent();
 
 	// Some variables for cleanliness's sake
-	public static String PLUS, MINUS, INPUT;
+	public static String PLUS, MINUS, INPUT, CURRENT_HP;
 	public static String CURRENT_ENTRY_STRING = "currentEntry";
 	public static String PLAYER_STRING = "player";
 	public static String BLANK = "";
@@ -66,6 +68,7 @@ public class DNDHPActivity extends Activity {
 		PLUS = getString(R.string.plus);
 		MINUS = getString(R.string.minus);
 		INPUT = getString(R.string.input);
+		CURRENT_HP = getString(R.string.CURRENT_HP);
 
 		// Create the new default player if there isn't one already
 		if (savedInstanceState == null) {
@@ -305,6 +308,8 @@ public class DNDHPActivity extends Activity {
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry);
 		savedInstanceState.putSerializable(PLAYER_STRING, player);
+		//savedInstanceState.putString(CURRENT_HP, Integer.toString(player.getHP())); //TODO working here.  Will this work?
+		
 	}
 
 	@Override
@@ -493,7 +498,12 @@ public class DNDHPActivity extends Activity {
 		}
 		showWorkViewMaker(value);
 		clearEntry();
-
+		
+		//TODO this might be the wrong place for the intent?  Intents are hard.
+		Intent intendCurrentHP = new Intent(this, AADNDHPWidgetProvider.class);
+		intendCurrentHP.putExtra(CURRENT_HP, Integer.toString(player.getHP()));
+		sendBroadcast(intendCurrentHP);
+		
 		currentHPView.setText(Integer.toString(player.getHP()));
 	}
 

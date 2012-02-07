@@ -23,7 +23,7 @@
 
         <receiver
             android:name=".AADNDHPWidgetProvider"
-            android:label="AADNDHPWidgetProivder"> <!--  keep it at the front my my widget list until I figure out the FC -->
+            android:label="AADNDHPWidgetProivder">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

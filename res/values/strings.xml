@@ -27,6 +27,7 @@
     <string name="THP">THP</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
+    <string name="CURRENT_HP">CURRENT HP</string>
     
     <!-- Status effect toggles.  Tabbed values are unused -->
     
