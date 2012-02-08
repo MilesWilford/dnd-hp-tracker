@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Decided to set this widget aside for now. 
         <receiver
             android:name=".AADNDHPWidgetProvider"
             android:label="AADNDHPWidgetProivder">
@@ -31,7 +32,7 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/hp_widget_info" />
-        </receiver>
+        </receiver>  -->
     </application>
 
 </manifest>

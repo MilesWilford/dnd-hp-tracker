@@ -500,9 +500,9 @@ public class DNDHPActivity extends Activity {
 		clearEntry();
 		
 		//TODO this might be the wrong place for the intent?  Intents are hard.
-		Intent intendCurrentHP = new Intent(this, AADNDHPWidgetProvider.class);
+		/*Intent intendCurrentHP = new Intent(this, AADNDHPWidgetProvider.class);
 		intendCurrentHP.putExtra(CURRENT_HP, Integer.toString(player.getHP()));
-		sendBroadcast(intendCurrentHP);
+		sendBroadcast(intendCurrentHP);*/
 		
 		currentHPView.setText(Integer.toString(player.getHP()));
 	}
@@ -622,8 +622,7 @@ public class DNDHPActivity extends Activity {
 
 	/*
 	 * Controls adding and removing ongoing damage to the player and updating
-	 * the button's text to reflect changes TODO: Is UX here best? Turning to
-	 * regen in negative numbers may be confusing.
+	 * the button's text to reflect changes
 	 */
 	public void ongoUpdater(String how) {
 		// Pick operation and adjust currentOngo number
