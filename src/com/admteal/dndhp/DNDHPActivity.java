@@ -28,8 +28,9 @@ public class DNDHPActivity extends Activity {
 
 	// Some variables for cleanliness's sake
 	public static String PLUS, MINUS, INPUT, CURRENT_HP;
-	public static String CURRENT_ENTRY_STRING = "currentEntry";
-	public static String PLAYER_STRING = "player";
+	public static String CURRENT_ENTRY_STRING = "currentEntry"; // Used in java
+																// code only
+	public static String PLAYER_STRING = "player"; // Used in java code only
 	public static String BLANK = "";
 
 	public final int DIALOG_CLEAR = 0;
@@ -65,6 +66,7 @@ public class DNDHPActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		// Let's get the string literals used in this activity from strings.xml
 		PLUS = getString(R.string.plus);
 		MINUS = getString(R.string.minus);
 		INPUT = getString(R.string.input);
@@ -75,7 +77,8 @@ public class DNDHPActivity extends Activity {
 			player = new Player();
 		}
 
-		// Set the toggle buttons
+		// Set the toggle buttons to java elements and give them their
+		// OnClickListeners
 		toggleBlinded = (ToggleButton) findViewById(R.id.toggleBlinded);
 		toggleBlinded.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -157,15 +160,16 @@ public class DNDHPActivity extends Activity {
 			}
 		});
 
-		// Set the calculator number buttons and their onClickListeners.
-		// Creates the 10 buttons at once
+		/*
+		 * Set the calculator number buttons and their OnClickListeners. Creates
+		 * the 10 buttons at once
+		 */
 		for (int i = 0; i < 10; i++) {
 			String buttonID = INPUT + Integer.toString(i);
 			int resourceID = getResources().getIdentifier(buttonID, "id",
 					getString(R.string.packageName));
 			Button b = (Button) findViewById(resourceID);
-			final int j = i; // allows passing i into a new
-								// View.OnClickListener's onClick
+			final int j = i;
 			b.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					currentEntryViewUpdater(j);
@@ -173,7 +177,7 @@ public class DNDHPActivity extends Activity {
 			});
 		}
 
-		// Create the calculator function buttons
+		// Create the calculator function buttons and sets their OnClickListener
 		inputTHP = (Button) findViewById(R.id.inputTHP);
 		inputTHP.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -219,14 +223,14 @@ public class DNDHPActivity extends Activity {
 		inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				player.setHS(currentEntry);
-				inputHS.setText(getString(R.string.hs)
-						+ ": " + Integer.toString(currentEntry));
+				inputHS.setText(getString(R.string.hs) + ": "
+						+ Integer.toString(currentEntry));
 				clearEntry();
 				return true; // stops click event from also being processed
 			}
 		});
 
-		// Create the ongoing function buttons
+		// Create the ongoing function buttons and sets their OnClickListeners
 		ongoAdd = (Button) findViewById(R.id.ongoAdd);
 		ongoAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -243,14 +247,14 @@ public class DNDHPActivity extends Activity {
 		inputOngo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				/*
-				 * current ongo stores the number backwards, so it is
-				 * inverted first
+				 * current ongo stores the number backwards, so it is inverted
+				 * first
 				 */
 				showWorkUpdater(-player.getOngo());
 			}
 		});
 
-		// Create the surges function buttons
+		// Create the surges function buttons and sets their OnClickListeners
 		surgesAdd = (Button) findViewById(R.id.surgesAdd);
 		surgesAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -274,7 +278,8 @@ public class DNDHPActivity extends Activity {
 			}
 		});
 
-		// Create the Death Saves function buttons
+		// Create the Death Saves function buttons and sets their
+		// OnClickListeners
 		DSAdd = (Button) findViewById(R.id.DSAdd);
 		DSAdd.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -288,12 +293,13 @@ public class DNDHPActivity extends Activity {
 			}
 		});
 
-		inputDS 		= (Button) findViewById(R.id.inputDS);
-		currentEntryView= (TextView) findViewById(R.id.currentEntryView);
-		showWorkScroller= (ScrollView) findViewById(R.id.showWorkScroller);
-		showWorkLayout	= (LinearLayout) findViewById(R.id.showWorkLayout);
-		currentHPView	= (TextView) findViewById(R.id.currentHPView);
-		currentTHPView	= (TextView) findViewById(R.id.currentTHPView);
+		// A few other Views we need for displaying information
+		inputDS = (Button) findViewById(R.id.inputDS);
+		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
+		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
+		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
+		currentHPView = (TextView) findViewById(R.id.currentHPView);
+		currentTHPView = (TextView) findViewById(R.id.currentTHPView);
 	}
 
 	@Override
@@ -306,23 +312,22 @@ public class DNDHPActivity extends Activity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry);
 		savedInstanceState.putSerializable(PLAYER_STRING, player);
-		//savedInstanceState.putString(CURRENT_HP, Integer.toString(player.getHP())); //TODO working here.  Will this work?
-		
+		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry);
 	}
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		currentEntry = savedInstanceState.getInt(CURRENT_ENTRY_STRING);
 		player = (Player) savedInstanceState.getSerializable(PLAYER_STRING);
+		currentEntry = savedInstanceState.getInt(CURRENT_ENTRY_STRING);
 	}
 
 	// Generate my alert dialogs
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
+		// DIALOG_CLEAR comes from long-pressing the C(lear) button
 		case DIALOG_CLEAR:
 			return new AlertDialog.Builder(this)
 					.setMessage(R.string.DIALOG_CLEAR_msg)
@@ -335,8 +340,16 @@ public class DNDHPActivity extends Activity {
 									player.extendedRest();
 									relaunchWithPlayer(player);
 								}
-							}).setNegativeButton(getString(R.string.no), null).create();
+							}).setNegativeButton(getString(R.string.no), null)
+					.create();
+			// DIALOG_NEW_CUSTOM_PLAYER comes from pressing the Custom Player menu/actionbar button
 		case DIALOG_NEW_CUSTOM_PLAYER:
+			// See dialog_custom_player.xml
+			/*
+			 * TODO: Clean up this code. Not sure the best way to do this. Might
+			 * actually better to make this dialog its own class, for several
+			 * reasons
+			 */
 			final View customizePlayerView = View.inflate(this,
 					R.layout.dialog_custom_player, null);
 			final EditText newMaxHPEdit = (EditText) customizePlayerView
@@ -385,7 +398,8 @@ public class DNDHPActivity extends Activity {
 											customPlayerNewHS = Integer
 													.toString(customPlayerNewHSInt);
 										}
-										if (customPlayerNewCurrentHP.equals(BLANK)
+										if (customPlayerNewCurrentHP
+												.equals(BLANK)
 												|| customPlayerNewCurrentSurges
 														.equals(BLANK)) {
 											player = new Player(
@@ -429,14 +443,15 @@ public class DNDHPActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
 		switch (item.getItemId()) {
+		// When user clicks the New Player menu/actionbar button
 		case R.id.newPlayer:
 			relaunchWithPlayer(new Player());
 			Toast.makeText(getApplicationContext(),
 					getString(R.string.TOAST_madeDefaultPlayer),
 					Toast.LENGTH_SHORT).show();
 			return true;
+		// When user clicks the Custom Player menu.actionbar button
 		case R.id.newCustomPlayer:
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
 			return true;
@@ -445,6 +460,10 @@ public class DNDHPActivity extends Activity {
 		}
 	}
 
+	/*
+	 * This method accepts a new Player class and uses it to set all the data
+	 * for display in the app.
+	 */
 	public void relaunchWithPlayer(Player newPlayer) {
 		player = newPlayer;
 		updateAll();
@@ -459,7 +478,8 @@ public class DNDHPActivity extends Activity {
 					.getHPHistory().get(i));
 		}
 	}
-	
+
+	// This method updates all fields, such as when re-launching with a new player
 	public void updateAll() {
 		currentHPView.setText(Integer.toString(player.getHP()));
 		ongoUpdater();
@@ -467,7 +487,7 @@ public class DNDHPActivity extends Activity {
 		surgesUpdater();
 		togglesUpdater();
 		tempHPUpdater();
-		
+
 	}
 
 	// Sets all toggle buttons to the states from the Player class
@@ -491,19 +511,14 @@ public class DNDHPActivity extends Activity {
 		if (value > 0) {
 			player.heal(value);
 		} else if (value < 0) {
-			player.injure(-value);
+			player.injure(value);
 		} else {
 			clearEntry();
 			return;
 		}
 		showWorkViewMaker(value);
 		clearEntry();
-		
-		//TODO this might be the wrong place for the intent?  Intents are hard.
-		/*Intent intendCurrentHP = new Intent(this, AADNDHPWidgetProvider.class);
-		intendCurrentHP.putExtra(CURRENT_HP, Integer.toString(player.getHP()));
-		sendBroadcast(intendCurrentHP);*/
-		
+
 		currentHPView.setText(Integer.toString(player.getHP()));
 	}
 
@@ -525,12 +540,12 @@ public class DNDHPActivity extends Activity {
 			 */
 			operation = BLANK;
 		}
-		
+
 		// First line shows how much was added or subtracted as +n or -n
 		adjustment.setText(operation + Integer.toString(value));
 		adjustment.setGravity(Gravity.RIGHT);
 		adjustment.setTextSize(dpi(14));
-		
+
 		// Second line shows new total number
 		sum.setText(Integer.toString(hpToList));
 		sum.setGravity(Gravity.LEFT);
@@ -543,7 +558,7 @@ public class DNDHPActivity extends Activity {
 		} else if (player.isDying()) {
 			sum.setTextColor(Color.RED);
 		}
-		
+
 		// Now commit those lines to the view
 		showWorkLayout.addView(adjustment);
 		showWorkLayout.addView(sum);
@@ -559,7 +574,7 @@ public class DNDHPActivity extends Activity {
 		});
 		tempHPUpdater();
 	}
-	
+
 	/*
 	 * Use the player's HP if an hpToList was not specified. Generally, this
 	 * will be the case
@@ -570,7 +585,10 @@ public class DNDHPActivity extends Activity {
 
 	// Controls adding temporary HP to player class
 	public void tempHPUpdater(int value) {
-		// No need to check for negatives since app doesn't allow negative numbers
+		/*
+		 *  No need to check for negatives since app doesn't 
+		 *  allow negative numbers
+		 */
 		player.addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
 		if (player.getTHP() > 0) {
@@ -596,7 +614,8 @@ public class DNDHPActivity extends Activity {
 		}
 		DSUpdater();
 	}
-	
+
+	// Update the button's text without changing the stored number
 	public void DSUpdater() {
 		inputDS.setText(getResources().getString(R.string.ds) + ": "
 				+ Integer.toString(player.getDeathSaves()));
@@ -614,10 +633,11 @@ public class DNDHPActivity extends Activity {
 		}
 		surgesUpdater();
 	}
-	
+
+	// Update the button's text without changing the stored number
 	public void surgesUpdater() {
-		inputSurges.setText(getResources().getString(R.string.surges)
-				+ ": " + Integer.toString(player.getSurges()));
+		inputSurges.setText(getResources().getString(R.string.surges) + ": "
+				+ Integer.toString(player.getSurges()));
 	}
 
 	/*
@@ -633,7 +653,8 @@ public class DNDHPActivity extends Activity {
 		}
 		ongoUpdater();
 	}
-	
+
+	// Update the button's text without changing the stored values
 	public void ongoUpdater() {
 		String dotOrHot, valueToUse;
 		// It's a regen if it is under 0, otherwise it is ongoing
@@ -661,11 +682,12 @@ public class DNDHPActivity extends Activity {
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
 
+	// Empties currentEntryView, such as when an operator is selected
 	public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
-	
+
 	// Turns a pixel size (int) to a dpi size.
 	public float dpi(int px) {
 		return px * getResources().getDisplayMetrics().density + 0.5f;

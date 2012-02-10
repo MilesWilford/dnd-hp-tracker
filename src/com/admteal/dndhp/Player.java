@@ -83,6 +83,10 @@ public class Player implements Serializable {
     
 	public void injure(int injureBy) {
 		int negBloodied = -maxHP / 2;
+		if (injureBy < 0) {
+			// Allows injure() to accept a negative int and behave expectedly
+			injureBy = -injureBy;
+		}
 		// No going below negative bloodied (you're dead)
 		if (currentHP + currentTHP - injureBy <= negBloodied) {
 			currentTHP = 0;
