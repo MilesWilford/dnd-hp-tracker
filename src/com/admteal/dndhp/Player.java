@@ -3,7 +3,12 @@ package com.admteal.dndhp;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-//TODO: MOVE THE MATH TO THIS CLASS RATHER THAN DNDHPActivity.java
+
+/* 
+ * Note: class uses int division because we round down in D&D.
+ * 3÷2 should equal 1.
+ */
+
 public class Player implements Serializable {
 	private static final long serialVersionUID = -736811401990731225L; //generated
 	
@@ -13,12 +18,10 @@ public class Player implements Serializable {
 		
     // The player's various stats and HPs are tracked in this class.
 
-	private int maxHP, maxSurges, currentTHP, currentHS, currentOngo;
-    private int currentHP, currentSurges, currentDeathSaves;
-    /* 
-     * Note: class uses int division because we round down in D&D.
-     * 3÷2 should equal 1.
-     */
+	private int maxHP, currentHP;
+	private int maxSurges, currentSurges;
+	private int currentTHP, currentHS, currentOngo, currentDeathSaves;
+	
     private ArrayList<Integer> changeHistory = new ArrayList<Integer>();
     private ArrayList<Integer> HPHistory = new ArrayList<Integer>();
     
