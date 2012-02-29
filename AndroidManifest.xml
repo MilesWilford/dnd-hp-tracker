@@ -20,19 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Decided to set this widget aside for now. 
-        <receiver
-            android:name=".AADNDHPWidgetProvider"
-            android:label="AADNDHPWidgetProivder">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/hp_widget_info" />
-        </receiver>  -->
     </application>
 
 </manifest>
