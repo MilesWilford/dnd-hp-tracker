@@ -1,6 +1,8 @@
 //git repository: "git@github.com:codonnell/dnd-hp-tracker.git"
 package com.admteal.dndhp;
 
+import java.util.ArrayList;
+
 import com.admteal.dndhp.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +25,7 @@ import android.widget.ToggleButton;
 import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
-	public Player player;
+	public ArrayList<Player> player = new ArrayList<Player>();
 	Intent intent = new Intent();
 
 	// Some variables for cleanliness's sake
@@ -74,7 +76,7 @@ public class DNDHPActivity extends Activity {
 
 		// Create the new default player if there isn't one already
 		if (savedInstanceState == null) {
-			player = new Player();
+			player.add(new Player());
 		}
 
 		// Set the toggle buttons to java elements and give them their
@@ -83,9 +85,9 @@ public class DNDHPActivity extends Activity {
 		toggleBlinded.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleBlinded.isChecked()) {
-					player.blind();
+					player.get(0).blind();
 				} else {
-					player.unblind();
+					player.get(0).unblind();
 				}
 			}
 		});
@@ -93,9 +95,9 @@ public class DNDHPActivity extends Activity {
 		toggleDazed.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleDazed.isChecked()) {
-					player.daze();
+					player.get(0).daze();
 				} else {
-					player.undaze();
+					player.get(0).undaze();
 				}
 			}
 		});
@@ -103,9 +105,9 @@ public class DNDHPActivity extends Activity {
 		toggleDominated.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleDominated.isChecked()) {
-					player.dominate();
+					player.get(0).dominate();
 				} else {
-					player.undominate();
+					player.get(0).undominate();
 				}
 			}
 		});
@@ -113,9 +115,9 @@ public class DNDHPActivity extends Activity {
 		toggleGrabbed.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleGrabbed.isChecked()) {
-					player.grab();
+					player.get(0).grab();
 				} else {
-					player.ungrab();
+					player.get(0).ungrab();
 				}
 			}
 		});
@@ -123,9 +125,9 @@ public class DNDHPActivity extends Activity {
 		toggleMarked.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleMarked.isChecked()) {
-					player.mark();
+					player.get(0).mark();
 				} else {
-					player.unmark();
+					player.get(0).unmark();
 				}
 			}
 		});
@@ -133,9 +135,9 @@ public class DNDHPActivity extends Activity {
 		toggleProne.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleProne.isChecked()) {
-					player.knockProne();
+					player.get(0).knockProne();
 				} else {
-					player.getUp();
+					player.get(0).getUp();
 				}
 			}
 		});
@@ -143,9 +145,9 @@ public class DNDHPActivity extends Activity {
 		toggleStunned.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleStunned.isChecked()) {
-					player.stun();
+					player.get(0).stun();
 				} else {
-					player.unstun();
+					player.get(0).unstun();
 				}
 			}
 		});
@@ -153,9 +155,9 @@ public class DNDHPActivity extends Activity {
 		toggleWeakened.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if (toggleStunned.isChecked()) {
-					player.weaken();
+					player.get(0).weaken();
 				} else {
-					player.unweaken();
+					player.get(0).unweaken();
 				}
 			}
 		});
@@ -213,7 +215,7 @@ public class DNDHPActivity extends Activity {
 		inputHS = (Button) findViewById(R.id.inputHS);
 		inputHS.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				showWorkUpdater(player.getHS());
+				showWorkUpdater(player.get(0).getHS());
 			}
 		});
 		/*
@@ -222,7 +224,7 @@ public class DNDHPActivity extends Activity {
 		 */
 		inputHS.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
-				player.setHS(currentEntry);
+				player.get(0).setHS(currentEntry);
 				inputHS.setText(getString(R.string.hs) + ": "
 						+ Integer.toString(currentEntry));
 				clearEntry();
@@ -250,7 +252,7 @@ public class DNDHPActivity extends Activity {
 				 * current ongo stores the number backwards, so it is inverted
 				 * first
 				 */
-				showWorkUpdater(-player.getOngo());
+				showWorkUpdater(-player.get(0).getOngo());
 			}
 		});
 
@@ -270,10 +272,10 @@ public class DNDHPActivity extends Activity {
 		inputSurges = (Button) findViewById(R.id.inputSurges);
 		inputSurges.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if (player.getSurges() == 0) {
+				if (player.get(0).getSurges() == 0) {
 					return;
 				}
-				showWorkUpdater(player.getHS());
+				showWorkUpdater(player.get(0).getHS());
 				surgesUpdater(MINUS);
 			}
 		});
@@ -305,21 +307,21 @@ public class DNDHPActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		relaunchWithPlayer(player);
+		relaunchWithPlayer(player.get(0));
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putSerializable(PLAYER_STRING, player);
-		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry);
+		savedInstanceState.putSerializable(PLAYER_STRING, player.get(0));
+		savedInstanceState.putInt(CURRENT_ENTRY_STRING, currentEntry); 
 	}
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		player = (Player) savedInstanceState.getSerializable(PLAYER_STRING);
+		player.add((Player) savedInstanceState.getSerializable(PLAYER_STRING));
 		currentEntry = savedInstanceState.getInt(CURRENT_ENTRY_STRING);
 	}
 
@@ -337,14 +339,14 @@ public class DNDHPActivity extends Activity {
 								public void onClick(DialogInterface arg0,
 										int arg1) {
 									clearEntry();
-									player.extendedRest();
-									relaunchWithPlayer(player);
+									player.get(0).extendedRest();
+									relaunchWithPlayer(player.get(0));
 								}
 							}).setNegativeButton(getString(R.string.no), null)
 					.create();
 			// DIALOG_NEW_CUSTOM_PLAYER comes from pressing the Custom Player menu/actionbar button
 		case DIALOG_NEW_CUSTOM_PLAYER:
-			// See dialog_custom_player.xml
+			// See dialog_custom_player.get(0).xml
 			/*
 			 * TODO: Clean up this code. Not sure the best way to do this. Might
 			 * actually better to make this dialog its own class, for several
@@ -402,27 +404,27 @@ public class DNDHPActivity extends Activity {
 												.equals(BLANK)
 												|| customPlayerNewCurrentSurges
 														.equals(BLANK)) {
-											player = new Player(
+											player.set(0, new Player(
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
-													Integer.parseInt(customPlayerNewHS));
+													Integer.parseInt(customPlayerNewHS)));
 											Toast.makeText(
 													getApplicationContext(),
 													getString(R.string.TOAST_madeFullHPPlayer),
 													Toast.LENGTH_SHORT).show();
-											relaunchWithPlayer(player);
+											relaunchWithPlayer(player.get(0));
 										} else {
-											player = new Player(
+											player.set(0, new Player(
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewCurrentHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
 													Integer.parseInt(customPlayerNewCurrentSurges),
-													Integer.parseInt(customPlayerNewHS));
+													Integer.parseInt(customPlayerNewHS)));
 											Toast.makeText(
 													getApplicationContext(),
 													getString(R.string.TOAST_madePartialHPPlayer),
 													Toast.LENGTH_SHORT).show();
-											relaunchWithPlayer(player);
+											relaunchWithPlayer(player.get(0));
 										}
 									}
 
@@ -465,23 +467,23 @@ public class DNDHPActivity extends Activity {
 	 * for display in the app.
 	 */
 	public void relaunchWithPlayer(Player newPlayer) {
-		player = newPlayer;
+		player.set(0, newPlayer);
 		updateAll();
 		/*
-		 * Because of the way they're created, player.changeHistory and
-		 * player.HPHistory are *always* the same length. First, removeAllViews
-		 * just in case any were already here.
+		 * Because of the way they're created, player.get(0).changeHistory and
+		 * player.get(0).HPHistory are *always* the same length. First,
+		 * removeAllViews just in case any were already here.
 		 */
 		showWorkLayout.removeAllViews();
-		for (int i = 0; i < player.getChangeHistory().size(); i++) {
-			showWorkViewMaker(player.getChangeHistory().get(i), player
-					.getHPHistory().get(i));
+		for (int i = 0; i < player.get(0).getChangeHistory().size(); i++) {
+			showWorkViewMaker(player.get(0).getChangeHistory().get(i), player
+					.get(0).getHPHistory().get(i));
 		}
 	}
 
 	// This method updates all fields, such as when re-launching with a new player
 	public void updateAll() {
-		currentHPView.setText(Integer.toString(player.getHP()));
+		currentHPView.setText(Integer.toString(player.get(0).getHP()));
 		ongoUpdater();
 		DSUpdater();
 		surgesUpdater();
@@ -492,14 +494,14 @@ public class DNDHPActivity extends Activity {
 
 	// Sets all toggle buttons to the states from the Player class
 	public void togglesUpdater() {
-		toggleBlinded.setChecked(player.isBlinded());
-		toggleDazed.setChecked(player.isDazed());
-		toggleDominated.setChecked(player.isDominated());
-		toggleGrabbed.setChecked(player.isGrabbed());
-		toggleMarked.setChecked(player.isMarked());
-		toggleProne.setChecked(player.isProne());
-		toggleStunned.setChecked(player.isStunned());
-		toggleWeakened.setChecked(player.isWeakened());
+		toggleBlinded.setChecked(player.get(0).isBlinded());
+		toggleDazed.setChecked(player.get(0).isDazed());
+		toggleDominated.setChecked(player.get(0).isDominated());
+		toggleGrabbed.setChecked(player.get(0).isGrabbed());
+		toggleMarked.setChecked(player.get(0).isMarked());
+		toggleProne.setChecked(player.get(0).isProne());
+		toggleStunned.setChecked(player.get(0).isStunned());
+		toggleWeakened.setChecked(player.get(0).isWeakened());
 	}
 
 	/*
@@ -509,9 +511,9 @@ public class DNDHPActivity extends Activity {
 	public void showWorkUpdater(int value) {
 		// First we must pick our operation.
 		if (value > 0) {
-			player.heal(value);
+			player.get(0).heal(value);
 		} else if (value < 0) {
-			player.injure(value);
+			player.get(0).injure(value);
 		} else {
 			clearEntry();
 			return;
@@ -519,7 +521,7 @@ public class DNDHPActivity extends Activity {
 		showWorkViewMaker(value);
 		clearEntry();
 
-		currentHPView.setText(Integer.toString(player.getHP()));
+		currentHPView.setText(Integer.toString(player.get(0).getHP()));
 	}
 
 	/*
@@ -551,11 +553,11 @@ public class DNDHPActivity extends Activity {
 		sum.setGravity(Gravity.LEFT);
 		sum.setTextSize(dpi(14));
 
-		if (hpToList == player.getMaxHP() && !player.isDefaultPlayer()) {
+		if (hpToList == player.get(0).getMaxHP() && !player.get(0).isDefaultPlayer()) {
 			sum.setTextColor(Color.GREEN);
-		} else if (player.isBloodied() && !player.isDefaultPlayer()) {
+		} else if (player.get(0).isBloodied() && !player.get(0).isDefaultPlayer()) {
 			sum.setTextColor(Color.YELLOW);
-		} else if (player.isDying()) {
+		} else if (player.get(0).isDying()) {
 			sum.setTextColor(Color.RED);
 		}
 
@@ -580,7 +582,7 @@ public class DNDHPActivity extends Activity {
 	 * will be the case
 	 */
 	public void showWorkViewMaker(int value) {
-		showWorkViewMaker(value, player.getHP());
+		showWorkViewMaker(value, player.get(0).getHP());
 	}
 
 	// Controls adding temporary HP to player class
@@ -589,10 +591,10 @@ public class DNDHPActivity extends Activity {
 		 *  No need to check for negatives since app doesn't 
 		 *  allow negative numbers
 		 */
-		player.addTHP(value);
+		player.get(0).addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
-		if (player.getTHP() > 0) {
-			currentTHPView.setText("(" + player.getTHP() + ")");
+		if (player.get(0).getTHP() > 0) {
+			currentTHPView.setText("(" + player.get(0).getTHP() + ")");
 		} else {
 			currentTHPView.setText(BLANK);
 		}
@@ -608,9 +610,9 @@ public class DNDHPActivity extends Activity {
 	 */
 	public void DSUpdater(String how) {
 		if (how.equals(PLUS)) {
-			player.addDeathSave();
+			player.get(0).addDeathSave();
 		} else if (how.equals(MINUS)) {
-			player.remDeathSave();
+			player.get(0).remDeathSave();
 		}
 		DSUpdater();
 	}
@@ -618,7 +620,7 @@ public class DNDHPActivity extends Activity {
 	// Update the button's text without changing the stored number
 	public void DSUpdater() {
 		inputDS.setText(getResources().getString(R.string.ds) + ": "
-				+ Integer.toString(player.getDeathSaves()));
+				+ Integer.toString(player.get(0).getDeathSaves()));
 	}
 
 	/*
@@ -627,9 +629,9 @@ public class DNDHPActivity extends Activity {
 	 */
 	public void surgesUpdater(String how) {
 		if (how.equals(PLUS)) {
-			player.addSurge();
+			player.get(0).addSurge();
 		} else if (how.equals(MINUS)) {
-			player.remSurge();
+			player.get(0).remSurge();
 		}
 		surgesUpdater();
 	}
@@ -637,7 +639,7 @@ public class DNDHPActivity extends Activity {
 	// Update the button's text without changing the stored number
 	public void surgesUpdater() {
 		inputSurges.setText(getResources().getString(R.string.surges) + ": "
-				+ Integer.toString(player.getSurges()));
+				+ Integer.toString(player.get(0).getSurges()));
 	}
 
 	/*
@@ -647,9 +649,9 @@ public class DNDHPActivity extends Activity {
 	public void ongoUpdater(String how) {
 		// Pick operation and adjust currentOngo number
 		if (how.equals(PLUS)) {
-			player.addOngo();
+			player.get(0).addOngo();
 		} else if (how.equals(MINUS)) {
-			player.remOngo();
+			player.get(0).remOngo();
 		}
 		ongoUpdater();
 	}
@@ -658,12 +660,12 @@ public class DNDHPActivity extends Activity {
 	public void ongoUpdater() {
 		String dotOrHot, valueToUse;
 		// It's a regen if it is under 0, otherwise it is ongoing
-		if (player.getOngo() < 0) {
+		if (player.get(0).getOngo() < 0) {
 			dotOrHot = getResources().getString(R.string.regen);
-			valueToUse = Integer.toString(player.getRegen());
+			valueToUse = Integer.toString(player.get(0).getRegen());
 		} else {
 			dotOrHot = getResources().getString(R.string.ongoing);
-			valueToUse = Integer.toString(player.getOngo());
+			valueToUse = Integer.toString(player.get(0).getOngo());
 		}
 		// Change the button text to reflect variable
 		inputOngo.setText(dotOrHot + ": " + valueToUse);
