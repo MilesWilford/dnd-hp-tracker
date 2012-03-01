@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class Player implements Serializable {
 	private static final long serialVersionUID = -736811401990731225L; //generated
 	
+	private String playerName = "The Only Player";
+	
 	private boolean blinded, dazed, deafened, dominated, dying, grabbed, 
 		helpless, immobile, marked, petrified, prone, restrained, 
 		stunned, unconscious, weakened, usingDefaultPlayer;
@@ -27,43 +29,43 @@ public class Player implements Serializable {
     
     // Default constructor for if we aren't passing a real max hp
     public Player() {
-    	maxHP = 999;
-    	currentHP = 0;
-    	currentTHP = 0;
-     	currentOngo = 0;
-     	maxSurges = 99;
-     	currentSurges = 0;
-    	currentHS = 0;
-     	currentDeathSaves = 3;
+    	this.maxHP = 999;
+    	this.currentHP = 0;
+    	this.currentTHP = 0;
+    	this.currentOngo = 0;
+    	this.maxSurges = 99;
+    	this.currentSurges = 0;
+    	this.currentHS = 0;
+    	this.currentDeathSaves = 3;
      	clearToggles();
-     	usingDefaultPlayer = true;
+     	this.usingDefaultPlayer = true;
     }
     
     // Create a new player at full HP
-    public Player(int newHP, int newSurges, int newCurrentHS) {
-        maxHP = newHP;
-    	currentHP = newHP;
-    	currentTHP = 0;
-        maxSurges = newSurges;
-        currentSurges = newSurges;
-        currentHS = newCurrentHS;
-     	currentDeathSaves = 3;
+    public Player(int maxHP, int maxSurges, int currentHS) {
+        this.maxHP = maxHP;
+    	this.currentHP = maxHP;
+    	this.currentTHP = 0;
+        this.maxSurges = maxSurges;
+        this.currentSurges = maxSurges;
+        this.currentHS = currentHS;
+     	this.currentDeathSaves = 3;
         clearToggles();
-     	usingDefaultPlayer = false;
+     	this.usingDefaultPlayer = false;
     }
     
     // Create a new player at partial HP
-    public Player(int newMaxHP, int newCurrentHP,
-    		int newMaxSurges, int newCurrentSurges, int newCurrentHS) {
-    	maxHP = newMaxHP;
-    	currentHP = newCurrentHP;
-    	currentTHP = 0;
-        maxSurges = newMaxSurges;
-        currentSurges = newCurrentSurges;
-        currentHS = newCurrentHS;
-     	currentDeathSaves = 3;
+    public Player(int maxHP, int currentHP,
+    		int maxSurges, int currentSurges, int currentHS) {
+    	this.maxHP = maxHP;
+    	this.currentHP = currentHP;
+    	this.currentTHP = 0;
+        this.maxSurges = maxSurges;
+        this.currentSurges = currentSurges;
+        this.currentHS = currentHS;
+     	this.currentDeathSaves = 3;
         clearToggles();
-     	usingDefaultPlayer = false;
+     	this.usingDefaultPlayer = false;
     }
     
     public void heal(int healBy) {
@@ -121,13 +123,23 @@ public class Player implements Serializable {
 		}
 	}
 
+	// PLAYER NAME
+	
+	public String getName() {
+		return playerName;
+	}
+	
+	public void setName(String playerName) {
+		this.playerName = playerName;
+	}
+	
     // HP VALUE
     public int getHP() {
         return currentHP;
     }
 
-    public void setHP(int newHP) {
-        currentHP = newHP;
+    public void setHP(int currentHP) {
+        this.currentHP = currentHP;
     }
 
     // MAX HP VALUE
@@ -135,8 +147,8 @@ public class Player implements Serializable {
         return maxHP;
     }
 
-    public void setMaxHP(int newMaxHP) {
-        maxHP = newMaxHP;
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
     }
     	
     // BLOODIED VALUE
@@ -165,9 +177,9 @@ public class Player implements Serializable {
         return currentSurges;
     }
 
-    public void setSurges(int newSurges) {
-    	if (newSurges >= 0) {
-            currentSurges = newSurges;
+    public void setSurges(int currentSurges) {
+    	if (currentSurges >= 0) {
+            this.currentSurges = currentSurges;
     	}
     }
     
@@ -183,8 +195,8 @@ public class Player implements Serializable {
     }
     
     // SURGE VALUE
-    public void setHS(int newHS) {
-    	currentHS = newHS;
+    public void setHS(int currentHS) {
+    	this.currentHS = currentHS;
     }
     
     public int getHS() {
@@ -192,8 +204,8 @@ public class Player implements Serializable {
     }
     
     // ONGOING VALUE
-    public void setOngo(int newOngo) {
-    	currentOngo = newOngo;
+    public void setOngo(int currentOngo) {
+    	this.currentOngo = currentOngo;
     }
     
     public int getOngo() {
@@ -214,8 +226,8 @@ public class Player implements Serializable {
     }
     
     // DEATH SAVES COUNT
-    public void setDeathSaves(int newDeathSaves) {
-    	currentDeathSaves = newDeathSaves;
+    public void setDeathSaves(int currentDeathSaves) {
+    	this.currentDeathSaves = currentDeathSaves;
     }
     
     public int getDeathSaves() {

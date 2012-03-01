@@ -26,17 +26,15 @@ import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
 	public ArrayList<Player> player = new ArrayList<Player>();
-	Intent intent = new Intent();
 
 	// Some variables for cleanliness's sake
-	public static String PLUS, MINUS, INPUT, CURRENT_HP;
-	public static String CURRENT_ENTRY_STRING = "currentEntry"; // Used in java
-																// code only
-	public static String PLAYER_STRING = "player"; // Used in java code only
-	public static String BLANK = "";
+	private static String PLUS, MINUS, INPUT, CURRENT_HP;
+	private static String CURRENT_ENTRY_STRING = "currentEntry";
+	private static String PLAYER_STRING = "player";
+	private static String BLANK = "";
 
-	public final int DIALOG_CLEAR = 0;
-	public final int DIALOG_NEW_CUSTOM_PLAYER = 1;
+	private final int DIALOG_CLEAR = 0;
+	private final int DIALOG_NEW_CUSTOM_PLAYER = 1;
 
 	public int currentEntry;
 
@@ -62,6 +60,116 @@ public class DNDHPActivity extends Activity {
 	public ScrollView showWorkScroller;
 	public LinearLayout showWorkLayout;
 
+	// Triggered in the XML in place of dozens of onClickListeners
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.toggleBlinded:
+			if (toggleBlinded.isChecked()) {
+				player.get(0).blind();
+			} else {
+				player.get(0).unblind();
+			}
+			break;
+		case R.id.toggleDazed:
+			if (toggleDazed.isChecked()) {
+				player.get(0).daze();
+			} else {
+				player.get(0).undaze();
+			}
+			break;
+		case R.id.toggleDominated:
+			if (toggleDominated.isChecked()) {
+				player.get(0).dominate();
+			} else {
+				player.get(0).undominate();
+			}
+			break;
+		case R.id.toggleGrabbed:
+			if (toggleGrabbed.isChecked()) {
+				player.get(0).grab();
+			} else {
+				player.get(0).ungrab();
+			}
+			break;
+		case R.id.toggleMarked:
+			if (toggleMarked.isChecked()) {
+				player.get(0).mark();
+			} else {
+				player.get(0).unmark();
+			}
+			break;
+		case R.id.toggleProne:
+			if (toggleProne.isChecked()) {
+				player.get(0).knockProne();
+			} else {
+				player.get(0).getUp();
+			}
+			break;
+		case R.id.toggleStunned:
+			if (toggleStunned.isChecked()) {
+				player.get(0).stun();
+			} else {
+				player.get(0).unstun();
+			}
+			break;
+		case R.id.toggleWeakened:
+			if (toggleStunned.isChecked()) {
+				player.get(0).weaken();
+			} else {
+				player.get(0).unweaken();
+			}
+			break;
+		case R.id.inputTHP:
+			tempHPUpdater(currentEntry);
+			clearEntry();
+			break;
+		case R.id.inputAdd:
+			showWorkUpdater(currentEntry);
+			break;
+		case R.id.inputSub:
+			showWorkUpdater(-currentEntry);
+			break;
+		// NOTE THAT A LONG CLICK ALSO EXISTS IN ONCREATE
+		case R.id.inputClear:
+			clearEntry();
+			break;
+		// NOTE THAT A LONG CLICK ALSO EXISTS IN ONCREATE
+		case R.id.inputHS:
+			showWorkUpdater(player.get(0).getHS());
+			break;
+		case R.id.ongoAdd:
+			ongoUpdater(PLUS);
+			break;
+		case R.id.ongoSub:
+			ongoUpdater(MINUS);
+			break;
+		case R.id.inputOngo:
+			// Stores the value backwards, so invert
+			showWorkUpdater(-player.get(0).getOngo());
+			break;
+		case R.id.surgesAdd:
+			surgesUpdater(PLUS);
+			break;
+		case R.id.surgesSub:
+			surgesUpdater(MINUS);
+			break;
+		case R.id.inputSurges:
+			if (player.get(0).getSurges() == 0) {
+				return;
+			}
+			showWorkUpdater(player.get(0).getHS());
+			surgesUpdater(MINUS);
+			break;
+		case R.id.DSAdd:
+			DSUpdater(PLUS);
+			break;
+		case R.id.DSSub:
+			DSUpdater(MINUS);
+			break;
+		default: break;
+		}
+	}
+
 	// Called when the activity is first created.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,86 +189,14 @@ public class DNDHPActivity extends Activity {
 
 		// Set the toggle buttons to java elements and give them their
 		// OnClickListeners
-		toggleBlinded = (ToggleButton) findViewById(R.id.toggleBlinded);
-		toggleBlinded.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleBlinded.isChecked()) {
-					player.get(0).blind();
-				} else {
-					player.get(0).unblind();
-				}
-			}
-		});
-		toggleDazed = (ToggleButton) findViewById(R.id.toggleDazed);
-		toggleDazed.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleDazed.isChecked()) {
-					player.get(0).daze();
-				} else {
-					player.get(0).undaze();
-				}
-			}
-		});
-		toggleDominated = (ToggleButton) findViewById(R.id.toggleDominated);
-		toggleDominated.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleDominated.isChecked()) {
-					player.get(0).dominate();
-				} else {
-					player.get(0).undominate();
-				}
-			}
-		});
-		toggleGrabbed = (ToggleButton) findViewById(R.id.toggleGrabbed);
-		toggleGrabbed.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleGrabbed.isChecked()) {
-					player.get(0).grab();
-				} else {
-					player.get(0).ungrab();
-				}
-			}
-		});
-		toggleMarked = (ToggleButton) findViewById(R.id.toggleMarked);
-		toggleMarked.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleMarked.isChecked()) {
-					player.get(0).mark();
-				} else {
-					player.get(0).unmark();
-				}
-			}
-		});
-		toggleProne = (ToggleButton) findViewById(R.id.toggleProne);
-		toggleProne.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleProne.isChecked()) {
-					player.get(0).knockProne();
-				} else {
-					player.get(0).getUp();
-				}
-			}
-		});
-		toggleStunned = (ToggleButton) findViewById(R.id.toggleStunned);
-		toggleStunned.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleStunned.isChecked()) {
-					player.get(0).stun();
-				} else {
-					player.get(0).unstun();
-				}
-			}
-		});
-		toggleWeakened = (ToggleButton) findViewById(R.id.toggleWeakened);
-		toggleWeakened.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleStunned.isChecked()) {
-					player.get(0).weaken();
-				} else {
-					player.get(0).unweaken();
-				}
-			}
-		});
+		toggleBlinded	= (ToggleButton) findViewById(R.id.toggleBlinded);
+		toggleDazed		= (ToggleButton) findViewById(R.id.toggleDazed);
+		toggleDominated	= (ToggleButton) findViewById(R.id.toggleDominated);
+		toggleGrabbed	= (ToggleButton) findViewById(R.id.toggleGrabbed);
+		toggleMarked	= (ToggleButton) findViewById(R.id.toggleMarked);
+		toggleProne		= (ToggleButton) findViewById(R.id.toggleProne);
+		toggleStunned	= (ToggleButton) findViewById(R.id.toggleStunned);
+		toggleWeakened	= (ToggleButton) findViewById(R.id.toggleWeakened);
 
 		/*
 		 * Set the calculator number buttons and their OnClickListeners. Creates
@@ -179,45 +215,14 @@ public class DNDHPActivity extends Activity {
 			});
 		}
 
-		// Create the calculator function buttons and sets their OnClickListener
-		inputTHP = (Button) findViewById(R.id.inputTHP);
-		inputTHP.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				tempHPUpdater(currentEntry);
-				clearEntry();
-			}
-		});
-		inputAdd = (Button) findViewById(R.id.inputAdd);
-		inputAdd.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showWorkUpdater(currentEntry);
-			}
-		});
-		inputSub = (Button) findViewById(R.id.inputSub);
-		inputSub.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showWorkUpdater(-currentEntry);
-			}
-		});
-		inputClear = (Button) findViewById(R.id.inputClear);
+		inputClear	= (Button) findViewById(R.id.inputClear);
 		inputClear.setOnLongClickListener(new View.OnLongClickListener() {
 			public boolean onLongClick(View v) {
 				showDialog(DIALOG_CLEAR);
 				return true; // stops click event from also being processed
 			}
 		});
-		inputClear.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				clearEntry();
-			}
-		});
 		inputHS = (Button) findViewById(R.id.inputHS);
-		inputHS.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				showWorkUpdater(player.get(0).getHS());
-			}
-		});
 		/*
 		 * Long click to set currentEntry into Healing surge value, and display
 		 * it on the button
@@ -232,71 +237,11 @@ public class DNDHPActivity extends Activity {
 			}
 		});
 
-		// Create the ongoing function buttons and sets their OnClickListeners
-		ongoAdd = (Button) findViewById(R.id.ongoAdd);
-		ongoAdd.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				ongoUpdater(PLUS);
-			}
-		});
-		ongoSub = (Button) findViewById(R.id.ongoSub);
-		ongoSub.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				ongoUpdater(MINUS);
-			}
-		});
-		inputOngo = (Button) findViewById(R.id.inputOngo);
-		inputOngo.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				/*
-				 * current ongo stores the number backwards, so it is inverted
-				 * first
-				 */
-				showWorkUpdater(-player.get(0).getOngo());
-			}
-		});
-
-		// Create the surges function buttons and sets their OnClickListeners
-		surgesAdd = (Button) findViewById(R.id.surgesAdd);
-		surgesAdd.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				surgesUpdater(PLUS);
-			}
-		});
-		surgesSub = (Button) findViewById(R.id.surgesSub);
-		surgesSub.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				surgesUpdater(MINUS);
-			}
-		});
-		inputSurges = (Button) findViewById(R.id.inputSurges);
-		inputSurges.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (player.get(0).getSurges() == 0) {
-					return;
-				}
-				showWorkUpdater(player.get(0).getHS());
-				surgesUpdater(MINUS);
-			}
-		});
-
-		// Create the Death Saves function buttons and sets their
-		// OnClickListeners
-		DSAdd = (Button) findViewById(R.id.DSAdd);
-		DSAdd.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				DSUpdater(PLUS);
-			}
-		});
-		DSSub = (Button) findViewById(R.id.DSSub);
-		DSSub.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				DSUpdater(MINUS);
-			}
-		});
+		inputOngo	= (Button) findViewById(R.id.inputOngo);
+		inputSurges	= (Button) findViewById(R.id.inputSurges);
+		inputDS		= (Button) findViewById(R.id.inputDS);
 
 		// A few other Views we need for displaying information
-		inputDS = (Button) findViewById(R.id.inputDS);
 		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
 		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
 		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
