@@ -44,6 +44,7 @@ public class PlayersDataSource {
 	public void updatePlayer(Player player) {
 		String playerName = player.getName();
 		byte[] serializedPlayer = Player.serliazeObject(player);
+		String whereClause = PlayerDBSQLiteHelper.COLUMN_PLAYER_NAME + " = " + playerName;
 		database.execSQL("INSERT OR IGNORE INTO "
 				+ PlayerDBSQLiteHelper.TABLE_PLAYERS + " ("
 				+ PlayerDBSQLiteHelper.COLUMN_PLAYER_NAME + ") VALUES ('"
@@ -52,9 +53,7 @@ public class PlayersDataSource {
 		values.put(PlayerDBSQLiteHelper.COLUMN_PLAYER_NAME, playerName);
 		values.put(PlayerDBSQLiteHelper.COLUMN_SERIALIZED_PLAYER,
 				serializedPlayer);
-		database.update(PlayerDBSQLiteHelper.TABLE_PLAYERS, values,
-				PlayerDBSQLiteHelper.COLUMN_PLAYER_NAME + " = " + playerName,
-				null);
+		database.update(PlayerDBSQLiteHelper.TABLE_PLAYERS, values, whereClause, null);
 	}
 	
 	public void deletePlayer(Player player) {
