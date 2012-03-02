@@ -1,7 +1,15 @@
 package com.admteal.dndhp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import android.util.Log;
 
 
 /* 
@@ -417,6 +425,43 @@ public class Player implements Serializable {
     	} else {
     		return HPHistory;
     	}
+    }
+    
+    // From johndev.net tutorials for manual serialization
+    
+    public static byte[] serliazeObject(Player player) { 
+    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    	
+    	try {
+    		ObjectOutput out = new ObjectOutputStream(bos);
+    		out.writeObject(player);
+    		out.close();
+    		
+    		// now get the bytes
+    		byte[] buf = bos.toByteArray();
+    		return buf;
+    	} catch (IOException ioe) {
+    	      Log.e("serializeObject", "error", ioe); 
+    	      return null;
+    	}
+    }
+    
+    public static Object deseriaizeObject(byte[] b) {
+    	try {
+    		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
+    		Object player = in.readObject();
+    		in.close();
+    		
+    		return player;
+    	} catch(ClassNotFoundException cnfe) { 
+    	      Log.e("deserializeObject", "class not found error", cnfe); 
+    	      
+    	      return null; 
+    	    } catch(IOException ioe) { 
+    	      Log.e("deserializeObject", "io error", ioe); 
+    	 
+    	      return null; 
+    	    } 
     }
 
 }

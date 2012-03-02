@@ -25,6 +25,7 @@ import android.widget.ToggleButton;
 import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
+	private PlayersDataSource datasource;
 	public ArrayList<Player> player = new ArrayList<Player>();
 
 	// Some variables for cleanliness's sake
@@ -120,8 +121,9 @@ public class DNDHPActivity extends Activity {
 			}
 			break;
 		case R.id.inputTHP:
-			tempHPUpdater(currentEntry);
-			clearEntry();
+			datasource.updatePlayer(player.get(0));
+//			tempHPUpdater(currentEntry);
+//			clearEntry();
 			break;
 		case R.id.inputAdd:
 			showWorkUpdater(currentEntry);
@@ -173,14 +175,17 @@ public class DNDHPActivity extends Activity {
 	// Called when the activity is first created.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		datasource = new PlayersDataSource(this);
+		datasource.open();
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
 		// Let's get the string literals used in this activity from strings.xml
-		PLUS = getString(R.string.plus);
-		MINUS = getString(R.string.minus);
-		INPUT = getString(R.string.input);
-		CURRENT_HP = getString(R.string.CURRENT_HP);
+		PLUS		= getString(R.string.plus);
+		MINUS		= getString(R.string.minus);
+		INPUT		= getString(R.string.input);
+		CURRENT_HP	= getString(R.string.CURRENT_HP);
 
 		// Create the new default player if there isn't one already
 		if (savedInstanceState == null) {
@@ -241,19 +246,24 @@ public class DNDHPActivity extends Activity {
 		inputSurges	= (Button) findViewById(R.id.inputSurges);
 		inputDS		= (Button) findViewById(R.id.inputDS);
 
-		// A few other Views we need for displaying information
-		currentEntryView = (TextView) findViewById(R.id.currentEntryView);
-		showWorkScroller = (ScrollView) findViewById(R.id.showWorkScroller);
-		showWorkLayout = (LinearLayout) findViewById(R.id.showWorkLayout);
-		currentHPView = (TextView) findViewById(R.id.currentHPView);
-		currentTHPView = (TextView) findViewById(R.id.currentTHPView);
+		currentEntryView	= (TextView) findViewById(R.id.currentEntryView);
+		showWorkScroller	= (ScrollView) findViewById(R.id.showWorkScroller);
+		showWorkLayout		= (LinearLayout) findViewById(R.id.showWorkLayout);
+		currentHPView		= (TextView) findViewById(R.id.currentHPView);
+		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		datasource.close();
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
 		relaunchWithPlayer(player.get(0));
 		currentEntryView.setText(Integer.toString(currentEntry));
+		datasource.open();
 	}
 
 	@Override
