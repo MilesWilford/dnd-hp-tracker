@@ -126,7 +126,13 @@ public class DNDHPActivity extends Activity {
 //			clearEntry();
 			break;
 		case R.id.inputAdd:
-			showWorkUpdater(currentEntry);
+//			showWorkUpdater(currentEntry);
+			if (datasource.getAllPlayers().size() > 0) {
+				player = datasource.getAllPlayers();
+				Toast.makeText(this, "Loaded SQLite", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, "Did Not Load SQLite", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case R.id.inputSub:
 			showWorkUpdater(-currentEntry);
