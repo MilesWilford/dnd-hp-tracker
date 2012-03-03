@@ -7,9 +7,13 @@ import com.admteal.dndhp.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +29,7 @@ import android.widget.ToggleButton;
 import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
-	private PlayersDataSource datasource;
+	PlayerDataSQLHelper playerData;
 	public ArrayList<Player> player = new ArrayList<Player>();
 
 	// Some variables for cleanliness's sake
@@ -121,18 +125,11 @@ public class DNDHPActivity extends Activity {
 			}
 			break;
 		case R.id.inputTHP:
-			datasource.updatePlayer(player.get(0));
-//			tempHPUpdater(currentEntry);
-//			clearEntry();
+			tempHPUpdater(currentEntry);
+			clearEntry();
 			break;
 		case R.id.inputAdd:
-//			showWorkUpdater(currentEntry);
-			if (datasource.getAllPlayers().size() > 0) {
-				player = datasource.getAllPlayers();
-				Toast.makeText(this, "Loaded SQLite", Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(this, "Did Not Load SQLite", Toast.LENGTH_SHORT).show();
-			}
+			showWorkUpdater(currentEntry);
 			break;
 		case R.id.inputSub:
 			showWorkUpdater(-currentEntry);
@@ -181,11 +178,11 @@ public class DNDHPActivity extends Activity {
 	// Called when the activity is first created.
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		datasource = new PlayersDataSource(this);
-		datasource.open();
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		playerData = new PlayerDataSQLHelper(this);
 
 		// Let's get the string literals used in this activity from strings.xml
 		PLUS		= getString(R.string.plus);
@@ -261,15 +258,21 @@ public class DNDHPActivity extends Activity {
 
 	@Override
 	protected void onPause() {
+		addPlayerToDB(player.get(0));
 		super.onPause();
-		datasource.close();
 	}
 	@Override
 	protected void onResume() {
 		super.onResume();
+		player.set(0, getPlayerFromDB());
 		relaunchWithPlayer(player.get(0));
 		currentEntryView.setText(Integer.toString(currentEntry));
-		datasource.open();
+	}
+	
+	@Override 
+	protected void onDestroy() {
+		super.onDestroy();
+		playerData.close();
 	}
 
 	@Override
@@ -649,6 +652,40 @@ public class DNDHPActivity extends Activity {
 	public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));
+	}
+	
+	// My database methods
+	// Add the player to the database
+	public void addPlayerToDB(Player player) {
+		SQLiteDatabase db = playerData.getWritableDatabase();
+		// First delete any same-named players from the database
+		String sql = "DELETE FROM " + PlayerDataSQLHelper.TABLE + " WHERE "
+				+ PlayerDataSQLHelper.COL_NAME + " = '" + player.getName()
+				+ "';";
+		db.execSQL(sql);
+		ContentValues values = new ContentValues();
+		values.put(PlayerDataSQLHelper.COL_NAME, player.getName());
+		values.put(PlayerDataSQLHelper.COL_SERPLAYER,
+				Player.serliazeObject(player));
+		db.insert(PlayerDataSQLHelper.TABLE, null, values);
+		Log.d("DNDHPActivity", "addPlayerToDB");
+	}
+
+	// Get the player from the database. Returns a new player if nothing was
+	// found in the database.
+	public Player getPlayerFromDB() {
+		SQLiteDatabase db = playerData.getWritableDatabase();
+		Cursor cursor = db.query(PlayerDataSQLHelper.TABLE, null, null, null,
+				null, null, null);
+		Player player = new Player();
+		startManagingCursor(cursor);
+		while (cursor.moveToNext()) {
+			player = (Player) Player.deseriaizeObject(cursor.getBlob(2));
+			Log.d("DNDHPActivity", player.getName()
+					+ " retrieved from database");
+		}
+		Log.d("DNDHPActivity", "getPlayerFromDB");
+		return player;
 	}
 
 	// Turns a pixel size (int) to a dpi size.
