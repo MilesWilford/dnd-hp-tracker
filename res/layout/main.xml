@@ -133,7 +133,7 @@
             </TableRow>
         </TableLayout>
 
-        <!-- Center Right Tracker Button android:onClick="onClick"s -->
+        <!-- Center Right Tracker Button -->
 
         <RelativeLayout
             android:id="@+id/trackersLayout"

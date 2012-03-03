@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
-
 /* 
  * Note: class uses int division because we round down in D&D.
  * 3÷2 should equal 1.
@@ -25,9 +24,7 @@ public class Player implements Serializable {
 	private boolean blinded, dazed, deafened, dominated, dying, grabbed, 
 		helpless, immobile, marked, petrified, prone, restrained, 
 		stunned, unconscious, weakened, usingDefaultPlayer;
-		
-    // The player's various stats and HPs are tracked in this class.
-
+	
 	private int maxHP, currentHP;
 	private int maxSurges, currentSurges;
 	private int currentTHP, currentHS, currentOngo, currentDeathSaves;
@@ -80,7 +77,6 @@ public class Player implements Serializable {
     	dying = false;
     	if (healBy > 0 && currentHP < 0) {
     		currentHP = 0;
-    		dying = false;
     	}
     	if (currentHP + healBy > maxHP) { //No going above max.
     		changeHistory.add(maxHP-currentHP);
@@ -89,7 +85,6 @@ public class Player implements Serializable {
         	currentHP += healBy;
         	changeHistory.add(healBy);
     	}
-    	dying = false;
     	unconscious = false;
     	HPHistory.add(currentHP);
     }

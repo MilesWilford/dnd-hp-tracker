@@ -67,6 +67,6 @@
     <!-- Dialogs -->
     
     <string name="DIALOG_CUSTOM_PLAYER_title">What stats should the new player have?</string>
-    <string name="DIALOG_CLEAR_msg">Take an extended rest?</string>
+    <string name="DIALOG_EXTENDED_REST_msg">Take an extended rest?</string>
 
 </resources>
