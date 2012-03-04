@@ -44,10 +44,6 @@ public class DNDHPActivity extends Activity {
 	private ToggleButton toggleBlinded, toggleDazed, toggleDominated,
 			toggleGrabbed, toggleMarked, toggleProne, toggleStunned,
 			toggleWeakened;
-
-	// This button has a long click for taking extended rests
-	// TODO: long clicking this button is bad UX
-	private Button inputClear;
 	
 	// This button has a long click for setting healing surge value
 	// TODO: long clicking this button is bad UX
@@ -136,7 +132,9 @@ public class DNDHPActivity extends Activity {
 		case R.id.inputSub:
 			showWorkUpdater(-currentEntry);
 			break;
-		// NOTE THAT A LONG CLICK ALSO EXISTS IN ONCREATE
+		case R.id.inputExtendedRest:
+			showDialog(DIALOG_EXTENDED_REST);
+			break;
 		case R.id.inputClear:
 			clearEntry();
 			break;
@@ -219,16 +217,6 @@ public class DNDHPActivity extends Activity {
 				}
 			});
 		}
-
-		// Long click for "C" clear button (extended rest)
-		// TODO: eliminate this in favor of another button
-		inputClear	= (Button) findViewById(R.id.inputClear);
-		inputClear.setOnLongClickListener(new View.OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				showDialog(DIALOG_EXTENDED_REST);
-				return true; // stops click event from also being processed
-			}
-		});
 		
 		// Long click for "HS" healing surge button (set healing surge)
 		// TODO: eliminate this in favor of a separate button/UI

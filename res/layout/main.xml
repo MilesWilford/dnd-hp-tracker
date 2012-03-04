@@ -238,6 +238,12 @@
                 android:orientation="vertical" >
 
                 <Button
+                    android:id="@+id/inputExtendedRest"
+                    style="@style/fill_parent"
+                    android:onClick="onClick"
+                    android:text="@string/ExtendedRest" />
+
+                <Button
                     android:id="@+id/inputClear"
                     style="@style/fill_parent"
                     android:onClick="onClick"
