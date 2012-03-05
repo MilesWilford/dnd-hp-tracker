@@ -45,8 +45,7 @@ public class DNDHPActivity extends Activity {
 			toggleGrabbed, toggleMarked, toggleProne, toggleStunned,
 			toggleWeakened;
 	
-	// This button has a long click for setting healing surge value
-	// TODO: long clicking this button is bad UX
+	// This button displays current HS
 	private Button inputHS;
 
 	// This button displays current ongoing/regen
@@ -217,24 +216,12 @@ public class DNDHPActivity extends Activity {
 				}
 			});
 		}
-		
-		// Long click for "HS" healing surge button (set healing surge)
-		// TODO: eliminate this in favor of a separate button/UI
-		inputHS = (Button) findViewById(R.id.inputHS);
-		inputHS.setOnLongClickListener(new View.OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				players.get(0).setHS(currentEntry);
-				inputHS.setText(getString(R.string.hs) + ": "
-						+ Integer.toString(currentEntry));
-				clearEntry();
-				return true; // stops click event from also being processed
-			}
-		});
 
 		// These buttons must be loaded so we can display stuff on the,
 		inputOngo	= (Button) findViewById(R.id.inputOngo);
 		inputSurges	= (Button) findViewById(R.id.inputSurges);
 		inputDS		= (Button) findViewById(R.id.inputDS);
+		inputHS		= (Button) findViewById(R.id.inputHS);
 
 		// These views are all part of presentation
 		currentEntryView	= (TextView) findViewById(R.id.currentEntryView);
@@ -380,7 +367,7 @@ public class DNDHPActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		// When user clicks the New Player menu/actionbar button
-		case R.id.newPlayer:
+		case R.id.default_player:
 			relaunchWithPlayer(new Player());
 			Toast.makeText(getApplicationContext(),
 					getString(R.string.TOAST_madeDefaultPlayer),
@@ -390,6 +377,11 @@ public class DNDHPActivity extends Activity {
 		case R.id.newCustomPlayer:
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
 			return true;
+		case R.id.setHealingSurge:
+			players.get(0).setHS(currentEntry);
+			inputHS.setText(getString(R.string.hs) + ": "
+					+ Integer.toString(currentEntry));
+			clearEntry();
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -423,6 +415,7 @@ public class DNDHPActivity extends Activity {
 		togglesUpdater();
 		tempHPUpdater();
 		surgesUpdater();
+		surgeValueUpdater();
 	}
 
 	public void togglesUpdater() {
@@ -570,6 +563,11 @@ public class DNDHPActivity extends Activity {
 	public void surgesUpdater() {
 		inputSurges.setText(getResources().getString(R.string.surges) + ": "
 				+ Integer.toString(players.get(0).getSurges()));
+	}
+	
+	public void surgeValueUpdater() {
+		inputHS.setText(getString(R.string.hs) + ": "
+				+ Integer.toString(players.get(0).getHS()));
 	}
 
 	/*

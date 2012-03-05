@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/newPlayer"
-        android:title="@string/new_player"
+    <item android:id="@+id/setHealingSurge"
+        android:title="@string/set_healing_surge"
+        android:showAsAction="always" />
+    <item android:id="@+id/default_player"
+        android:title="@string/default_player"
 		android:showAsAction="ifRoom|withText" />
     <item android:id="@+id/newCustomPlayer"
         android:title="@string/custom_player"
