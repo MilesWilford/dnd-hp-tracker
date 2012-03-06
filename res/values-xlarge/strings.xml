@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="Clear">Clear Current Entry</string>
+    <string name="ExtendedRest">Take Extended Rest</string>
+    <string name="hs">Healing Surge</string>
+    <string name="ongoing">Ongoing Damage</string>
+    <string name="regen">Regeneration</string>
+    <string name="surges">Healing Surges Remaining</string>
+    <string name="THP">Set Temp HP</string>
+    
+    <!-- Status effect toggles.  Tabbed values are unused -->
+    
+    <string name="Blinded">Blind</string>
+    <string name="Dazed">Dazed</string>
+    	<string name="Deafened">Deafened</string>
+    <string name="Dominated">Dominated</string>
+    	<string name="Dying">Dying</string>
+    <string name="Grabbed">Grabbed</string>
+    	<string name="Helpless">Helpless</string>
+    	<string name="Immobile">Immobilized</string>
+    <string name="Marked">Marked</string>
+    	<string name="Petrified">Petrified</string>
+    <string name="Prone">Prone</string>
+    	<string name="Restrained">Restrained</string>
+    <string name="Stunned">Stunned</string>
+    	<string name="Unconscious">Unconscious</string>
+    <string name="Weakened">Weakened</string>
+</resources>
