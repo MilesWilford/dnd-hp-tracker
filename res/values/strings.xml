@@ -18,6 +18,9 @@
     <string name="set_healing_surge">Set HS</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="THP">THP</string>
+    <string name="Add">+</string>
+    <string name="Subtract">-</string>
     
     <!-- String literals for use in the java -->
     
@@ -26,7 +29,6 @@
     <string name="blank"></string>
     <string name="colonspace">:</string>
     <string name="input">input</string>
-    <string name="THP">THP</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
     <string name="CURRENT_HP">CURRENT HP</string>

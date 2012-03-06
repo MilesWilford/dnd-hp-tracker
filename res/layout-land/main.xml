@@ -114,6 +114,7 @@
         <ToggleButton
             android:id="@+id/toggleMarked"
             style="@style/SmallButton"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:onClick="onClick"
             android:textOff="@string/Marked"
@@ -122,6 +123,7 @@
         <ToggleButton
             android:id="@+id/toggleProne"
             style="@style/SmallButton"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:onClick="onClick"
             android:textOff="@string/Prone"
@@ -130,6 +132,7 @@
         <ToggleButton
             android:id="@+id/toggleStunned"
             style="@style/SmallButton"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:onClick="onClick"
             android:textOff="@string/Stunned"
@@ -138,6 +141,7 @@
         <ToggleButton
             android:id="@+id/toggleWeakened"
             style="@style/SmallButton"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:onClick="onClick"
             android:textOff="@string/Weakened"
@@ -168,7 +172,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:onClick="onClick"
-            android:text="-" />
+            android:text="@string/Subtract" />
 
         <Button
             android:id="@+id/inputDS"
@@ -184,7 +188,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:onClick="onClick"
-            android:text="+" />
+            android:text="@string/Add" />
 
         <!-- Healing Surges -->
 
@@ -194,7 +198,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/DSSub"
             android:onClick="onClick"
-            android:text="-" />
+            android:text="@string/Subtract" />
 
         <Button
             android:id="@+id/inputSurges"
@@ -210,7 +214,7 @@
             android:layout_below="@+id/DSAdd"
             android:layout_toLeftOf="@+id/inputHS"
             android:onClick="onClick"
-            android:text="+" />
+            android:text="@string/Add" />
 
         <Button
             android:id="@+id/inputHS"
@@ -228,7 +232,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/surgesSub"
             android:onClick="onClick"
-            android:text="-" />
+            android:text="@string/Subtract" />
 
         <Button
             android:id="@+id/inputOngo"
@@ -244,7 +248,7 @@
             android:layout_below="@+id/surgesAdd"
             android:layout_toLeftOf="@+id/inputTHP"
             android:onClick="onClick"
-            android:text="+" />
+            android:text="@string/Add" />
 
         <Button
             android:id="@+id/inputTHP"
@@ -321,7 +325,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/input5"
                     android:onClick="onClick"
-                    android:text="+" />
+                    android:text="@string/Add" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -378,7 +382,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/input0"
                     android:onClick="onClick"
-                    android:text="-" />
+                    android:text="@string/Subtract" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

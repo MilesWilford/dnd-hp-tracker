@@ -149,7 +149,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:onClick="onClick"
-                android:text="-" />
+                android:text="@string/Subtract" />
 
             <Button
                 android:id="@+id/inputDS"
@@ -165,7 +165,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:onClick="onClick"
-                android:text="+" />
+                android:text="@string/Add" />
 
             <!-- Healing Surges -->
 
@@ -175,7 +175,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/DSSub"
                 android:onClick="onClick"
-                android:text="-" />
+                android:text="@string/Subtract" />
 
             <Button
                 android:id="@+id/inputSurges"
@@ -191,7 +191,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/DSAdd"
                 android:onClick="onClick"
-                android:text="+" />
+                android:text="@string/Add" />
 
             <!-- Ongoing/Regeneration -->
 
@@ -201,7 +201,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/surgesSub"
                 android:onClick="onClick"
-                android:text="-" />
+                android:text="@string/Subtract" />
 
             <Button
                 android:id="@+id/inputOngo"
@@ -217,7 +217,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/surgesAdd"
                 android:onClick="onClick"
-                android:text="+" />
+                android:text="@string/Add" />
         </RelativeLayout>
 
         <!-- Calculator Button android:onClick="onClick"s -->
@@ -355,14 +355,14 @@
                     style="@style/fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="onClick"
-                    android:text="+" />
+                    android:text="@string/Add" />
 
                 <Button
                     android:id="@+id/inputSub"
                     style="@style/fill_parent"
                     android:layout_height="wrap_content"
                     android:onClick="onClick"
-                    android:text="-" />
+                    android:text="@string/Subtract" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
