@@ -370,6 +370,12 @@
             style="@style/SmallButton"
             android:onClick="onClick"
             android:text="@string/Clear" />
+        
+        <Button
+            android:id="@+id/inputUndo"
+            style="@style/SmallButton"
+            android:onClick="onClick"
+            android:text="@string/Undo" />
 
     </LinearLayout>
 

@@ -404,6 +404,25 @@ public class Player implements Serializable {
 	public boolean isDefaultPlayer() {
 		return usingDefaultPlayer;
 	}
+	
+	public void undoLast() {
+		undoNum(1);
+	}
+	
+	public void undoNum(int distance) {
+		if (changeHistory.size() == 1 || HPHistory.size() == 1) {
+			changeHistory.clear();
+			HPHistory.clear();
+			currentHP = 0;
+			
+		} else {
+			for (int i = 1; i <= distance; i++) {
+				changeHistory.remove(changeHistory.size()-1);		
+				HPHistory.remove(HPHistory.size()-1);
+				currentHP = HPHistory.get(HPHistory.size()-1);
+			}
+		}
+	}
     
 	// History trackers.  These must be the same size or it will cause problems.
     public ArrayList<Integer> getChangeHistory() {

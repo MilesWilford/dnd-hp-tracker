@@ -137,7 +137,9 @@ public class DNDHPActivity extends Activity {
 		case R.id.inputClear:
 			clearEntry();
 			break;
-		// NOTE THAT A LONG CLICK ALSO EXISTS IN ONCREATE
+		case R.id.inputUndo:
+			undoLastOp();
+			break;
 		case R.id.inputHS:
 			showWorkUpdater(players.get(0).getHS());
 			break;
@@ -616,6 +618,11 @@ public class DNDHPActivity extends Activity {
 	public void clearEntry() {
 		currentEntry = 0;
 		currentEntryView.setText(Integer.toString(currentEntry));
+	}
+	
+	public void undoLastOp() {
+		players.get(0).undoLast();
+		relaunchWithPlayer(players.get(0));
 	}
 	
 	// TODO: should database actions be in their own class?

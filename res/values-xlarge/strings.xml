@@ -3,6 +3,7 @@
     
     <string name="Clear">Clear Current Entry</string>
     <string name="ExtendedRest">Take Extended Rest</string>
+    <string name="Undo">Undo Last Operation</string>
     <string name="hs">Healing Surge</string>
     <string name="ongoing">Ongoing Damage</string>
     <string name="regen">Regeneration</string>

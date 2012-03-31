@@ -185,10 +185,18 @@
         <Button
             android:id="@+id/DSAdd"
             style="@style/SmallButton"
-            android:layout_alignParentRight="true"
+			android:layout_toLeftOf="@+id/inputUndo"
             android:layout_alignParentTop="true"
             android:onClick="onClick"
             android:text="@string/Add" />
+        
+        <Button
+            android:id="@+id/inputUndo"
+            style="@style/SmallButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onClick"
+            android:text="@string/Undo" />
 
         <!-- Healing Surges -->
 

@@ -8,6 +8,7 @@
 	
     <string name="Clear">C</string>
     <string name="ExtendedRest">ER</string>
+    <string name="Undo">U</string>
     <string name="regen">Regen</string>
     <string name="ongoing">Ongoing</string>
     <string name="surges">Surges</string>
