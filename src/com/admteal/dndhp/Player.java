@@ -410,7 +410,7 @@ public class Player implements Serializable {
 	}
 	
 	public void undoNum(int distance) {
-		if (changeHistory.size() == 1 || HPHistory.size() == 1) {
+		if (changeHistory.size() <= 1 || HPHistory.size() <= 1) {
 			changeHistory.clear();
 			HPHistory.clear();
 			currentHP = 0;
