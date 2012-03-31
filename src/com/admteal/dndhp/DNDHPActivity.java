@@ -380,6 +380,11 @@ public class DNDHPActivity extends Activity {
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
 			return true;
 		case R.id.setHealingSurge:
+			if (currentEntry == 0) {
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.TOAST_HSWasZero), 
+						Toast.LENGTH_SHORT).show();
+			}
 			players.get(0).setHS(currentEntry);
 			inputHS.setText(getString(R.string.hs) + ": "
 					+ Integer.toString(currentEntry));

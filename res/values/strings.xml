@@ -68,6 +68,7 @@
     <string name="TOAST_madeFullHPPlayer">Made a new player at full HP</string>
     <string name="TOAST_madePartialHPPlayer">Made a new player at partial HP</string>
     <string name="TOAST_madeDefaultPlayer">Set current player to default</string>
+    <string name="TOAST_HSWasZero">Current entry was 0, setting healing surge value to 0.</string>
     
     <!-- Dialogs -->
     
