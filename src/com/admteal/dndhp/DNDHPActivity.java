@@ -4,6 +4,8 @@ package com.admteal.dndhp;
 import java.util.ArrayList;
 
 import com.admteal.dndhp.R;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -231,6 +234,7 @@ public class DNDHPActivity extends Activity {
 		showWorkLayout		= (LinearLayout) findViewById(R.id.showWorkLayout);
 		currentHPView		= (TextView) findViewById(R.id.currentHPView);
 		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);
+			
 	}
 
 	@Override

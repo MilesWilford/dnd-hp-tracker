@@ -64,11 +64,11 @@
     
     <!--  Toasts -->
     
-    <string name="TOAST_couldNotMakePlayer">Necessary values were blank, so new custom player could not be made.</string>
+    <string name="TOAST_couldNotMakePlayer">Necessary values were blank, so a new custom player could not be made.</string>
     <string name="TOAST_madeFullHPPlayer">Made a new player at full HP</string>
     <string name="TOAST_madePartialHPPlayer">Made a new player at partial HP</string>
     <string name="TOAST_madeDefaultPlayer">Set current player to default</string>
-    <string name="TOAST_HSWasZero">Current entry was 0, setting healing surge value to 0.</string>
+    <string name="TOAST_HSWasZero">Current entry was 0.  Setting healing surge value to 0.</string>
     
     <!-- Dialogs -->
     
