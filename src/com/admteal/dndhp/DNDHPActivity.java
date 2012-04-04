@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -234,6 +235,15 @@ public class DNDHPActivity extends Activity {
 		showWorkLayout		= (LinearLayout) findViewById(R.id.showWorkLayout);
 		currentHPView		= (TextView) findViewById(R.id.currentHPView);
 		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);
+		
+        
+        
+        String[] playerNames = {players.get(0).getName()}; //TODO something better than this for generating array of names
+        SpinnerAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, playerNames);
+        
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setListNavigationCallbacks(spinnerAdapter, null);
 			
 	}
 
