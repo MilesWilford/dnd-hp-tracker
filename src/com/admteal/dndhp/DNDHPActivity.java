@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.admteal.dndhp.R;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,11 +35,13 @@ import android.os.Bundle;
 public class DNDHPActivity extends Activity {
 	PlayerDataSQLHelper playerData;
 	public ArrayList<Player> players = new ArrayList<Player>();
-
+	
+	public int CURRENT_PLAYER;
 	// Some string literals we'll use for clarity's sake
 	private static String PLUS, MINUS, INPUT;
 	private static String BLANK = "";
 
+	// This will let me treat dialogs as ints using a switch
 	private final int DIALOG_EXTENDED_REST = 0;
 	private final int DIALOG_NEW_CUSTOM_PLAYER = 1;
 
@@ -60,6 +63,9 @@ public class DNDHPActivity extends Activity {
 
 	// This button displays current surges
 	private Button inputSurges;
+	
+	//This button allows the user to click to undo
+	private Button inputUndo;
 
 	// The views we'll be using for presentation
 	private TextView currentEntryView, currentHPView, currentTHPView;
@@ -71,58 +77,58 @@ public class DNDHPActivity extends Activity {
 		switch (view.getId()) {
 		case R.id.toggleBlinded:
 			if (toggleBlinded.isChecked()) {
-				players.get(0).blind();
+				players.get(CURRENT_PLAYER).blind();
 			} else {
-				players.get(0).unblind();
+				players.get(CURRENT_PLAYER).unblind();
 			}
 			break;
 		case R.id.toggleDazed:
 			if (toggleDazed.isChecked()) {
-				players.get(0).daze();
+				players.get(CURRENT_PLAYER).daze();
 			} else {
-				players.get(0).undaze();
+				players.get(CURRENT_PLAYER).undaze();
 			}
 			break;
 		case R.id.toggleDominated:
 			if (toggleDominated.isChecked()) {
-				players.get(0).dominate();
+				players.get(CURRENT_PLAYER).dominate();
 			} else {
-				players.get(0).undominate();
+				players.get(CURRENT_PLAYER).undominate();
 			}
 			break;
 		case R.id.toggleGrabbed:
 			if (toggleGrabbed.isChecked()) {
-				players.get(0).grab();
+				players.get(CURRENT_PLAYER).grab();
 			} else {
-				players.get(0).ungrab();
+				players.get(CURRENT_PLAYER).ungrab();
 			}
 			break;
 		case R.id.toggleMarked:
 			if (toggleMarked.isChecked()) {
-				players.get(0).mark();
+				players.get(CURRENT_PLAYER).mark();
 			} else {
-				players.get(0).unmark();
+				players.get(CURRENT_PLAYER).unmark();
 			}
 			break;
 		case R.id.toggleProne:
 			if (toggleProne.isChecked()) {
-				players.get(0).knockProne();
+				players.get(CURRENT_PLAYER).knockProne();
 			} else {
-				players.get(0).getUp();
+				players.get(CURRENT_PLAYER).getUp();
 			}
 			break;
 		case R.id.toggleStunned:
 			if (toggleStunned.isChecked()) {
-				players.get(0).stun();
+				players.get(CURRENT_PLAYER).stun();
 			} else {
-				players.get(0).unstun();
+				players.get(CURRENT_PLAYER).unstun();
 			}
 			break;
 		case R.id.toggleWeakened:
 			if (toggleStunned.isChecked()) {
-				players.get(0).weaken();
+				players.get(CURRENT_PLAYER).weaken();
 			} else {
-				players.get(0).unweaken();
+				players.get(CURRENT_PLAYER).unweaken();
 			}
 			break;
 		case R.id.inputTHP:
@@ -145,7 +151,7 @@ public class DNDHPActivity extends Activity {
 			undoLastOp();
 			break;
 		case R.id.inputHS:
-			showWorkUpdater(players.get(0).getHS());
+			showWorkUpdater(players.get(CURRENT_PLAYER).getHS());
 			break;
 		case R.id.ongoAdd:
 			ongoUpdater(PLUS);
@@ -155,7 +161,7 @@ public class DNDHPActivity extends Activity {
 			break;
 		case R.id.inputOngo:
 			// Stores the value backwards, so invert
-			showWorkUpdater(-players.get(0).getOngo());
+			showWorkUpdater(-players.get(CURRENT_PLAYER).getOngo());
 			break;
 		case R.id.surgesAdd:
 			surgesUpdater(PLUS);
@@ -164,10 +170,10 @@ public class DNDHPActivity extends Activity {
 			surgesUpdater(MINUS);
 			break;
 		case R.id.inputSurges:
-			if (players.get(0).getSurges() == 0) {
+			if (players.get(CURRENT_PLAYER).getSurges() == 0) {
 				return;
 			}
-			showWorkUpdater(players.get(0).getHS());
+			showWorkUpdater(players.get(CURRENT_PLAYER).getHS());
 			surgesUpdater(MINUS);
 			break;
 		case R.id.DSAdd:
@@ -182,9 +188,11 @@ public class DNDHPActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-				super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		CURRENT_PLAYER = 0;
 		
+		// helper for our SQLite database
 		playerData = new PlayerDataSQLHelper(this);
 
 		// Get the string literals used in this activity from strings.xml
@@ -192,7 +200,7 @@ public class DNDHPActivity extends Activity {
 		MINUS		= getString(R.string.minus);
 		INPUT		= getString(R.string.input);
 
-		// Make sure at least one player loaded to prevent any crashes
+		// Make sure at least one player loaded to prevent any crashes on first boot
 		if (players.size() == 0) {
 			players.add(new Player());
 		}
@@ -223,36 +231,40 @@ public class DNDHPActivity extends Activity {
 			});
 		}
 
-		// These buttons must be loaded so we can display stuff on the,
+		// These buttons must be loaded so they can display stuff
 		inputOngo	= (Button) findViewById(R.id.inputOngo);
 		inputSurges	= (Button) findViewById(R.id.inputSurges);
 		inputDS		= (Button) findViewById(R.id.inputDS);
 		inputHS		= (Button) findViewById(R.id.inputHS);
+		inputUndo 	= (Button) findViewById(R.id.inputUndo);
 
 		// These views are all part of presentation
 		currentEntryView	= (TextView) findViewById(R.id.currentEntryView);
 		showWorkScroller	= (ScrollView) findViewById(R.id.showWorkScroller);
 		showWorkLayout		= (LinearLayout) findViewById(R.id.showWorkLayout);
 		currentHPView		= (TextView) findViewById(R.id.currentHPView);
-		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);
+		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);   
 		
-        
-        
-        String[] playerNames = {players.get(0).getName()}; //TODO something better than this for generating array of names
-        SpinnerAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, playerNames);
-        
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setListNavigationCallbacks(spinnerAdapter, null);
-			
-	}
+		/*
+		String[] playerNames = {players.get(CURRENT_PLAYER).getName()}; //TODO something better than this for generating array of names
+		SpinnerAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, playerNames);
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		addPlayerToDB(players.get(0));
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(spinnerAdapter, new ActionBar.OnNavigationListener() {
+			
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				addPlayerToDB(players.get(CURRENT_PLAYER));
+				// TODO: This stuff is stopping my compatibility.  
+				// I am sticking with one player for now, but later on it will be important to track multiple players.
+				//
+				Toast.makeText(getApplicationContext(), Integer.toString(itemPosition), Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		});
+		*/
 	}
-	
+		
 	@Override 
 	protected void onDestroy() {
 		super.onDestroy();
@@ -260,10 +272,16 @@ public class DNDHPActivity extends Activity {
 	}
 	
 	@Override
+	protected void onPause() {
+		super.onPause();
+		addPlayerToDB(players.get(CURRENT_PLAYER));
+	}
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
 		players = getPlayersFromDB();
-		relaunchWithPlayer(players.get(0));
+		relaunchWithPlayer(players.get(CURRENT_PLAYER));
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
 
@@ -280,8 +298,8 @@ public class DNDHPActivity extends Activity {
 								public void onClick(DialogInterface arg0,
 										int arg1) {
 									clearEntry();
-									players.get(0).extendedRest();
-									relaunchWithPlayer(players.get(0));
+									players.get(CURRENT_PLAYER).extendedRest();
+									relaunchWithPlayer(players.get(CURRENT_PLAYER));
 								}
 							}).setNegativeButton(getString(R.string.no), null)
 					.create();
@@ -340,7 +358,7 @@ public class DNDHPActivity extends Activity {
 												.equals(BLANK)
 												|| customPlayerNewCurrentSurges
 														.equals(BLANK)) {
-											players.set(0, new Player(
+											players.set(CURRENT_PLAYER, new Player(
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
 													Integer.parseInt(customPlayerNewHS)));
@@ -348,9 +366,9 @@ public class DNDHPActivity extends Activity {
 													getApplicationContext(),
 													getString(R.string.TOAST_madeFullHPPlayer),
 													Toast.LENGTH_SHORT).show();
-											relaunchWithPlayer(players.get(0));
+											relaunchWithPlayer(players.get(CURRENT_PLAYER));
 										} else {
-											players.set(0, new Player(
+											players.set(CURRENT_PLAYER, new Player(
 													Integer.parseInt(customPlayerNewMaxHP),
 													Integer.parseInt(customPlayerNewCurrentHP),
 													Integer.parseInt(customPlayerNewMaxSurges),
@@ -360,7 +378,7 @@ public class DNDHPActivity extends Activity {
 													getApplicationContext(),
 													getString(R.string.TOAST_madePartialHPPlayer),
 													Toast.LENGTH_SHORT).show();
-											relaunchWithPlayer(players.get(0));
+											relaunchWithPlayer(players.get(CURRENT_PLAYER));
 										}
 									}
 
@@ -399,7 +417,7 @@ public class DNDHPActivity extends Activity {
 						getString(R.string.TOAST_HSWasZero), 
 						Toast.LENGTH_SHORT).show();
 			}
-			players.get(0).setHS(currentEntry);
+			players.get(CURRENT_PLAYER).setHS(currentEntry);
 			inputHS.setText(getString(R.string.hs) + ": "
 					+ Integer.toString(currentEntry));
 			clearEntry();
@@ -413,24 +431,25 @@ public class DNDHPActivity extends Activity {
 	 * for display in the app.
 	 */
 	public void relaunchWithPlayer(Player newPlayer) {
-		players.set(0, newPlayer);
+		players.set(CURRENT_PLAYER, newPlayer);
 		addPlayerToDB(newPlayer);
 		updateAll();
 		/*
-		 * Because of the way they're created, players.get(0).changeHistory and
-		 * players.get(0).HPHistory are *always* the same length. First,
+		 * Because of the way they're created, players.get(CURRENT_PLAYER).changeHistory and
+		 * players.get(CURRENT_PLAYER).HPHistory are *always* the same length. First,
 		 * removeAllViews just in case any were already here.
 		 */
 		showWorkLayout.removeAllViews();
-		for (int i = 0; i < players.get(0).getChangeHistory().size(); i++) {
-			showWorkViewMaker(players.get(0).getChangeHistory().get(i), players
+		for (int i = 0; i < players.get(CURRENT_PLAYER).getChangeHistory().size(); i++) {
+			showWorkViewMaker(players.get(CURRENT_PLAYER).getChangeHistory().get(i), players
 					.get(0).getHPHistory().get(i));
 		}
 	}
 
 	// This method updates all views
 	public void updateAll() {
-		currentHPView.setText(Integer.toString(players.get(0).getHP()));
+		currentHPView.setText(Integer.toString(players.get(CURRENT_PLAYER).getHP()));
+		inputUndo.setEnabled(players.get(CURRENT_PLAYER).canUndo());
 		ongoUpdater();
 		DSUpdater();
 		togglesUpdater();
@@ -440,7 +459,7 @@ public class DNDHPActivity extends Activity {
 	}
 
 	public void togglesUpdater() {
-		Player player = players.get(0);
+		Player player = players.get(CURRENT_PLAYER);
 		togglesUpdater(player);
 	}
 	// Sets all toggle buttons to the states from the Player class
@@ -462,17 +481,18 @@ public class DNDHPActivity extends Activity {
 	public void showWorkUpdater(int value) {
 		// First we must pick our operation.
 		if (value > 0) {
-			players.get(0).heal(value);
+			players.get(CURRENT_PLAYER).heal(value);
 		} else if (value < 0) {
-			players.get(0).injure(value);
+			players.get(CURRENT_PLAYER).injure(value);
 		} else {
 			clearEntry();
 			return;
 		}
 		showWorkViewMaker(value);
 		clearEntry();
+		inputUndo.setEnabled(players.get(CURRENT_PLAYER).canUndo());
 
-		currentHPView.setText(Integer.toString(players.get(0).getHP()));
+		currentHPView.setText(Integer.toString(players.get(CURRENT_PLAYER).getHP()));
 	}
 
 	/*
@@ -501,11 +521,11 @@ public class DNDHPActivity extends Activity {
 		sum.setGravity(Gravity.LEFT);
 		sum.setTextSize(dpi(14));
 
-		if (hpToList == players.get(0).getMaxHP() && !players.get(0).isDefaultPlayer()) {
+		if (hpToList == players.get(CURRENT_PLAYER).getMaxHP() && !players.get(CURRENT_PLAYER).isDefaultPlayer()) {
 			sum.setTextColor(Color.GREEN);
-		} else if (players.get(0).isBloodied() && !players.get(0).isDefaultPlayer()) {
+		} else if (players.get(CURRENT_PLAYER).isBloodied() && !players.get(CURRENT_PLAYER).isDefaultPlayer()) {
 			sum.setTextColor(Color.YELLOW);
-		} else if (players.get(0).isDying()) {
+		} else if (players.get(CURRENT_PLAYER).isDying()) {
 			sum.setTextColor(Color.RED);
 		}
 
@@ -530,7 +550,7 @@ public class DNDHPActivity extends Activity {
 	 * will be the case
 	 */
 	public void showWorkViewMaker(int value) {
-		showWorkViewMaker(value, players.get(0).getHP());
+		showWorkViewMaker(value, players.get(CURRENT_PLAYER).getHP());
 	}
 
 	// Controls adding temporary HP to player class
@@ -539,10 +559,10 @@ public class DNDHPActivity extends Activity {
 	}
 
 	public void tempHPUpdater(int value) {
-		players.get(0).addTHP(value);
+		players.get(CURRENT_PLAYER).addTHP(value);
 		currentTHPView.setTextColor(Color.GREEN);
-		if (players.get(0).getTHP() > 0) {
-			currentTHPView.setText("(" + players.get(0).getTHP() + ")");
+		if (players.get(CURRENT_PLAYER).getTHP() > 0) {
+			currentTHPView.setText("(" + players.get(CURRENT_PLAYER).getTHP() + ")");
 		} else {
 			currentTHPView.setText(BLANK);
 		}
@@ -554,9 +574,9 @@ public class DNDHPActivity extends Activity {
 	 */
 	public void DSUpdater(String how) {
 		if (how.equals(PLUS)) {
-			players.get(0).addDeathSave();
+			players.get(CURRENT_PLAYER).addDeathSave();
 		} else if (how.equals(MINUS)) {
-			players.get(0).remDeathSave();
+			players.get(CURRENT_PLAYER).remDeathSave();
 		}
 		DSUpdater();
 	}
@@ -564,7 +584,7 @@ public class DNDHPActivity extends Activity {
 	// Update the button's text without changing the stored number
 	public void DSUpdater() {
 		inputDS.setText(getResources().getString(R.string.ds) + ": "
-				+ Integer.toString(players.get(0).getDeathSaves()));
+				+ Integer.toString(players.get(CURRENT_PLAYER).getDeathSaves()));
 	}
 
 	/*
@@ -573,9 +593,9 @@ public class DNDHPActivity extends Activity {
 	 */
 	public void surgesUpdater(String how) {
 		if (how.equals(PLUS)) {
-			players.get(0).addSurge();
+			players.get(CURRENT_PLAYER).addSurge();
 		} else if (how.equals(MINUS)) {
-			players.get(0).remSurge();
+			players.get(CURRENT_PLAYER).remSurge();
 		}
 		surgesUpdater();
 	}
@@ -583,12 +603,12 @@ public class DNDHPActivity extends Activity {
 	// Update the button's text without changing the stored number
 	public void surgesUpdater() {
 		inputSurges.setText(getResources().getString(R.string.surges) + ": "
-				+ Integer.toString(players.get(0).getSurges()));
+				+ Integer.toString(players.get(CURRENT_PLAYER).getSurges()));
 	}
 	
 	public void surgeValueUpdater() {
 		inputHS.setText(getString(R.string.hs) + ": "
-				+ Integer.toString(players.get(0).getHS()));
+				+ Integer.toString(players.get(CURRENT_PLAYER).getHS()));
 	}
 
 	/*
@@ -598,9 +618,9 @@ public class DNDHPActivity extends Activity {
 	public void ongoUpdater(String how) {
 		// Pick operation and adjust currentOngo number
 		if (how.equals(PLUS)) {
-			players.get(0).addOngo();
+			players.get(CURRENT_PLAYER).addOngo();
 		} else if (how.equals(MINUS)) {
-			players.get(0).remOngo();
+			players.get(CURRENT_PLAYER).remOngo();
 		}
 		ongoUpdater();
 	}
@@ -609,12 +629,12 @@ public class DNDHPActivity extends Activity {
 	public void ongoUpdater() {
 		String dotOrHot, valueToUse;
 		// It's a regen if it is under 0, otherwise it is ongoing
-		if (players.get(0).getOngo() < 0) {
+		if (players.get(CURRENT_PLAYER).getOngo() < 0) {
 			dotOrHot = getResources().getString(R.string.regen);
-			valueToUse = Integer.toString(players.get(0).getRegen());
+			valueToUse = Integer.toString(players.get(CURRENT_PLAYER).getRegen());
 		} else {
 			dotOrHot = getResources().getString(R.string.ongoing);
-			valueToUse = Integer.toString(players.get(0).getOngo());
+			valueToUse = Integer.toString(players.get(CURRENT_PLAYER).getOngo());
 		}
 		// Change the button text to reflect variable
 		inputOngo.setText(dotOrHot + ": " + valueToUse);
@@ -640,8 +660,8 @@ public class DNDHPActivity extends Activity {
 	}
 	
 	public void undoLastOp() {
-		players.get(0).undoLast();
-		relaunchWithPlayer(players.get(0));
+		players.get(CURRENT_PLAYER).undoLast();
+		relaunchWithPlayer(players.get(CURRENT_PLAYER));
 	}
 	
 	// TODO: should database actions be in their own class?

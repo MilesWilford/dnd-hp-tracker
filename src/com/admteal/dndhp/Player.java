@@ -405,6 +405,14 @@ public class Player implements Serializable {
 		return usingDefaultPlayer;
 	}
 	
+	public boolean canUndo() {
+		if (changeHistory.size() == 0 || HPHistory.size() == 0) {
+			return false;
+		}
+		return true;
+		
+	}
+	
 	public void undoLast() {
 		undoNum(1);
 	}

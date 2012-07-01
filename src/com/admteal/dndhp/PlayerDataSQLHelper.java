@@ -32,6 +32,7 @@ public class PlayerDataSQLHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// I'm not good with this, so for now an upgrade will simply delete the old db
 		String sql = "DROP TABLE " + TABLE + ";";
 		db.execSQL(sql);
 		Log.d("PlayerDataSQLHelper", "onUpgrade: " + sql);
@@ -39,3 +40,13 @@ public class PlayerDataSQLHelper extends SQLiteOpenHelper {
 	}
 
 }
+
+/*
+ * players.db version 1
+ * table players:
+ * +--------+----------+-------------------------+
+ * |   ID   |   NAME   |        SERPLAYER        |
+ * +--------+----------+-------------------------+
+ * |  auto  | assigned | Serialized Player class |
+ * +--------+----------+-------------------------+
+ */

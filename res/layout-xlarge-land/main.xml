@@ -134,11 +134,6 @@
             android:textOff="@string/Weakened"
             android:textOn="@string/Weakened" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/inputExtendedRest"
             style="@style/SmallButton"
