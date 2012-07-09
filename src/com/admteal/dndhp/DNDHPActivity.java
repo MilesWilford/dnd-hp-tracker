@@ -34,9 +34,14 @@ import android.os.Bundle;
 
 public class DNDHPActivity extends Activity {
 	PlayerDataSQLHelper playerData;
-	public ArrayList<Player> players = new ArrayList<Player>();
 	
+	/* 
+	 * This is stored as an ArrayList so that implementing support of 
+	 * multiple players later on will be less challenging.
+	 */
+	public ArrayList<Player> players = new ArrayList<Player>();
 	public int CURRENT_PLAYER;
+	
 	// Some string literals we'll use for clarity's sake
 	private static String PLUS, MINUS, INPUT;
 	private static String BLANK = "";
@@ -72,10 +77,14 @@ public class DNDHPActivity extends Activity {
 	private ScrollView showWorkScroller;
 	private LinearLayout showWorkLayout;
 
-	// Used in place of setting dozens of OnClickListeners
+	/* 
+	 * Used in place of setting dozens of OnClickListeners
+	 * Note that each UI element in the layout must have the onClick method called
+	 */
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.toggleBlinded:
+			//TODO: The add a toggle for each of these into the Players class to improve clarity?
 			if (toggleBlinded.isChecked()) {
 				players.get(CURRENT_PLAYER).blind();
 			} else {
@@ -190,9 +199,11 @@ public class DNDHPActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		// Hard coded since we do not yet support multiple players.  TODO
 		CURRENT_PLAYER = 0;
 		
-		// helper for our SQLite database
+		// helper for our SQLite database hookup
 		playerData = new PlayerDataSQLHelper(this);
 
 		// Get the string literals used in this activity from strings.xml
@@ -216,7 +227,9 @@ public class DNDHPActivity extends Activity {
 		toggleWeakened	= (ToggleButton) findViewById(R.id.toggleWeakened);
 
 		/*
-		 * Create OnClickListeners for the number buttons without having to hard code each button
+		 * Create OnClickListeners for the number buttons 
+		 * without having to hard code each button
+		 * A little inelegant, but very suave!
 		 */
 		for (int i = 0; i < 10; i++) {
 			String buttonID = INPUT + Integer.toString(i);
@@ -231,14 +244,14 @@ public class DNDHPActivity extends Activity {
 			});
 		}
 
-		// These buttons must be loaded so they can display stuff
+		// These buttons must be loaded so they can also be part of presentation
 		inputOngo	= (Button) findViewById(R.id.inputOngo);
 		inputSurges	= (Button) findViewById(R.id.inputSurges);
 		inputDS		= (Button) findViewById(R.id.inputDS);
 		inputHS		= (Button) findViewById(R.id.inputHS);
 		inputUndo 	= (Button) findViewById(R.id.inputUndo);
 
-		// These views are all part of presentation
+		// These views are all direct part of presentation
 		currentEntryView	= (TextView) findViewById(R.id.currentEntryView);
 		showWorkScroller	= (ScrollView) findViewById(R.id.showWorkScroller);
 		showWorkLayout		= (LinearLayout) findViewById(R.id.showWorkLayout);
@@ -246,6 +259,7 @@ public class DNDHPActivity extends Activity {
 		currentTHPView		= (TextView) findViewById(R.id.currentTHPView);   
 		
 		/*
+		 * TODO: Code to support an ActionBar spinner for multiple players.  Tabs may actually be better.
 		String[] playerNames = {players.get(CURRENT_PLAYER).getName()}; //TODO something better than this for generating array of names
 		SpinnerAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, playerNames);
 
@@ -255,10 +269,7 @@ public class DNDHPActivity extends Activity {
 			
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 				addPlayerToDB(players.get(CURRENT_PLAYER));
-				// TODO: This stuff is stopping my compatibility.  
-				// I am sticking with one player for now, but later on it will be important to track multiple players.
-				//
-				Toast.makeText(getApplicationContext(), Integer.toString(itemPosition), Toast.LENGTH_SHORT).show();
+				// stuff
 				return false;
 			}
 		});
@@ -268,24 +279,33 @@ public class DNDHPActivity extends Activity {
 	@Override 
 	protected void onDestroy() {
 		super.onDestroy();
-		playerData.close();
+		// Apparently you need to be careful to close SQLite connections when your app ends
+		playerData.close(); 
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
+		/* 
+		 * Store current player info permanently to database for posterity.  
+		 * This is pretty aggressive data storage, but since it isn't much data I don't see that as an issue.
+		 */
 		addPlayerToDB(players.get(CURRENT_PLAYER));
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// Load all players from SQLite 
 		players = getPlayersFromDB();
+		// Run my global "set all fields" method based on CURRENT_PLAYER
 		relaunchWithPlayer(players.get(CURRENT_PLAYER));
+		// Refill currentEntry, something we normally don't bother with
 		currentEntryView.setText(Integer.toString(currentEntry));
 	}
 
 	// Generate my alert dialogs
+	// TODO: This is a pig sty.
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -392,6 +412,7 @@ public class DNDHPActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// This uses menu.xml for populating my menu OR ActionBar options, depending on API level
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
@@ -407,10 +428,11 @@ public class DNDHPActivity extends Activity {
 					getString(R.string.TOAST_madeDefaultPlayer),
 					Toast.LENGTH_SHORT).show();
 			return true;
-		// When user clicks the Custom Player menu.actionbar button
+		// When user clicks the Custom Player menu/actionbar button
 		case R.id.newCustomPlayer:
 			showDialog(DIALOG_NEW_CUSTOM_PLAYER);
 			return true;
+		// When user clicks the Set Healing Surge menu/actionbar button
 		case R.id.setHealingSurge:
 			if (currentEntry == 0) {
 				Toast.makeText(getApplicationContext(),
@@ -437,7 +459,7 @@ public class DNDHPActivity extends Activity {
 		/*
 		 * Because of the way they're created, players.get(CURRENT_PLAYER).changeHistory and
 		 * players.get(CURRENT_PLAYER).HPHistory are *always* the same length. First,
-		 * removeAllViews just in case any were already here.
+		 * removeAllViews for a tabula rasa
 		 */
 		showWorkLayout.removeAllViews();
 		for (int i = 0; i < players.get(CURRENT_PLAYER).getChangeHistory().size(); i++) {
@@ -459,8 +481,8 @@ public class DNDHPActivity extends Activity {
 	}
 
 	public void togglesUpdater() {
-		Player player = players.get(CURRENT_PLAYER);
-		togglesUpdater(player);
+		// TODO: Verify change I made here doesn't cause crashes
+		togglesUpdater(players.get(CURRENT_PLAYER));
 	}
 	// Sets all toggle buttons to the states from the Player class
 	public void togglesUpdater(Player player) {
@@ -491,7 +513,6 @@ public class DNDHPActivity extends Activity {
 		showWorkViewMaker(value);
 		clearEntry();
 		inputUndo.setEnabled(players.get(CURRENT_PLAYER).canUndo());
-
 		currentHPView.setText(Integer.toString(players.get(CURRENT_PLAYER).getHP()));
 	}
 
@@ -665,7 +686,7 @@ public class DNDHPActivity extends Activity {
 	}
 	
 	// TODO: should database actions be in their own class?
-	// Add the player to the database
+	// Add the current player to the database
 	public void addPlayerToDB(Player player) {
 		SQLiteDatabase db = playerData.getWritableDatabase();
 		// First delete any same-named players from the database
